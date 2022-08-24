@@ -47,5 +47,6 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 &emsp;&emsp;○ GitHub Account: https://github.com/Weeyumn
 
+&emsp;&emsp;○ Discord Account: weeyum #4628
 
 
