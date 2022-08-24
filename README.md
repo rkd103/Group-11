@@ -45,7 +45,7 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 &emsp;&emsp;○ Email: wtn36@msstate.edu
 
-&emsp;&emsp;○ GitHub Account: https://github.com/
+&emsp;&emsp;○ GitHub Account: https://github.com/Weeyumn
 
 
 
