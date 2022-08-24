@@ -29,5 +29,23 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 &emsp;&emsp;○ Email: brettbaltz23@gmail.com
 
-&emsp;&emsp;○ GitHub Account: https://github.com/blb820
+&emsp;&emsp;○ GitHub Account: https://github.com/BrettBaltz
+
+● Name: HeFeng Ou
+
+&emsp;&emsp;○ NetID: ho170
+
+&emsp;&emsp;○ Email: ho170@msstate.edu
+
+&emsp;&emsp;○ GitHub Account: https://github.com/
+
+● Name: William Neeley
+
+&emsp;&emsp;○ NetID: wtn36
+
+&emsp;&emsp;○ Email: wtn36@msstate.edu
+
+&emsp;&emsp;○ GitHub Account: https://github.com/
+
+
 
