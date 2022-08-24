@@ -19,7 +19,7 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 &emsp;&emsp;○ NetID: blb820
 
-&emsp;&emsp;○ Email: brettbaltz23@gmail.com
+&emsp;&emsp;○ Email: blb820@msstate.edu
 
 &emsp;&emsp;○ GitHub Account: https://github.com/BrettBaltz
 
