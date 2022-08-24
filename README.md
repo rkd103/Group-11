@@ -1,10 +1,10 @@
 # Course:
-CSE: 2213
+CSE: 4214
 
 # Course Title:
-Methods & Tools in Software Development
+Introduction to Software Engineering
 
 # Project Title:
-Group Project (Spring 2022)
+A Facebook like social media platform (Fall 2022)
 
 # Project Requirements:
