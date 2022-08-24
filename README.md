@@ -15,14 +15,6 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 # Collaborators:
 
-● Name: Robert Dilworth
-
-&emsp;&emsp;○ NetID: rkd103
-
-&emsp;&emsp;○ Email: rkd103@msstate.edu
-
-&emsp;&emsp;○ GitHub Account: https://github.com/rkd103
-
 ● Name: Brett Baltz
 
 &emsp;&emsp;○ NetID: blb820
@@ -31,6 +23,16 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 &emsp;&emsp;○ GitHub Account: https://github.com/BrettBaltz
 
+
+● Name: Robert Dilworth
+
+&emsp;&emsp;○ NetID: rkd103
+
+&emsp;&emsp;○ Email: rkd103@msstate.edu
+
+&emsp;&emsp;○ GitHub Account: https://github.com/rkd103
+
+
 ● Name: HeFeng Ou
 
 &emsp;&emsp;○ NetID: ho170
@@ -38,6 +40,7 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 &emsp;&emsp;○ Email: ho170@msstate.edu
 
 &emsp;&emsp;○ GitHub Account: https://github.com/ho170
+
 
 ● Name: William Neeley
 
