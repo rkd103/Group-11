@@ -11,6 +11,11 @@ A Facebook like social media platform (Fall 2022)
 https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 # Project Functionalities #
+### Description: ###
+NA
+### Objective: ###
+NA
+### Features: ###
 NA
 
 # Group Number: #
