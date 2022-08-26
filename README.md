@@ -12,7 +12,10 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 # Project Functionalities #
 ### Description: ###
-_To be determined with subsequent updates_
+A web application that permits the following user-based actions:
+* convenient conconnectivity, by way of customer/consumer interactions
+* real time status updates, by way of user statuses/timelines
+* responsive feedback, by way of the user's approval and critique of posts in addition to their dissemination
 ### Objective: ###
 Design and develop a Facebook like social media platform that will have a number of different functionalities based on the stackholders' expectations.
 ### Features: ###
