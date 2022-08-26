@@ -63,7 +63,8 @@ Design and develop a Facebook-like social media platform that will have a number
 * Markup Language(s): 
   * HTML
   * CSS 
-
+* Database Connector:
+  *  Flask-SQLAlchemy
 
 
 
