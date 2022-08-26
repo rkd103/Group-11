@@ -14,9 +14,13 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 ### Description: ###
 NA
 ### Objective: ###
-NA
+Design and develop a Facebook like social media platform that will have a number of different functionalities based on the stackholders' expectations.
 ### Features: ###
-NA
+* A user will be able to:
+  * login into his or her account, connect with his or her friends, and access their timelines
+  * compose, edit, and post statuses on his or her timeline
+  * send and accept friend requests from other users; this will, in turn, grant the current user the ability to befriend another user, enabling them to interact with their page
+  * like, comment, and share the status/timeline post of their friends
 
 # Group Number: #
 11
