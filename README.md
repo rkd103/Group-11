@@ -5,7 +5,7 @@ CSE: 4214
 Introduction to Software Engineering
 
 # Project Title: #
-A Facebook like social media platform (Fall 2022)
+A Facebook-like social media platform (Fall 2022)
 
 # Project Requirements: #
 https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
@@ -13,17 +13,17 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 # Project Functionalities #
 ### Description: ###
 A web application that permits the following user-based actions:
-* convenient conconnectivity, by way of customer/consumer interactions
-* real time status updates, by way of user statuses/timelines
+* convenient connectivity, by way of customer/consumer interactions
+* real-time status updates, by way of user statuses/timelines
 * responsive feedback, by way of the user's approval and critique of posts in addition to their dissemination
 ### Objective: ###
-Design and develop a Facebook like social media platform that will have a number of different functionalities based on the stackholders' expectations.
+Design and develop a Facebook-like social media platform that will have a number of different functionalities based on the stackholder's expectations.
 ### Features: ###
 * A user will be able to:
   * login into his or her account, connect with his or her friends, and access their timelines
   * compose, edit, and post statuses on his or her timeline
   * send and accept friend requests to and from other users
-    * this privilege will, in turn, grant the current user the ability to befriend another user, which enables the customer to interact with the assets of the recently aquainted associate
+    * this privilege will, in turn, grant the current user the ability to befriend another user, which enables the customer to interact with the assets of the recently acquainted associate
   * like, comment, and share the status/timeline post of their friends
 
 # Group Number: #
