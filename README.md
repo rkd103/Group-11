@@ -12,7 +12,7 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 
 # Project Functionalities #
 ### Description: ###
-NA
+_To be determined with subsequent updates_
 ### Objective: ###
 Design and develop a Facebook like social media platform that will have a number of different functionalities based on the stackholders' expectations.
 ### Features: ###
