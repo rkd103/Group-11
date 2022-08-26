@@ -15,7 +15,7 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 A web application that permits the following user-based actions:
 * convenient connectivity, by way of customer/consumer interactions
 * real-time status updates, by way of user statuses/timelines
-* responsive feedback, by way of the user's approval and critique of posts in addition to their dissemination
+* responsive feedback, by way of user approval and critique of posts in addition to the dissemination of relatable/engaging uploads
 ### Objective: ###
 Design and develop a Facebook-like social media platform that will have a number of different functionalities based on the stackholder's expectations.
 ### Features: ###
