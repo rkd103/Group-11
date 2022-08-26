@@ -19,7 +19,8 @@ Design and develop a Facebook like social media platform that will have a number
 * A user will be able to:
   * login into his or her account, connect with his or her friends, and access their timelines
   * compose, edit, and post statuses on his or her timeline
-  * send and accept friend requests from other users; this will, in turn, grant the current user the ability to befriend another user, enabling them to interact with their page
+  * send and accept friend requests to and from other users
+    * this privilege will, in turn, grant the current user the ability to befriend another user, enabling the current user to interact with the associate's page
   * like, comment, and share the status/timeline post of their friends
 
 # Group Number: #
