@@ -29,6 +29,9 @@ Design and develop a Facebook-like social media platform that will have a number
 # Group Number: #
 11
 
+# Website Title #
+Hand-in-Hand (tentative)
+
 # Collaborators: #
 * Name: Brett Baltz
   * NetID: blb820
