@@ -45,14 +45,12 @@ Hand-in-Hand (tentative)
   * GitHub Account: https://github.com/rkd103
   * GitHub Username: rkd103
   * Role: Team Leader
-  
 * Name: HeFeng Ou
   * NetID: ho170
   * Email: ho170@msstate.edu
   * GitHub Account: https://github.com/ho170
   * GitHub Username: ho170
   * Role: Collaborator
-  
 * Name: William Neeley
   * NetID: wtn36
   * Email: wtn36@msstate.edu
