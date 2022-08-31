@@ -30,7 +30,7 @@ Design and develop a Facebook-like social media platform that will have a number
 11
 
 # Website Title #
-Hand-in-Hand (tentative)
+Hand-in-Hand
 
 # Collaborators: #
 * Name: Brett Baltz
