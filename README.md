@@ -68,6 +68,8 @@ Hand-in-Hand
   * CSS 
 * Database Connector:
   * Flask-SQLAlchemy
+* Cloud Object Storage Service:
+  * Cloudinary
 
 
 
