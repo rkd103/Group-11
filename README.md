@@ -15,9 +15,9 @@ https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
 A web application that permits the following user-based actions:
 * convenient connectivity, by way of customer/consumer interactions
 * real-time status updates, by way of user statuses/timelines
-* responsive feedback, by way of user post approval and critique in addition to the dissemination of relatable/engaging uploads
+* responsive feedback, by way of user post-approval and critique in addition to the dissemination of relatable/engaging uploads
 ### Objective: ###
-Design and develop a Facebook-like social media platform that will have a number of different functionalities based on the stackholder's expectations.
+Design and develop a Facebook-like social media platform that will have several different functionalities based on the stakeholder's expectations.
 ### Features: ###
 * A user will be able to:
   * create/login into his or her account, connect with his or her friends, and access their timelines
@@ -70,6 +70,3 @@ Hand-in-Hand
   * Flask-SQLAlchemy
 * Cloud Object Storage Service:
   * Cloudinary
-
-
-
