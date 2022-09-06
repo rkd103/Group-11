@@ -66,7 +66,7 @@ Hand-in-Hand
   * Python
 * Web Application Framework:
   * Flask
-* Markup Language(s): 
+* Markup Languages: 
   * HTML
   * CSS 
 * Database Connector:
