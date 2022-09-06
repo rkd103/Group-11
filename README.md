@@ -26,6 +26,9 @@ Design and develop a Facebook-like social media platform that will have several 
     * this privilege will, in turn, grant the current user the ability to befriend another user, which enables the customer to interact with the assets of the recently acquainted associate
   * like, comment, and share the status/timeline post of their friends
 
+# Software Requirements Specification Document: #
+https://github.com/rkd103/Group-11/blob/MASTER/CSE-4212_SRS_Document_Group_11.pdf
+
 # Group Number: #
 11
 
