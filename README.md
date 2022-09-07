@@ -22,7 +22,7 @@ Design and develop a Facebook-like social media platform that will have several 
 * A user will be able to:
   * create/login into his or her account, connect with his or her friends, and access their timelines
   * compose, edit, and post statuses on his or her timeline
-  * send and accept friend requests to and from other users
+  * send and receive friend requests to and from other users
     * this privilege will, in turn, grant the current user the ability to befriend another user, which enables the customer to interact with the assets of the recently acquainted associate
   * like, comment, and share the status/timeline post of their friends
 
