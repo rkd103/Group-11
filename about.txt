@@ -1,0 +1,6 @@
+Name: Brett Baltz
+    NetID: blb820
+    Email: blb820@msstate.edu
+    GitHub Account: https://github.com/BrettBaltz
+    GitHub Username: BrettBaltz
+    Role: Collaborator
