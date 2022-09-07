@@ -1,5 +1,0 @@
-NetID: wtn36
-Email: wtn36@msstate.edu
-GitHub Account: https://github.com/Weeyumn
-GitHub Username: Weeyumn
-Role: Collaborator
