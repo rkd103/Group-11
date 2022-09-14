@@ -73,3 +73,6 @@ Hand-in-Hand
   * Flask-SQLAlchemy
 * Cloud Object Storage Service:
   * Cloudinary
+* Test Suite:
+  * Selenium WebDriver
+  * PyAutoGUI
