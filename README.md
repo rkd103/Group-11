@@ -8,7 +8,7 @@ Introduction to Software Engineering
 A Facebook-like social media platform (Fall 2022)
 
 # Project Requirements: #
-https://github.com/rkd103/Group-11/blob/main/CSE_4214_Project_Topic.pdf
+https://github.com/rkd103/Group-11/blob/Master/CSE_4214_Project_Topic.pdf
 
 # Project Functionalities #
 ### Description: ###
@@ -27,7 +27,7 @@ Design and develop a Facebook-like social media platform that will have several 
   * like, comment, and share the status/timeline post of their friends
 
 # Software Requirements Specification Document: #
-https://github.com/rkd103/Group-11/blob/MASTER/CSE-4212_SRS_Document_Group_11.pdf
+https://github.com/rkd103/Group-11/blob/Master/CSE-4212_SRS_Document_Group_11.pdf
 
 # Group Number: #
 11
