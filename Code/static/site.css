@@ -1,0 +1,98 @@
+body
+{
+    font-family: Open Sans;
+    background-color: #800000;
+}
+.homepage_background_image
+{
+    position: absolute;
+    height: 767px;
+    width: 685px;
+    right: 0%;
+    top: 0%;
+    object-fit: cover;
+}
+
+.logo
+{
+    text-align: left;
+    font-family: Open Sans;
+    font-size: 50px;
+}
+.logo_catchphrase
+{
+    font-family: Calibri;
+    font-size: 24px;
+    font-weight: normal;
+}
+.homepage_welcome_message
+{
+    text-align: left;
+    color: white;
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 30%;
+}
+
+input[type=text]
+{
+    border-radius: 5px;
+    color: white;
+    background-color: #80000033;
+    border-style: inset;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 90%;
+}
+input[type=password]
+{
+    border-radius: 5px;
+    color: white;
+    background-color: #80000033;
+    border-style: inset;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 90%;
+}
+.login_submit_button
+{
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(39, 170, 39);
+    color: white;
+    font-weight: 800;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 100%;
+}
+.account_creation_button
+{
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(19, 66, 254);
+    color: white;
+    font-weight: 800;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 100%;
+}
+.forget_password_link
+{
+    color: rgb(39, 170, 39);
+}
+.default_homepage_actions
+{
+    text-align: center;
+    font-family: Calibri;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 30%;
+    overflow: auto;
+    border-style: hidden;
+    border-radius: 5px;
+    background-color: #300E14;
+    box-shadow: 5px 5px 5px #18070a;
+    padding: 20px;
+}

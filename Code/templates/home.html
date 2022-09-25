@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"></html>
+<head>
+    <meta charset="utf-8"/>
+
+    <title>
+        Hand-in-Hand Homepage
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
+</head>
+
+<body>
+
+    <img class="homepage_background_image" src="{{ url_for('static', filename='homepage_background_image.png') }}" />
+
+    <section class="homepage_welcome_message">
+        <h1 class="logo">
+            Hand-in-Hand
+        </h1>
+        <h4 class="logo_catchphrase">
+            With hands clasped, we cohabitate in close association. Connect <i>hand-in-hand</i> with friends near and abroad!
+        </h4>
+        </body>
+    </section>
+
+    <section class="default_homepage_actions">
+        <form action="/login" method="post">
+            <section class="login_outer_container">
+                <section class="login_username_form">
+                    <input type="text" name="username" placeholder="Username"> </br> </br>
+                </section>
+                <section class="login_password_form">
+                    <input type="password" name="password" placeholder="Password"> </br> </br>
+                </section>
+            </section>
+            
+            <button class="login_submit_button" type="submit" name="submit" value>
+                Log In
+            </button>
+        </form>
+        </br>
+        <a class="forget_password_link" href="/forget_password" style="text-decoration:none">Forget password?</a>
+        </br>
+        </br>
+        <hr>
+        </br>
+        <a class="account_creation_button" href="/create_account" style="text-decoration:none">Create new account</a>
+        </br>
+    </section>
+</body>
