@@ -71,6 +71,7 @@ Hand-in-Hand
   * CSS 
 * Database Connector:
   * Flask-SQLAlchemy
+  * SQLite
 * Cloud Object Storage Service:
   * Cloudinary
 * Test Suite:
