@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"></html>
+<head>
+
+    <meta charset="utf-8"/>
+
+    <title>
+        Hand-in-Hand - log in or sign up
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
+
+</head>
+
+<body>
+    {% if account_creation_flag %}
+        <section class="overlay">
+            <section class="popup" style="background: green;">
+                <h2>
+                    Success!
+                </h2>
+                <a class="close" href="/">&times;</a>
+                <content>
+                    User account has been created.
+                </content>
+            </section>
+        </section>
+    {% endif %}
+
+    <img class="homepage_background_image" src="{{ url_for('static', filename='homepage_background_image.png') }}" />
+
+    <section class="homepage_welcome_message">
+        <h1 class="logo">
+            Hand-in-Hand
+        </h1>
+        <h4 class="logo_catchphrase">
+            With hands clasped, we cohabitate in close association. Connect <i>hand-in-hand</i> with friends near and abroad!
+        </h4>
+    </section>
+
+    <section class="default_homepage_actions">
+
+        <form action="/login" method="post">
+            <section class="login_outer_container">
+                <section class="login_username_form">
+                    <input type="text" name="username" placeholder="Username" required pattern=".{,1024}"> </br> </br>
+                </section>
+                <section class="login_password_form">
+                    <input type="password" name="password" placeholder="Password" required pattern=".{,1024}"> </br> </br>
+                </section>
+            </section>
+            <button class="login_submit_button" type="submit" name="submit" value>
+                Log In
+            </button>
+        </form>
+        
+        </br> <a class="forgot_credentials_link" href="/forgot_credentials" style="text-decoration:none">Forgot credentials?</a> </br> </br>
+
+        <hr> </br>
+
+        <form action="/create_account">
+            <button class="account_creation_button" type="submit">
+                Create new account
+            </button> </br>
+        </form>
+
+    </section>
+
+    <footer>
+        Mississippi State University | CSE 4214: Introduction to Software Engineering | Group 11 </br>
+        <a href="mailto:cse.4212.group.11@gmail.com">cse.4212.group.11@gmail.com</a>
+    </footer>
+</body>
