@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    background-color: dodgerblue;
+}
+input[type=submit] {
+    background-color: transparent;
+    color: white;
+    padding: 10px;
+    border: none;
+}
+input[type=submit]:hover {
+    background-color: rgb(55, 160, 255);
+    color: white;
+}
