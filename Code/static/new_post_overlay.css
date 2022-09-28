@@ -1,0 +1,58 @@
+.overlay_background {
+    display: none;
+    position: fixed;
+    top: 0; bottom: 0; left: 0; right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.overlay {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    margin: auto;
+    top: 0; bottom: 0; left: 0; right: 0;
+    width: 70%;
+    height: 70%;
+    background-color: white;
+}
+.overlay_header {
+    display: flex;
+    align-items: center;
+    padding-left: 1vmin;
+    font-size: 5vmin;
+    height: 15%;
+}
+.overlay_center {
+    display: flex;
+    padding-left: 1vmin;
+    padding-right: 1vmin;
+    height: 70%;
+}
+.overlay_center > textarea {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    resize: none;
+}
+.overlay_footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 15%;
+    padding-left: 1vmin;
+    padding-right: 1vmin;
+}
+.post_button, .cancel_button {
+    font-size: 2vmin;
+    padding-top: 1.5vmin;
+    padding-bottom: 1.5vmin;
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+    color: white;
+    border: none;
+}
+.post_button {
+    background-color: dodgerblue;
+}
+.cancel_button {
+    background-color: rgb(150, 150, 150);
+}

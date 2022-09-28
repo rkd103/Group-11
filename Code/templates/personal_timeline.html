@@ -3,10 +3,48 @@
     <head>
         <title> Hand-in-Hand </title>
 
-        {% extends "header.html" %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='personal_timeline.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='new_post_overlay.css') }}">
+        <script type="text/javascript"> 
+            function show_overlay() {
+                document.getElementById("overlay_background").style.display = "inline";
+                document.getElementById("overlay").style.display = "flex";
+            }
+        </script>
+        <script type="text/javascript">
+            function hide_overlay() {
+                document.getElementById("overlay_background").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+            }
+        </script>
 
+        {% extends "base.html" %}
+
+        {% block content %}
         <body>
-            <p> Coming soon </p>
+            <div class=overlay_background id="overlay_background"> </div>
+
+            <form class="submit_post"> </form>
+            <div class="overlay" id="overlay">
+                <div class="overlay_header"> 
+                    <div> Create post </div>
+                </div>
+                <div class="overlay_center"> 
+                    <textarea form="submit_post"> </textarea>
+                </div>
+                <div class="overlay_footer">
+                    <div>
+                        <input class="cancel_button" onclick="hide_overlay()" type="submit" value="Cancel">
+                    </div>
+                    <div>
+                        <input class="post_button" type="submit" form="submit_post" value="Post">
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" onclick="show_overlay()" value="New post">
+
         </body>
+        {% endblock %}
     </head>
 </html>

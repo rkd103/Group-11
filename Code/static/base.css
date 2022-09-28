@@ -1,0 +1,22 @@
+input[type=submit]:hover {
+    cursor: pointer;
+}
+input[type=button]:hover {
+    cursor: pointer;
+}
+.header {
+    display: flex;
+    justify-content: space-around;
+    background-color: rgb();
+}
+.page_link {
+    background-color: transparent;
+    color: white;
+    padding: 1vmin;
+    font-size: 4vmin;
+    border: none;
+}
+.page_link:hover {
+    background-color: rgb(55, 160, 255);
+    color: white;
+}
