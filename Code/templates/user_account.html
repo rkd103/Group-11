@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Hand-in-Hand </title>
+
+        {% block header %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <body>
+            <!-- Links to personal pages for the current user -->
+            <div class="header">
+                <form action="/home/timeline">
+                    <input class="page_link" type="submit" value="Timeline">
+                </form>
+                <form action="/home/friends">
+                    <input class="page_link" type="submit" value="Friends">
+                </form>
+                <form action="/home/account">
+                    <input class="page_link" type="submit" value="Account">
+                </form>
+                <form action="/">
+                    <input class="page_link" type="submit" value="Logout">
+                </form>
+            </div>
+        </body>
+        {% endblock %}
+            <h1>
+                Success! </br>
+            </h1>
+            <h2>
+                Redirecting to the user's account page.
+            </h2>
+            <h3>
+                Create the template for every user account.
+            </h3>
+        {% block content %} {% endblock %}
+    </head>
+</html>
