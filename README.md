@@ -64,6 +64,7 @@ Hand-in-Hand
 # Languages & Techniques: #
 * Programming Language: 
   * Python
+  * JavaScript
 * Web Application Framework:
   * Flask
 * Markup Language(s):
