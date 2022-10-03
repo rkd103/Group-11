@@ -1,0 +1,369 @@
+body
+{
+    font-family: Open Sans;
+    background-color: #800000;
+    width: 100%;
+    height: 100%;
+}
+.homepage_background_image
+{
+    z-index:-5;
+    position: absolute;
+    height: 767px;
+    width: 685px;
+    right: 0%;
+    top: 0%;
+}
+
+.logo
+{
+    color: teal;
+    font-family: Open Sans;
+    font-size: 50px;
+}
+.logo_catchphrase
+{
+    font-family: Calibri;
+    font-size: 24px;
+    font-weight: normal;
+}
+.homepage_welcome_message
+{
+    text-align: left;
+    color: white;
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 30%;
+}
+
+input[type=text]
+{
+    border-radius: 5px;
+    color: white;
+    background-color: #80000033;
+    border-style: inset;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 90%;
+}
+input[type=password]
+{
+    border-radius: 5px;
+    color: white;
+    background-color: #80000033;
+    border-style: inset;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 90%;
+}
+input[type=email]
+{
+    border-radius: 5px;
+    color: white;
+    background-color: #80000033;
+    border-style: inset;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 90%;
+}
+.login_submit_button
+{
+    border-radius: 5px;
+    border: none;
+    background-color: teal;
+    color: white;
+    font-weight: 800;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 100%;
+}
+.account_creation_button
+{
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(19, 66, 254);
+    color: white;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 12px 20px;
+    width: 60%;
+}
+.forgot_credentials_link
+{
+    color: rgb(39, 170, 39);
+}
+.default_homepage_actions
+{
+    text-align: center;
+    font-family: Calibri;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    min-width: 30%;
+    overflow: auto;
+    border-style: hidden;
+    border-radius: 5px;
+    background-color: #300E14;
+    box-shadow: 5px 5px 5px #18070a;
+    padding: 20px;
+}
+
+footer
+{
+    text-align: center;
+    padding: 20px;
+    background: grey;
+    color: black;
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    display: inline;
+    left: 0%;
+}
+
+.default_access_heading
+{
+    position: absolute;
+    top: 0%;
+    text-align: center;
+    width: 100%;
+}
+.default_panel
+{
+    text-align: center;
+    font-family: Calibri;
+    position: absolute;
+    top: 15%;
+    width: 30%;
+    overflow: auto;
+    border-style: hidden;
+    border-radius: 5px;
+    background-color: #300E14;
+    box-shadow: 5px 5px 5px #18070a;
+    padding: 20px;
+    left:34%;
+}
+.sign_up_button
+{
+    border-radius: 5px;
+    border: none;
+    background-color: teal;
+    color: white;
+    font-weight: 800;
+    font-size: 17px;
+    padding: 12px 20px;
+    width: 50%;
+}
+
+::placeholder
+{
+    font-size: 15px;
+}
+
+.popup
+{
+    z-index: +1;
+    position: absolute;
+    color: white;
+    bottom: 77%;
+    left: 0%;
+    margin: 80px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 15px;
+    width: auto;
+    transition: all 3s ease-in-out;
+    overflow: auto;
+}
+.popup h2
+{
+    margin-top: 0;
+}
+.popup .close
+{
+    position: absolute;
+    top: 20px;
+    right: 5px;
+    transition: all 400ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+.popup .close:hover
+{
+    color: black;
+}
+.popup .content
+{
+    max-height: 30%;
+    overflow: auto;
+}
+
+.search_button
+{
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(19, 66, 254);
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 20px;
+    width: auto;
+}
+
+.cancel_button
+{
+    border-radius: 5px;
+    border: none;
+    background-color: gray;
+    color: rgb(61, 61, 61);
+    font-weight: 800;
+    font-size: 15px;
+    padding: 12px 20px;
+    width: 50%;
+    text-decoration: none;
+}
+
+.forgot_credentials_buttons
+{
+    text-align: right;
+
+}
+
+.user_account_image
+{
+    left: 93%;
+    top: 1%;
+    position: absolute;
+    border-style: solid;
+    border-radius: 50px;
+    border-color: rgba(61, 60, 54, 0.643);
+    background-color: transparent;
+    border-width: 1px;
+}
+.user_account_image:hover
+{
+    background-color: rgba(36, 36, 32, 0.643);
+    filter: brightness(50%);
+}
+
+.notification_image
+{
+    left: 89%;
+    top: 1%;
+    position: absolute;
+    border-style: none;
+    border-width: 5px;
+}
+.notification_image:hover
+{
+    background-color: rgba(36, 36, 32, 0.643);
+}
+
+.homepage_image
+{
+    left: 6%;
+    top: 4%;
+    position: absolute;
+    border-style: none;
+    border-width: 5px;
+}
+.homepage_image:hover
+{
+    background-color: rgba(36, 36, 32, 0.643);
+}
+
+.menu_image
+{
+    left: 6%;
+    top: 12%;
+    position: absolute;
+    border-style: none;
+    border-width: 5px;
+}
+.menu_image:hover
+{
+    background-color: rgba(36, 36, 32, 0.643);
+}
+
+.dropdown_menu_button
+{
+    border: none;
+    background-color: transparent;
+    left: 6%;
+    top: 12%;
+    position: absolute;
+    width: 48px;
+    height: 96px;
+}
+
+.dropdown_menu
+{
+    display: inline-block;
+    left: 0%;
+    top: 10%;
+    position: absolute;
+}
+.dropdown_menu_content 
+{
+    display: none;
+    position: absolute;
+    background-color: rgba(61, 60, 54, 0.643);
+    min-width: auto;
+    box-shadow: 8px 8px 16px rgba(0,0,0,0.2);
+    z-index: +3;
+}
+.dropdown_menu_content a
+{
+    padding: 3.3px;
+    display: block;
+}
+.dropdown_menu_content a:hover
+{
+    background-color: rgba(0, 0, 0, 0.643);
+}
+.dropdown_menu_content:hover
+{
+    display: block;
+}
+.dropdown_menu:hover .dropdown_menu_content
+{
+    display: block;
+}
+
+.new_status_button
+{
+    width: 48px;
+    height: 48px;
+    left: 93%;
+    top: 90%;
+    position: absolute;
+    border-style: none;
+    border-radius: 50%;
+    background-color: grey;
+    border-width: 5px;
+    box-shadow: 2px 2px 4px #3d3c36;
+    z-index: +5;
+    padding: 5px;
+}
+.new_status_button:hover
+{
+    background-color: rgba(61, 60, 54, 0.643);
+}
+
+.create_post_image
+{
+    left: 93.7%;
+    top: 91%;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: +6;
+}
+.create_post_image:hover
+{
+    filter: brightness(50%);
+}
+  

@@ -1,0 +1,29 @@
+@import "colors.css";
+
+button:hover {
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    cursor: pointer;
+}
+input[type=button]:hover {
+    cursor: pointer;
+}
+.header {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--primary-color);
+}
+.page_link {
+    background-color: transparent;
+    color: white;
+    padding: 1vmin;
+    font-size: 2vmin;
+    border: none;
+}
+.page_link:hover {
+    background-color: rgb(180, 0, 0);
+}
+#content_region {
+    padding: 4vmin;
+}

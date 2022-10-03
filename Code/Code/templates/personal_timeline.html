@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Hand-in-Hand </title>
+
+        <style>
+            .timeline_post {
+                min-height: 20vmin; 
+                align-self: auto;
+                width: 80%;
+                margin-top: 2vmin;
+                margin-bottom: 2vmin;
+                border: 0.2vmin solid black;
+            }
+            .timeline_post_header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 6vmin;
+            }
+            .timeline_post_text {
+                display: flex;
+                min-height: 10vmin;
+                max-height: 90vmin;
+                overflow: auto;
+            }
+            .timeline_post_text > span {
+                word-break: break-all;
+                white-space: break-spaces;
+            }
+            .timeline_post_footer {
+                display: flex;
+                height: 4vmin;
+                justify-content: space-evenly;
+                align-items: center;
+            }
+            .post_menu {
+                display: none;
+            }
+
+        </style>
+
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='personal_timeline.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='new_post_overlay.css') }}">
+        <script type="text/javascript">
+            function show_overlay() {
+                document.getElementById("overlay_background").style.display = "inline";
+                document.getElementById("overlay").style.display = "flex";
+            }
+        </script>
+        <script type="text/javascript">
+            function hide_overlay() {
+                document.getElementById("overlay_background").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+            }
+        </script>
+        <script type="text/javascript">
+            // Display the number of characters used in the post
+            function count_chars() {
+                let text = document.getElementById("post_text_box").value;
+                let num_chars = text.length;
+
+                document.getElementById("char_counter").innerHTML = num_chars + " / 1024";
+
+                if (num_chars > 0 && num_chars <= 1024) {
+                    document.getElementById("post_button").style.backgroundColor = "#800000";
+                }
+                else {
+                    document.getElementById("post_button").style.backgroundColor = "#80000080";
+                }
+            }
+        </script>
+        <script>
+            // Check the post and submit if valid
+            function verify_post() {
+                let text = document.getElementById("post_text_box").value;
+                let num_chars = text.length;
+                if (num_chars == 0 || num_chars > 1024) {
+                    alert("Invalid number of characters in post");
+                    return;
+                }
+                if ((text.match(/\n/g) || []).length > 10) {
+                    alert("Too many line breaks in post");
+                    return;
+                }
+                if (text && !text.trim()) {
+                    alert("Post must contain more than whitespace");
+                    return;
+                }
+
+                document.forms["submit_post"].submit();
+            }
+        </script>
+        <script>
+            function toggle_post_menu(post_id) {
+                post_id = post_id.slice(post_id.lastIndexOf('_') + 1);
+                if (document.getElementById("post_menu_" + post_id).style.display = "none") {
+                    document.getElementById("post_menu_" + post_id).style.display = "inline";
+                    return;
+                }
+                document.getElementById("post_menu_" + id).style.display = "none";
+                alert('test');
+            }
+        </script>
+
+        {% extends "base.html" %}
+
+        {% block content %}
+            <div class=overlay_background id="overlay_background"></div>
+
+            <form class="submit_post" name="submit_post" id="submit_post" action="/home/timeline/submit_post" method="post"></form>
+            <div class="overlay" id="overlay">
+                <div class="overlay_header"> 
+                    <div> Create post </div>
+                </div>
+                <div class="overlay_center"> 
+                    <textarea form="submit_post" name="post_text" id="post_text_box" oninput="count_chars()" ></textarea>
+                </div>
+                <div class="char_counter" id="char_counter">
+                    0 / 1024
+                </div>
+                <div class="overlay_footer">
+                    <div>
+                        <input class="cancel_button" onclick="hide_overlay()" type="submit" value="Cancel">
+                    </div>
+                    <div>
+                        <input class="post_button" id="post_button" type="submit" onclick="verify_post()" value="Post">
+                    </div>
+                </div>
+            </div>
+
+            <input class="new_post_button" type="submit" onclick="show_overlay()" value="New post">
+
+            {% for timeline_post in timeline %}
+            <div class="timeline_post">
+                <!-- Set unique ids for making the post_menu_button work for each post -->
+                {% set post_menu_button_id = "post_menu_button_" ~ loop.index %}
+                {% set post_menu_id = "post_menu_" ~ loop.index %}
+                {% set comment_on_post_id = "comment_on_post_" ~ loop.index %}
+                {% set edit_post_id = "edit_post_" ~ loop.index %}
+                {% set delete_post_id = "delete_post_" ~ loop.index %}
+
+                <div class="timeline_post_header">
+                    <div>
+                        <div> {{ timeline_post.username }} </div>
+                        <div> {{ timeline_post.original_post_time }} </div>
+                    </div>
+                    <div>
+                        <button class="post_menu_button" id="{{ post_menu_button_id }}" onclick="toggle_post_menu(id)">&nbsp</button>
+                        <div class="post_menu" id="{{ post_menu_id }}">
+                            <button class="comment_on_post" id="{{ comment_on_post_id }}"> Comment on post </button>
+                            <button class="edit_post" id="{{ edit_post_id }}"> Edit post </button>
+                            <button class="delete_post" id="{{ delete_post_id }}"> Delete post </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline_post_text"> 
+                    <span>{{ timeline_post.post_text }}</span>
+                </div>
+                <div class="timeline_post_footer">
+                    <div> {{ timeline_post.num_likes }} </div>
+                    <div> {{ timeline_post.num_shares }} </div>
+                    <div> {{ timeline_post.num_comments }} </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endblock %}
+    </head>
+</html>
