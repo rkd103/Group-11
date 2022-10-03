@@ -1,3 +1,5 @@
+@import "colors.css";
+
 .overlay_background {
     display: none;
     position: fixed;
@@ -25,13 +27,21 @@
     display: flex;
     padding-left: 1vmin;
     padding-right: 1vmin;
-    height: 70%;
+    height: 65%;
 }
 .overlay_center > textarea {
     box-sizing: border-box;
     height: 100%;
     width: 100%;
     resize: none;
+}
+.char_counter {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-size: 2vmin;
+    height: 5%;
+    padding-right: 1vmin;
 }
 .overlay_footer {
     display: flex;
@@ -51,8 +61,8 @@
     border: none;
 }
 .post_button {
-    background-color: dodgerblue;
+    background-color: var(--primary-color-invalid);
 }
 .cancel_button {
-    background-color: rgb(150, 150, 150);
+    background-color: var(--custom-gray);
 }

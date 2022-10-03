@@ -3,9 +3,45 @@
     <head>
         <title> Hand-in-Hand </title>
 
+        <style>
+            #timeline_post {
+                display: flex;
+                flex-direction: column;
+                align-self: center;
+                min-height: 20vmin; 
+                width: 60%;
+                margin-top: 2vmin;
+                margin-bottom: 2vmin;
+                box-sizing: border-box;
+                border: 0.2vmin solid black;
+            }
+            #timeline_post_header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 6vmin;
+            }
+            #timeline_post_text {
+                display: flex;
+                max-width: 100%;
+                flex-wrap: wrap;
+                min-height: 10vmin;
+                box-sizing: border-box;
+                word-break: break-word;
+            }
+            #timeline_post_footer {
+                display: flex;
+                height: 4vmin;
+                justify-content: space-evenly;
+                align-items: center;
+            }
+
+        </style>
+
+
         <link rel="stylesheet" href="{{ url_for('static', filename='personal_timeline.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='new_post_overlay.css') }}">
-        <script type="text/javascript"> 
+        <script type="text/javascript">
             function show_overlay() {
                 document.getElementById("overlay_background").style.display = "inline";
                 document.getElementById("overlay").style.display = "flex";
@@ -17,34 +53,87 @@
                 document.getElementById("overlay").style.display = "none";
             }
         </script>
+        <script type="text/javascript">
+            // Display the number of characters used in the post
+            function count_chars() {
+                let text = document.getElementById("post_text_box").value;
+                let num_chars = text.length;
+
+                document.getElementById("char_counter").innerHTML = num_chars + " / 1024";
+
+                if (num_chars > 0 && num_chars <= 1024) {
+                    document.getElementById("post_button").style.backgroundColor = "#800000";
+                }
+                else {
+                    document.getElementById("post_button").style.backgroundColor = "#80000080";
+                }
+            }
+        </script>
+        <script>
+            // Check the post and submit if valid
+            function verify_post() {
+                let text = document.getElementById("post_text_box").value;
+                let num_chars = text.length;
+                if (num_chars == 0 || num_chars > 1024) {
+                    alert("Invalid number of characters in post");
+                    return;
+                }
+                document.forms["submit_post"].submit();
+            }
+        </script>
+        <script>
+            window.onload = 
+        </script>
 
         {% extends "base.html" %}
 
         {% block content %}
-        <body>
-            <div class=overlay_background id="overlay_background"> </div>
+            <div class=overlay_background id="overlay_background"></div>
 
-            <form class="submit_post"> </form>
+            <form class="submit_post" name="submit_post" id="submit_post" action="/home/timeline/submit_post" method="post"></form>
             <div class="overlay" id="overlay">
                 <div class="overlay_header"> 
                     <div> Create post </div>
                 </div>
                 <div class="overlay_center"> 
-                    <textarea form="submit_post"> </textarea>
+                    <textarea form="submit_post" name="post_text" id="post_text_box" oninput="count_chars()" ></textarea>
+                </div>
+                <div class="char_counter" id="char_counter">
+                    0 / 1024
                 </div>
                 <div class="overlay_footer">
                     <div>
                         <input class="cancel_button" onclick="hide_overlay()" type="submit" value="Cancel">
                     </div>
                     <div>
-                        <input class="post_button" type="submit" form="submit_post" value="Post">
+                        <input class="post_button" id="post_button" type="submit" onclick="verify_post()" value="Post">
                     </div>
                 </div>
             </div>
 
-            <input type="submit" onclick="show_overlay()" value="New post">
+            <input class="new_post_button" type="submit" onclick="show_overlay()" value="New post">
 
-        </body>
+            <div id="timeline">
+            {% for timeline_post in timeline %}
+                <div id="timeline_post">
+                    <div id="timeline_post_header">
+                        <div> 
+                            <div> {{ timeline_post.username }} </div>
+                            <div> {{ timeline_post.original_post_time }} </div>
+                        </div>
+                        <button id="post_menu_button">&nbsp</button>
+                    </div>
+                    <div id="timeline_post_text"> 
+                        <pre> {{ timeline_post.post_text }} </pre>
+                    </div>
+                    <div id="timeline_post_footer">
+                        <div> {{ timeline_post.num_likes }} </div>
+                        <div> {{ timeline_post.num_shares }} </div>
+                        <div> {{ timeline_post.num_comments }} </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
         {% endblock %}
     </head>
 </html>

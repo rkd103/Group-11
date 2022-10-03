@@ -1,0 +1,9 @@
+:root {
+    --primary-color: maroon;
+    --secondary-color: teal;
+    --custom-gray: rgb(150, 150, 150);
+
+    /* Use for when button should not be clickable */
+    --primary-color-invalid: #80000080;
+    --secondary-color-invalid: #00808080; 
+}

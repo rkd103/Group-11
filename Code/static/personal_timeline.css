@@ -1,0 +1,9 @@
+@import "colors.css";
+
+.new_post_button {
+    background-color: var(--secondary-color);
+    color: white;
+    font-size: 3vmin;
+    padding: 1vmin;
+    border: none;
+}

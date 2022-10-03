@@ -1,5 +1,4 @@
-# Copied from Robert's repo #
-class User:
+class Current_User:
     def __init__(self, username, password, first_name=None, middle_name=None, last_name=None, email=None, password_confirmation=None):
         self.username = username
         self.password = password

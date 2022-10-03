@@ -3,9 +3,10 @@
     <head>
         <title> Hand-in-Hand </title>
 
-        {% block header %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
         <body>
+            {% block header %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+
             <!-- Links to personal pages for the current user -->
             <div class="header">
                 <form action="/home/timeline">
@@ -18,9 +19,11 @@
                     <input class="page_link" type="submit" value="Account">
                 </form>
             </div>
-        </body>
-        {% endblock %}
+            {% endblock %}
 
-        {% block content %} {% endblock %}
+            <section id="content_region"> 
+                {% block content %} {% endblock %}
+            </section>
+        </body>
     </head>
 </html>
