@@ -54,6 +54,20 @@
         }
     </style>
 
+{% set ns = namespace(messages="") %}
+{% for message in get_flashed_messages() %}
+    <!-- Only get one message -->
+    {% if ns.messages == "" %} 
+        {% set ns.messages = ns.messages + message %}
+    {% endif %}
+{% endfor %}
+<script>
+    function display_flashes() {
+        if ({{ ns.messages|tojson }}) { alert({{ ns.messages|tojson }}); }
+    }
+    display_flashes();
+</script>
+
 {% for timeline_post in timeline %}
         <div class="timeline_post">
             <!-- Set unique ids for making the post_menu_button work for each post -->
