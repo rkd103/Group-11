@@ -41,7 +41,7 @@ Hand-in-Hand
   * Email: blb820@msstate.edu
   * GitHub Account: https://github.com/BrettBaltz
   * GitHub Username: BrettBaltz
-  * Role: Collaborator
+  * Role: Head Collaborator
 * Name: Robert Dilworth
   * NetID: rkd103
   * Email: rkd103@msstate.edu
