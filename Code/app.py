@@ -99,13 +99,13 @@ class RelationshipType(enum.Enum):
     RECEIVED_REQUEST = 2
     FRIEND = 3
 class Relationship(db.Model):
-    username_1 = db.Column(db.Integer, primary_key=True)
-    username_2 = db.Column(db.Integer, primary_key=True) 
+    username_1 = db.Column(db.String(1024), primary_key=True)
+    username_2 = db.Column(db.String(1024), primary_key=True) 
     relationship_type = db.Column(db.Enum(RelationshipType))
 
 class Post(db.Model):
     post_id = db.Column(db.Integer, unique=True, primary_key=True)
-    username = db.Column(db.Integer, nullable=False)
+    username = db.Column(db.String(1024), nullable=False)
     post_text = db.Column(db.String(1024), nullable=False)
     num_likes = db.Column(db.Integer, nullable=False)
     num_shares = db.Column(db.Integer, nullable=False)
@@ -115,7 +115,7 @@ class Post(db.Model):
 
 class Comment(db.Model):
     comment_id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.Integer, nullable=False)
+    username = db.Column(db.String(1024), nullable=False)
     parent_id = db.Column(db.Integer, nullable=False)
     comment_text = db.Column(db.String(1024), nullable=False)
     num_likes = db.Column(db.Integer, nullable=False)
@@ -124,17 +124,17 @@ class Comment(db.Model):
 
 class Share(db.Model):
     post_id = db.Column(db.Integer, nullable=False, primary_key=True)
-    username_receiver = db.Column(db.Integer, nullable=False, primary_key=True)
-    username_sender = db.Column(db.Integer, nullable=False, primary_key=True)
+    username_receiver = db.Column(db.String(1024), nullable=False, primary_key=True)
+    username_sender = db.Column(db.String(1024), nullable=False, primary_key=True)
     shared_time = db.Column(db.TIMESTAMP, nullable=False)
 
 class PostLikes(db.Model):
     post_id = db.Column(db.Integer, nullable=False, primary_key=True)
-    username = db.Column(db.Integer, nullable=False, primary_key=True)
+    username = db.Column(db.String(1024), nullable=False, primary_key=True)
 
 class CommentLikes(db.Model):
     comment_id = db.Column(db.Integer, nullable=False, primary_key=True)
-    username = db.Column(db.Integer, nullable=False, primary_key=True)
+    username = db.Column(db.String(1024), nullable=False, primary_key=True)
 
 #*****************
 #***Flask*Forms***
