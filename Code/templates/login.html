@@ -12,63 +12,18 @@
 
 </head>
 
-<body>
-    {% if account_creation_flag %}
-        <section class="overlay">
-            <section class="popup" style="background: green;">
-                <h2>
-                    Account Creation Success!
-                </h2>
-                <a class="close" href="/">&times;</a>
-                <content>
-                    User account has been created.
-                </content>
-            </section>
-        </section>
-    {% endif %}
-    {% if login_validation_flag %}
-        <section class="overlay">
-            <section class="popup" style="background: red;">
-                <h2>
-                    Login Failure!
-                </h2>
-                <a class="close" href="/">&times;</a>
-                <content>
-                    The provided credentials are <i>invalid</i> or are <i>not tied</i> to an existing user. Please try again.
-                </content>
-            </section>
-        </section>
-    {% endif %}
-    {% if forgot_credential_routine_status %}
-        <section class="overlay">
-            <section class="popup" style="background: green;">
-                <h2>
-                    Credential Replacement Succeeded!
-                </h2>
-                <a class="close" href="/">&times;</a>
-                <content>
-                    Check your email for a message from our development team.
-                </content>
-            </section>
-        </section>
-    {% endif %}
-    {% if disabled_account_status %}
-        <section class="overlay">
-            <section class="popup" style="bottom: 43%; height: 40%; background: white; color: black;">
-                <h2>
-                    Your Account is Temporarily Locked!
-                </h2>
-                <a class="close" style="color: black;" href="/">&times;</a>
-                <content>
-                    <hr> <br/> <br/>
-                    We've detected suspicious activity on your Hand-in-Hand account and have temporarily locked it as a security precaution. <br/> <br/>
-                    It's likely that your email was compromised as a result of phishing or other malicious means. <br/> <br/>
-                    If you suspect that your account was wrongfully disabled, use the "Forgot Credential" option presented on the login screen.
-                    <br/> <br/> <hr> <br/> <br/> 
-                </content>
-            </section>
-        </section>
-    {% endif %}
+<body onload="display_flashes()">
+
+    {% set ns = namespace(messages="") %}
+    {% for message in get_flashed_messages() %}
+        {% set ns.messages = ns.messages + message %}
+    {% endfor %}
+
+    <script>
+        function display_flashes() {
+            if ({{ ns.messages|tojson }}) { alert({{ ns.messages|tojson }}); }
+        }
+    </script>
 
     <img class="homepage_background_image" src="{{ url_for('static', filename='homepage_background_image.png') }}" />
 
@@ -83,28 +38,17 @@
 
     <section class="default_homepage_actions">
 
-        <form action="/login" method="post">
+        <form method="post">
+            {{ login_form.hidden_tag() }} 
             <section class="login_outer_container">
-                {% if login_validation_flag %}
-                    <section class="login_username_form">
-                        <input style="border-color: red;" type="text" name="username/email" placeholder="Username or Email" required pattern=".{1,1024}" title="This field cannot be left blank."> </br> </br>
-                    </section>
-                    <section class="login_password_form">
-                        <input style="border-color: red;" type="password" name="password" placeholder="Password" required pattern=".{1,1024}" title="This field cannot be left blank."> </br> </br>
-                    </section>
-                    <section style="color: red; font-size: 15px; text-align: center;">
-                        Your login attempt was not successful. Please try again. Remaining attempts ({{ login_attempts }}). <br/> <br/>
-                    </section>
-                {% else %}
-                    <section class="login_username_form">
-                        <input type="text" name="username/email" placeholder="Username or Email" required pattern=".{1,1024}" title="This field cannot be left blank."> </br> </br>
-                    </section>
-                    <section class="login_password_form">
-                        <input type="password" name="password" placeholder="Password" required pattern=".{1,1024}" title="This field cannot be left blank."> </br> </br>
-                    </section>
-                {% endif %}
+                <section class="login_username_form" placeholder="Username or Email">
+                    {{ login_form.account_identifier(placeholder="Enter username or email") }} </br> </br>
+                </section>
+                <section class="login_password_form" placeholder="Password">
+                    {{ login_form.password(placeholder="Enter password") }} </br> </br>
+                </section>
             </section>
-            <button class="login_submit_button" type="submit" name="submit" value>
+            <button class="login_submit_button" type="submit" name="submit">
                 Log In
             </button>
         </form>
@@ -113,7 +57,7 @@
 
         <hr> </br>
 
-        <form action="/create_account">
+        <form action="/register">
             <button class="account_creation_button" type="submit">
                 Create new account
             </button> </br>

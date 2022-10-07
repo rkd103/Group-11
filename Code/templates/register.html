@@ -8,11 +8,35 @@
         Hand-in-Hand - create account
     </title>
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
+    <style>
+        .sign_up > .first_name { width: 70%; }
+        .sign_up > .middle_name { width: 65%; }
+        .sign_up > .last_name { width: 70%; }
+        .sign_up > .username { width: 70%; }
+        .sign_up > .email { width: 78%; }
+        .sign_up > .password { width: 72%; }
+        .sign_up > .password_confirmation { width: 50%; }
+    </style>
 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
 </head>
 
-<body>    
+<body onload="display_errors()">
+
+    {% set ns = namespace(errors="") %}
+    <!-- Get errors in registration form -->
+    {% for field in register_form.errors %}
+        {% for error in register_form.errors[field] %}
+            {% set ns.errors = ns.errors + error + '\n' %}
+        {% endfor %}
+    {% endfor %}
+    <!-- Display errors in registration form -->
+    <script>
+        function display_errors() {
+            if ({{ ns.errors|tojson }}) { alert({{ ns.errors|tojson }}); }
+        }
+    </script>
+
     <section class="default_access_heading"> 
         <h1 class="logo">
             <a href="/" style=" text-decoration:none;
@@ -20,7 +44,7 @@
         </h1>
     </section>
 
-    <form action="/validate_credentials" method="post">
+    <form method="post">
         <section class="default_panel">
             <section style="font-size: 30px;
                             color: white;
@@ -31,32 +55,18 @@
             <hr>
             
             <section class="sign_up" style="text-align: start; color: white;">
-                First Name: <input id="first_name" style="width: 70%" required type="text" name="first_name" placeholder="First Name" pattern="[a-zA-Z]{1,1024}" title="Names should only contain upper and lower case letters."> <br/>
-                Middle Name: <input style="width: 65%;" type="text" name="middle_name" placeholder="Middle Name" pattern="[a-zA-Z]{1,1024}" title="Names should only contain upper and lower case letters."> <br/>
-                Last Name: <input style="width: 70%;" required type="text" name="last_name" placeholder="Last Name" pattern="[a-zA-Z]{1,1024}" title="Names should only contain upper and lower case letters."> <br/>
-                {% if uniqueness_flag %}
-                    Username: <input style="border-color: red;width: 70%;" type="text" required name="username" placeholder="Username" pattern=".{1,1024}" title="This field cannot be left blank."> <br/>
-                    Email: <input style="border-color: red;width: 78%;" type="email" required name="email" placeholder="Email" pattern=".{1,1024}" title="This field cannot be left blank."> <br/>
-                    <section style="color: red; font-size: 15px; text-align: center;">
-                        The selected username has already been claimed and/or the provided email has already been registered. Please modify one or more of the aforementioned fields. <br/>
-                    </section>
-                {% else %}
-                    Username: <input style="width: 70%;" type="text" required name="username" placeholder="Username" pattern=".{1,1024}" title="This field cannot be left blank."> <br/>
-                    Email: <input style="width: 78%;" type="email" required name="email" placeholder="Email" pattern=".{1,1024}" title="This field cannot be left blank."> <br/>
-                {% endif %}
-                Password: <input style="width: 72%;" type="password" name="password" placeholder="Password" required pattern="(?=.*[a-zA-z0-9].*[^a-zA-z0-9\n\t\r]).{15,1024}" title="Passwords must: (1) contain at least 15 characters, (2) contain at least one upper case character, (3) contain at least one lower case character, (4) contain at least one digit, and (5) contain at least one non-alphabetical character"> <br/>
-                {% if password_input_flag %}
-                    Password Confirmation: <input style="width: 50%;border-color: red;" type="password" name="password_confirmation" placeholder="Password Confirmation" required pattern="(?=.*[a-zA-z0-9].*[^a-zA-z0-9\n\t\r]).{15,1024}" title="Passwords must: (1) contain at least 15 characters, (2) contain at least one upper case character, (3) contain at least one lower case character, (4) contain at least one digit, and (5) contain at least one non-alphabetical character"> <br/>
-                    <section style="color: red; font-size: 15px; text-align: center;">
-                        Password fields must match. <br/>
-                    </section>
-                {% else %}
-                    Password Confirmation: <input style="width: 50%;" type="password" name="password_confirmation" placeholder="Password Confirmation" required pattern="(?=.*[a-zA-z0-9].*[^a-zA-z0-9\n\t\r]).{15,1024}" title="Passwords must: (1) contain at least 15 characters, (2) contain at least one upper case character, (3) contain at least one lower case character, (4) contain at least one digit, and (5) contain at least one non-alphabetical character"> <br/>
-                {% endif %} </br> </br>
+                {{ register_form.hidden_tag() }}
+                First Name: {{ register_form.first_name(class_="first_name") }} <br>
+                Middle Name: {{ register_form.middle_name(class_="middle_name") }} <br>
+                Last Name: {{ register_form.last_name(class_="last_name") }} <br>
+                Username: {{ register_form.username(class_="username") }} <br>
+                Email: {{ register_form.email(class_="email") }} <br>
+                Password: {{ register_form.password(class_="password") }} <br>
+                Password Confirmation: {{ register_form.password_confirmation(class_="password_confirmation")}} <br>
+
+                </br> </br>
                 <section style="text-align: center;">
-                    <button  class="sign_up_button" type="submit">
-                        Sign Up
-                    </button> </br>
+                    {{ register_form.submit(class_="sign_up_button") }}
                 </section>
             </section>
 
@@ -67,4 +77,6 @@
         Mississippi State University | CSE 4214: Introduction to Software Engineering | Group 11 </br>
         <a href="mailto:cse.4212.group.11@gmail.com">cse.4212.group.11@gmail.com</a>
     </footer>
+
+
 </body>
