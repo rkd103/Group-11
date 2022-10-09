@@ -1,0 +1,130 @@
+{% extends 'navigation_overlay.html' %}
+{% block user_account_image %}
+    <a href="/home/account">
+        <img class="user_account_image" src="/static/default_user_account_icon.png" width="48px" height="48px" title="User Account">
+    </a>
+{% endblock %}
+{% block body %}
+    <style>
+        .timeline_post {
+            min-height: 20vmin; 
+            align-self: auto;
+            width: 80%;
+            margin-top: 2vmin;
+            margin-bottom: 2vmin;
+            border: 0.2vmin none;
+            border-radius: 5px;
+            background-color: grey;
+            box-shadow: 4px 4px 4px #3d3c36;
+            left: 50vh;
+            width: 60vh;
+            position: relative;
+            display: -moz-inline-stack;
+            padding: 30px;
+        }
+        .timeline_post_header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 6vmin;
+            background-color: rgba(0, 128, 128, 0.40);
+            padding: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+        }
+        .timeline_post_text {
+            display: flex;
+            min-height: 10vmin;
+            max-height: 90vmin;
+            overflow: auto;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            padding: 20px;
+        }
+        .timeline_post_text > span {
+            word-break: break-all;
+            white-space: break-spaces;
+        }
+        .timeline_post_footer {
+            display: flex;
+            height: 4vmin;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    </style>
+
+{% set ns = namespace(messages="") %}
+{% for message in get_flashed_messages() %}
+    <!-- Only get one message -->
+    {% if ns.messages == "" %} 
+        {% set ns.messages = ns.messages + message %}
+    {% endif %}
+{% endfor %}
+<script>
+    function display_flashes() {
+        if ({{ ns.messages|tojson }}) { alert({{ ns.messages|tojson }}); }
+    }
+    display_flashes();
+</script>
+
+{% for timeline_post in timeline %}
+        <div class="timeline_post">
+            <!-- Set unique ids for making the post_menu_button work for each post -->
+            {% set post_menu_button_id = "post_menu_button_" ~ loop.index %}
+            {% set post_menu_id = "post_menu_" ~ loop.index %}
+            {% set comment_on_post_id = "comment_on_post_" ~ loop.index %}
+            {% set edit_post_id = "edit_post_" ~ loop.index %}
+            {% set delete_post_id = "delete_post_" ~ loop.index %}
+
+            <div class="timeline_post_header">
+                <div>
+                    <div> Username: {{ timeline_post.username }} </div>
+                    <div> Original Post Time: {{ timeline_post.original_post_time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
+                    {% if timeline_post.last_edit_time %}
+                        <div> Edit Time: {{ timeline_post.last_edit_time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
+                    {% endif %}
+                </div>
+                <div class="dropdown_menu" style="position: flex; left: 90%; top: 5vh;">
+
+                    <button class="dropdown_menu_button">
+                        <img class="menu_image" src="/static/three_dots_menu_icon.png" width="10px"  title="Comment Options">
+                    </button>
+                    <br/><br/><br/>
+
+                    <form action="" method="post" id="comment_option_selection">
+                        <div class="dropdown_menu_content" id="{{ post_menu_id }}" style="background: rgb(128, 128, 128, .70); border-radius: 5px; padding: 10px;">
+                            <a href="/home/timeline/comment_on_post" style="text-decoration: none;">
+                                <img src="/static/comment_icon.png" width="30px;" title="Comment on post">
+                            </a>
+                            <a href="/home/timeline/edit_post/prompt/{{ timeline_post.post_id }}" style="text-decoration: none;">
+                                <img src="/static/edit_icon.png" width="30px" title="Edit post">
+                            </a>
+                            <a href="/home/timeline/delete_post/{{ timeline_post.post_id }}" onclick="submit">
+                                <img src="/static/delete_icon.png" width="30px" title="Delete post">
+
+                            </a>
+                        </div>
+                    </form>
+
+                    <script>
+                        function identify_and_submit_post(new_action)
+                            {
+                                document.getElementById('comment_option_selection').action = new_action;
+                                document.getElementById('comment_option_selection').value = ""
+                            }
+                    </script>
+
+                </div>
+            </div>
+            <div class="timeline_post_text"> 
+                <span>{{ timeline_post.post_text }}</span>
+            </div>
+            <div class="timeline_post_footer">
+                <div> <br/> <img src="/static/like_icon.png" width="20px" title="Likes"> {{ timeline_post.num_likes }} </div>
+                <div> <br/> <img src="/static/share_icon.png" width="20px" title="Shares"> {{ timeline_post.num_shares }} </div>
+                <div> <br/> <img src="/static/comment_count_icon.png" width="20px" title="Comments"> {{ timeline_post.num_comments }} </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endblock %}
