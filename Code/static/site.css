@@ -21,6 +21,16 @@ body
     font-family: Open Sans;
     font-size: 50px;
 }
+.logo_interactive
+{
+    color: teal;
+    font-family: Open Sans;
+    font-size: 50px;
+}
+.logo_interactive:hover
+{
+    filter: brightness(50%);
+}
 .logo_emblem:hover
 {
     filter: brightness(50%);
@@ -48,7 +58,7 @@ input[type=text]
     background-color: #80000033;
     border-style: inset;
     font-size: 17px;
-    padding: 12px 20px;
+    padding: 6px 10px;
     width: 90%;
 }
 input[type=password]
@@ -58,7 +68,7 @@ input[type=password]
     background-color: #80000033;
     border-style: inset;
     font-size: 17px;
-    padding: 12px 20px;
+    padding: 6px 10px;
     width: 90%;
 }
 input[type=email]
@@ -68,7 +78,7 @@ input[type=email]
     background-color: #80000033;
     border-style: inset;
     font-size: 17px;
-    padding: 12px 20px;
+    padding: 6px 10px;
     width: 90%;
 }
 .login_submit_button
@@ -80,7 +90,7 @@ input[type=email]
     font-weight: 800;
     font-size: 17px;
     padding: 12px 20px;
-    width: 100%;
+    width: 95%;
 }
 .login_submit_button:hover
 {
@@ -128,7 +138,7 @@ input[type=email]
 footer
 {
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     background: grey;
     color: black;
     position: fixed;
@@ -414,11 +424,12 @@ footer
 }
 .char_counter
 {
-    z-index: +6;
-    top: 65%;
-    left: 87%;
-    width: 50%;
+    z-index: +8;
+    top: 35vh;
+    left: 67vh;
+    width: 10vh;
     position: absolute;
+    background-color: rgb(128, 128, 128, .5);
 }
 .create_post_container_submit_button
 {
@@ -470,7 +481,7 @@ textarea::placeholder
 }
 .file_preview
 {
-    position: absolute;
+    position: flex;
     left: 60%;
     top: 61%;
 }
@@ -479,7 +490,6 @@ textarea::placeholder
     position: fixed;
     top: 58.7%;
     height: 70px;
-    width: 70px;
     left: 55%;
     border-style: solid;
     border-radius: 5px;
@@ -506,7 +516,7 @@ img[src=""]
     top: 2%;
     right: 2%;
     text-align: center;
-    padding: 5px;
+    padding: 1vh 1vh 1vh 1vh;
     font-weight: bold;
     font-size: larger;
 }
@@ -528,6 +538,11 @@ img[src=""]
 .post_submit_button:hover
 {
     background-color: rgb(0, 72, 72);
+}
+
+.photo_icon
+{
+    left: 50vh;
 }
 
 .photo_icon:hover

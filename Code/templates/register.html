@@ -9,13 +9,13 @@
     </title>
 
     <style>
-        .sign_up > .first_name { width: 70%; }
-        .sign_up > .middle_name { width: 65%; }
-        .sign_up > .last_name { width: 70%; }
-        .sign_up > .username { width: 70%; }
-        .sign_up > .email { width: 78%; }
-        .sign_up > .password { width: 72%; }
-        .sign_up > .password_confirmation { width: 50%; }
+        .sign_up > .first_name { width: 95%; }
+        .sign_up > .middle_name { width: 95%; }
+        .sign_up > .last_name { width: 95%; }
+        .sign_up > .username { width: 95%; }
+        .sign_up > .email { width: 95%; }
+        .sign_up > .password { width: 95%; }
+        .sign_up > .password_confirmation { width: 95%; }
     </style>
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
@@ -38,7 +38,7 @@
     </script>
 
     <section class="default_access_heading"> 
-        <h1 class="logo">
+        <h1 class="logo_interactive">
             <a href="/" style=" text-decoration:none;
                                 color:teal;">Hand-in-Hand</a>
         </h1>
@@ -53,18 +53,21 @@
             </section> 
 
             <hr>
+            <section style="color: white; text-align: left;">
+                Fields marked with an <label style="color: teal;">*</label> are required
+            </section>
             
             <section class="sign_up" style="text-align: start; color: white;">
                 {{ register_form.hidden_tag() }}
-                First Name: {{ register_form.first_name(class_="first_name") }} <br>
-                Middle Name: {{ register_form.middle_name(class_="middle_name") }} <br>
-                Last Name: {{ register_form.last_name(class_="last_name") }} <br>
-                Username: {{ register_form.username(class_="username") }} <br>
-                Email: {{ register_form.email(class_="email") }} <br>
-                Password: {{ register_form.password(class_="password") }} <br>
-                Password Confirmation: {{ register_form.password_confirmation(class_="password_confirmation")}} <br>
+                First Name: <label style="color: teal;">*</label> <br> {{ register_form.first_name(class_="first_name") }} <br>
+                Middle Name: <br> {{ register_form.middle_name(class_="middle_name") }} <br>
+                Last Name: <label style="color: teal;">*</label> <br> {{ register_form.last_name(class_="last_name") }} <br>
+                Username: <label style="color: teal;">*</label> <br> {{ register_form.username(class_="username") }} <br>
+                Email: <label style="color: teal;">*</label> <br> {{ register_form.email(class_="email") }} <br>
+                Password: <label style="color: teal;">*</label> <br> {{ register_form.password(class_="password") }} <br>
+                Password Confirmation: <label style="color: teal;">*</label> <br> {{ register_form.password_confirmation(class_="password_confirmation")}} <br>
 
-                </br> </br>
+                </br>
                 <section style="text-align: center;">
                     {{ register_form.submit(class_="sign_up_button") }}
                 </section>

@@ -52,7 +52,8 @@
                                                                                                         position: absolute;
                                                                                                         top: 7%;
                                                                                                         width: 48%;
-                                                                                                        padding-left: 45px;"
+                                                                                                        padding-left: 45px;
+                                                                                                        padding-block: 12px;"
                                                                                                                                         title="Search Bar" onlick="submit" pattern=".{1,1024}">
                     <input type="submit" style="display: none" />
                     <img src="/static/search_icon.png" width="24px" height="24px" style=   "left: 26%;
@@ -140,7 +141,7 @@
                 <br/> <hr>
             </section>
 
-            <form class="submit_post" name="submit_post" id="submit_post" action="/home/timeline/submit_post" method="post"></form>
+            <form class="submit_post" name="submit_post" id="submit_post" action="/home/timeline/submit_post" method="post" enctype="multipart/form-data"></form>
 
             <textarea rows="12" cols="72" wrap="soft" style=   "position: absolute;
                                                                 overflow: auto;
@@ -165,7 +166,6 @@
                     let num_chars = text.length;
                     if (num_chars == 0 || num_chars > 1024) {
                         alert("Invalid number of characters in post");
-                        off();
                         return;
                     }
                     else if ((text.match(/\n/g) || []).length > 10) {
@@ -268,10 +268,7 @@
 
         <body style=   "padding: 4%;
                         width: fit-content;
-                        height: auto;
-                        -webkit-box-align:center;
-                        -webkit-box-pack:center;
-                        display:-webkit-box;">
+                        height: auto;">
             {% block body %}
 
             {% endblock %}

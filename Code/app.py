@@ -15,9 +15,10 @@ import enum
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, EmailField
+from wtforms import StringField, PasswordField, SubmitField, EmailField, FileField
 from wtforms.validators import InputRequired, Length, EqualTo, ValidationError
 from wtforms_validators import Alpha
+
 
 #******************************************
 #***Function*Declarations*and*Defintions***
@@ -60,6 +61,7 @@ bcrypt = Bcrypt(app)
 # Configures the SQLite database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 app.config['SECRET_KEY'] = 'T@&5RcGyBwXbVjb^%VX3'
+app.config['UPLOAD_FOLDER'] = "/uploads"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -80,9 +82,7 @@ class User(db.Model, UserMixin):
     middle_name = db.Column(db.String(1024), nullable=True)
     last_name = db.Column(db.String(1024), nullable=False)
     email = db.Column(db.String(1024), unique=True, nullable=False)
-    # Should store a URL to some cloud storage receptecle
     profile_picture = db.Column(db.String(1024), nullable=True)
-    # Should store a URL to some cloud storage receptecle
     background_banner_image = db.Column(db.String(1024), nullable=True)
     user_description = db.Column(db.String(1024), nullable=True)
     objective = db.Column(db.String(1024), nullable=True)
@@ -238,6 +238,9 @@ class LoginForm(FlaskForm):
 #*************************
 @app.route("/")
 def home():
+    # Uses the session variable to create a count to keep track of the number of login attempts
+    session['login_attempt'] = 20
+
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
     return redirect(url_for('user_timeline'))
@@ -258,28 +261,81 @@ def login():
         # Check username + password against database
         user = User.query.filter_by(username = login_form.account_identifier.data).first()
         if user != None:
-            is_correct_password = bcrypt.check_password_hash(
-                pw_hash = user.password, 
-                password = login_form.password.data
-            )
-            if is_correct_password:
-                login_user(user, remember=False)
-                return redirect(url_for('user_timeline'))
-            # TODO: Log failed login attempt
+            try:
+                is_correct_password = bcrypt.check_password_hash(
+                    pw_hash = user.password, 
+                    password = login_form.password.data
+                )
+                if is_correct_password:
+                    login_user(user, remember=False)
+                    login_attempt = session.get('login_attempt')
+                    login_attempt = 20
+                    session['login_attempt'] = login_attempt
+                    return redirect(url_for('user_timeline'))
+            except (ValueError):
+                None
+
+            # Source: https://splunktool.com/counting-login-attempts-in-flask
+            # Retrieves the session variable 'login_attempt,' decrements it, and updates the original value
+            login_attempt = session.get('login_attempt')
+            login_attempt -= 1
+            session['login_attempt'] = login_attempt
+            # Displays an error message to the user indicating the number of remaining attempts
+            if login_attempt == 1:
+                flash('This is your last attempt, Attempt %d of 20 ' % login_attempt, 'error')
+                return redirect(url_for('login'))
+            elif login_attempt < 20 and login_attempt > 1:
+                flash('Invalid login credentials, Attempts %d of 20' % login_attempt, 'error')
+                return redirect(url_for('login'))
+            else:
+                flash('We\'ve detected suspicious activity on your Hand-in-Hand account and have temporarily locked it as a security precaution.\n\nIt\'s likely that your email was compromised as a result of phishing or other malicious means.\n\nIf you suspect that your account was wrongfully disabled, use the \"Forgot Credential\" option presented on the login screen.', 'error')
+                user.password = generate_password()
+                db.session.commit()
+                login_attempt = session.get('login_attempt')
+                login_attempt = 20
+                session['login_attempt'] = login_attempt
+                return redirect(url_for('login'))
+
         
         # Check email + password against database 
         user = User.query.filter_by(email = login_form.account_identifier.data).first()
         if user != None:
-            is_correct_password = bcrypt.check_password_hash(
-                pw_hash = user.password,
-                password = login_form.password.data
-            )
-            if is_correct_password:
-                login_user(user, remember=False)
-                return redirect(url_for('user_timeline'))
-            # TODO: Log failed login attempt
+            try:
+                is_correct_password = bcrypt.check_password_hash(
+                    pw_hash = user.password, 
+                    password = login_form.password.data
+                )
+                if is_correct_password:
+                    login_user(user, remember=False)
+                    login_attempt = session.get('login_attempt')
+                    login_attempt = 20
+                    session['login_attempt'] = login_attempt
+                    return redirect(url_for('user_timeline'))
+            except (ValueError):
+                None
 
-        flash('Invalid login information')
+            # Source: https://splunktool.com/counting-login-attempts-in-flask
+            # Retrieves the session variable 'login_attempt,' decrements it, and updates the original value
+            login_attempt = session.get('login_attempt')
+            login_attempt -= 1
+            session['login_attempt'] = login_attempt
+            # Displays an error message to the user indicating the number of remaining attempts
+            if login_attempt == 1:
+                flash('This is your last attempt, Attempt %d of 20 ' % login_attempt, 'error')
+                return redirect(url_for('login'))
+            elif login_attempt < 20 and login_attempt > 1:
+                flash('Invalid login credentials, Attempts %d of 20' % login_attempt, 'error')
+                return redirect(url_for('login'))
+            else:
+                flash('We\'ve detected suspicious activity on your Hand-in-Hand account and have temporarily locked it as a security precaution.\n\nIt\'s likely that your email was compromised as a result of phishing or other malicious means.\n\nIf you suspect that your account was wrongfully disabled, use the \"Forgot Credential\" option presented on the login screen.', 'error')
+                user.password = generate_password()
+                db.session.commit()
+                login_attempt = session.get('login_attempt')
+                login_attempt = 20
+                session['login_attempt'] = login_attempt
+                return redirect(url_for('login'))
+
+        flash('Invalid login credentials')
 
     return render_template('login.html', login_form=login_form)
 
@@ -395,6 +451,7 @@ def user_timeline():
 #***Submit*a*new*post***
 #***********************
 @app.route('/home/timeline/submit_post', methods=['GET', 'POST'])
+@login_required
 def submit_post():
     # Generate unique post id
     new_post_id = randrange(pow(2, 31) - 1)
@@ -411,6 +468,7 @@ def submit_post():
         original_post_time = datetime.now(),
         last_edit_time = None
     )
+
     db.session.add(new_post)
     db.session.commit()
 
@@ -420,11 +478,34 @@ def submit_post():
 #***Delete*a*post***
 #*******************
 @app.route('/home/timeline/delete_post/<post_to_delete_id>')
+@login_required
 def delete_post(post_to_delete_id):
     post_database_table = Post.query.all()
     for post in post_database_table:
         if (post.post_id == int(post_to_delete_id)):
             db.session.delete(post)
+            db.session.commit()
+    return redirect(url_for('user_timeline'))
+
+#*******************
+#***Edit*a*post***
+#*******************
+@app.route('/home/timeline/edit_post/prompt/<post_to_edit_id>', methods=['GET', 'POST'])
+@login_required
+def edit_post_prompt(post_to_edit_id):
+    return render_template('edit_timeline_post.html', post_to_edit_id=post_to_edit_id)
+
+#*************************
+#***Edit*a*post*(cont.)***
+#*************************
+@app.route('/home/timeline/edit_post/<post_to_edit_id>', methods=['GET', 'POST'])
+@login_required
+def edit_post(post_to_edit_id):
+    post_database_table = Post.query.all()
+    for post in post_database_table:
+        if (post.post_id == int(post_to_edit_id)):
+            post.post_text = request.form.get('edit_text')
+            post.last_edit_time = datetime.now()
             db.session.commit()
     return redirect(url_for('user_timeline'))
 

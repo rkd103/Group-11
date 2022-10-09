@@ -16,10 +16,10 @@
             border-radius: 5px;
             background-color: grey;
             box-shadow: 4px 4px 4px #3d3c36;
-            left: 25%;
-            width: 50%;
+            left: 50vh;
+            width: 60vh;
             position: relative;
-            display: inline-block;
+            display: -moz-inline-stack;
             padding: 30px;
         }
         .timeline_post_header {
@@ -79,10 +79,13 @@
 
             <div class="timeline_post_header">
                 <div>
-                    <div> {{ timeline_post.username }} </div>
-                    <div> {{ timeline_post.original_post_time }} </div>
+                    <div> Username: {{ timeline_post.username }} </div>
+                    <div> Original Post Time: {{ timeline_post.original_post_time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
+                    {% if timeline_post.last_edit_time %}
+                        <div> Edit Time: {{ timeline_post.last_edit_time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
+                    {% endif %}
                 </div>
-                <div class="dropdown_menu" style="position: flex; left: 90%;">
+                <div class="dropdown_menu" style="position: flex; left: 90%; top: 5vh;">
 
                     <button class="dropdown_menu_button">
                         <img class="menu_image" src="/static/three_dots_menu_icon.png" width="10px"  title="Comment Options">
@@ -94,7 +97,7 @@
                             <a href="/home/timeline/comment_on_post" style="text-decoration: none;">
                                 <img src="/static/comment_icon.png" width="30px;" title="Comment on post">
                             </a>
-                            <a href="/home/timeline/edit_post" style="text-decoration: none;">
+                            <a href="/home/timeline/edit_post/prompt/{{ timeline_post.post_id }}" style="text-decoration: none;">
                                 <img src="/static/edit_icon.png" width="30px" title="Edit post">
                             </a>
                             <a href="/home/timeline/delete_post/{{ timeline_post.post_id }}" onclick="submit">
