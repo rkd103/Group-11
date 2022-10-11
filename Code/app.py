@@ -1,7 +1,6 @@
 #**********************
 #***Library*Includes***
 #**********************
-
 from requests import post
 from flask import Flask, render_template, redirect, request, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +17,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, EmailField, FileField
 from wtforms.validators import InputRequired, Length, EqualTo, ValidationError
 from wtforms_validators import Alpha
+import os
+from werkzeug.utils import secure_filename
 
 
 #******************************************
@@ -49,9 +50,9 @@ def send_email(recipient_email, email_subject_line, email_content):
     return ("Email Sent")
 
 
-#**************************
-#***Object*Instantiation***
-#********************~*****
+#********************************************
+#***Object*Instantiation*and*Configuration***
+#********************************************
 
 # Creates an instance of a Flask object
 app = Flask(__name__)
@@ -61,7 +62,28 @@ bcrypt = Bcrypt(app)
 # Configures the SQLite database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 app.config['SECRET_KEY'] = 'T@&5RcGyBwXbVjb^%VX3'
-app.config['UPLOAD_FOLDER'] = "/uploads"
+UPLOADS = os.path.join('static', 'uploads')
+app.config['UPLOAD_FOLDER'] = UPLOADS
+app.config['ALLOWED_MEDIA_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF", "MP4", "MOV", "MKV"]
+app.config['MAX_CONTENT_LENGTH'] = (10 * 1024 * 1024)
+
+# Source: https://www.youtube.com/watch?v=6WruncSoCdI
+def allowed_media(filename):
+    if not "." in filename:
+        return False
+
+    ext = filename.rsplit(".", 1)[1]
+
+    if ext.upper() in app.config['ALLOWED_MEDIA_EXTENSIONS']:
+        return True
+    else:
+        return False
+
+# Source: https://stackoverflow.com/questions/19459236/how-to-handle-413-request-entity-too-large-in-python-flask-server
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    flash('That file is too large.\n\nIt exceeded the maximum size of 10MB.')
+    return redirect(url_for('user_timeline'))
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -112,6 +134,7 @@ class Post(db.Model):
     num_comments = db.Column(db.Integer, nullable=False)
     original_post_time = db.Column(db.TIMESTAMP, nullable=False)
     last_edit_time = db.Column(db.TIMESTAMP, nullable=True)
+    post_media = db.Column(db.String(1024), nullable=True)
 
 class Comment(db.Model):
     comment_id = db.Column(db.Integer, primary_key=True)
@@ -282,10 +305,10 @@ def login():
             session['login_attempt'] = login_attempt
             # Displays an error message to the user indicating the number of remaining attempts
             if login_attempt == 1:
-                flash('This is your last attempt, Attempt %d of 20 ' % login_attempt, 'error')
+                flash('This is your last attempt, Attempt %d of 20. ' % login_attempt, 'error')
                 return redirect(url_for('login'))
             elif login_attempt < 20 and login_attempt > 1:
-                flash('Invalid login credentials, Attempts %d of 20' % login_attempt, 'error')
+                flash('Invalid login credentials, Attempts %d of 20.' % login_attempt, 'error')
                 return redirect(url_for('login'))
             else:
                 flash('We\'ve detected suspicious activity on your Hand-in-Hand account and have temporarily locked it as a security precaution.\n\nIt\'s likely that your email was compromised as a result of phishing or other malicious means.\n\nIf you suspect that your account was wrongfully disabled, use the \"Forgot Credential\" option presented on the login screen.', 'error')
@@ -321,10 +344,10 @@ def login():
             session['login_attempt'] = login_attempt
             # Displays an error message to the user indicating the number of remaining attempts
             if login_attempt == 1:
-                flash('This is your last attempt, Attempt %d of 20 ' % login_attempt, 'error')
+                flash('This is your last attempt, Attempt %d of 20. ' % login_attempt, 'error')
                 return redirect(url_for('login'))
             elif login_attempt < 20 and login_attempt > 1:
-                flash('Invalid login credentials, Attempts %d of 20' % login_attempt, 'error')
+                flash('Invalid login credentials, Attempts %d of 20.' % login_attempt, 'error')
                 return redirect(url_for('login'))
             else:
                 flash('We\'ve detected suspicious activity on your Hand-in-Hand account and have temporarily locked it as a security precaution.\n\nIt\'s likely that your email was compromised as a result of phishing or other malicious means.\n\nIf you suspect that your account was wrongfully disabled, use the \"Forgot Credential\" option presented on the login screen.', 'error')
@@ -335,7 +358,7 @@ def login():
                 session['login_attempt'] = login_attempt
                 return redirect(url_for('login'))
 
-        flash('Invalid login credentials')
+        flash('Invalid login credentials.')
 
     return render_template('login.html', login_form=login_form)
 
@@ -388,7 +411,7 @@ def account_retrieval():
         email_content = msg
     )
 
-    flash('A temporary password has been sent to your email')
+    flash('A temporary password has been sent to your email.')
     return redirect(url_for('login'))
 
 #*******************************
@@ -452,7 +475,7 @@ def user_timeline():
 #***********************
 @app.route('/home/timeline/submit_post', methods=['GET', 'POST'])
 @login_required
-def submit_post():
+def submit_post():      
     # Generate unique post id
     new_post_id = randrange(pow(2, 31) - 1)
     if Post.query.filter_by(post_id = new_post_id).first() != None:
@@ -466,10 +489,30 @@ def submit_post():
         num_shares = 0,
         num_comments = 0,
         original_post_time = datetime.now(),
-        last_edit_time = None
+        last_edit_time = None,
+        post_media = ""
     )
 
-    db.session.add(new_post)
+    # Reads in the media attached to a post
+    # Source: https://www.youtube.com/watch?v=6WruncSoCdI
+    if request.method == "POST":
+        if request.files:
+
+            media = request.files['media']
+
+            if not media.filename == "":
+                if allowed_media(media.filename):
+                    filename = secure_filename(media.filename)
+                    media.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+                    new_post.post_media = filename
+                    
+                    db.session.add(new_post)
+                else:
+                    flash('That file extension is not allowed.')
+            else:
+                db.session.add(new_post)
+
     db.session.commit()
 
     return redirect(url_for('user_timeline'))
@@ -488,7 +531,7 @@ def delete_post(post_to_delete_id):
     return redirect(url_for('user_timeline'))
 
 #*******************
-#***Edit*a*post***
+#***Edit*post***
 #*******************
 @app.route('/home/timeline/edit_post/prompt/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
@@ -496,7 +539,7 @@ def edit_post_prompt(post_to_edit_id):
     return render_template('edit_timeline_post.html', post_to_edit_id=post_to_edit_id)
 
 #*************************
-#***Edit*a*post*(cont.)***
+#***Edit*post*(cont.)***
 #*************************
 @app.route('/home/timeline/edit_post/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
@@ -506,7 +549,29 @@ def edit_post(post_to_edit_id):
         if (post.post_id == int(post_to_edit_id)):
             post.post_text = request.form.get('edit_text')
             post.last_edit_time = datetime.now()
-            db.session.commit()
+    
+            # Reads in the media attached to a post
+            # Source: https://www.youtube.com/watch?v=6WruncSoCdI
+            if request.method == "POST":
+                if request.files:
+
+                    media = request.files['edit_media']
+
+                    if not media.filename == "":
+                        if allowed_media(media.filename):
+                            filename = secure_filename(media.filename)
+                            media.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+                            post.post_media = filename
+                            
+                        else:
+                            flash('That file extension is not allowed.')
+                    else:
+                        None
+    
+    db.session.commit()
+
+
     return redirect(url_for('user_timeline'))
 
 #*************************

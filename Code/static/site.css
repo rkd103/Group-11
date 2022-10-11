@@ -485,17 +485,18 @@ textarea::placeholder
     left: 60%;
     top: 61%;
 }
-.file_preview_img
+.file_preview_img, .file_preview_vid
 {
     position: fixed;
     top: 58.7%;
     height: 70px;
     left: 55%;
-    border-style: solid;
-    border-radius: 5px;
-    border-color: teal;
 }
 img[src=""]
+{
+    display: none;
+}
+video[src=""]
 {
     display: none;
 }

@@ -46,11 +46,19 @@
             word-break: break-all;
             white-space: break-spaces;
         }
+        .timeline_post_media {
+            background-color: rgba(0, 128, 128, 0.40);
+            display: relative;
+            overflow: auto;
+            border-radius: 5px;
+            padding: 20px;
+        }
         .timeline_post_footer {
             display: flex;
             height: 4vmin;
             justify-content: space-evenly;
             align-items: center;
+            position: relative;
         }
     </style>
 
@@ -79,10 +87,10 @@
 
             <div class="timeline_post_header">
                 <div>
-                    <div> Username: {{ timeline_post.username }} </div>
-                    <div> Original Post Time: {{ timeline_post.original_post_time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
+                    <div> &lt;Username&gt; {{ timeline_post.username }} </div>
+                    <div> &lt;Original Post Time&gt; {{ timeline_post.original_post_time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
                     {% if timeline_post.last_edit_time %}
-                        <div> Edit Time: {{ timeline_post.last_edit_time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
+                        <div> &lt;Edit Time&gt; {{ timeline_post.last_edit_time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
                     {% endif %}
                 </div>
                 <div class="dropdown_menu" style="position: flex; left: 90%; top: 5vh;">
@@ -120,6 +128,20 @@
             <div class="timeline_post_text"> 
                 <span>{{ timeline_post.post_text }}</span>
             </div>
+
+            {% if timeline_post.post_media %}
+                <!--Source: https://stackoverflow.com/questions/48279563/how-to-display-video-or-image-in-single-tag-->
+                <div class="timeline_post_media">
+                    {% if ( (".jpg" in timeline_post.post_media) or (".jpeg" in timeline_post.post_media) or (".png" in timeline_post.post_media) or (".gif" in timeline_post.post_media) ) %}
+                        <img src="/static/uploads/{{ timeline_post.post_media }}" style="display: block; margin-left: auto; margin-right: auto; height: 30vh;"> 
+                    {% else %}
+                        <video width="320" height="240" style="display: block; margin-left: auto; margin-right: auto;" controls> 
+                            <source src="/static/uploads/{{ timeline_post.post_media }}" ng-if="option=='video'">
+                        </video>
+                    {% endif %}
+                </div>
+            {% endif %}
+
             <div class="timeline_post_footer">
                 <div> <br/> <img src="/static/like_icon.png" width="20px" title="Likes"> {{ timeline_post.num_likes }} </div>
                 <div> <br/> <img src="/static/share_icon.png" width="20px" title="Shares"> {{ timeline_post.num_shares }} </div>

@@ -141,7 +141,48 @@
                 <br/> <hr>
             </section>
 
-            <form class="submit_post" name="submit_post" id="submit_post" action="/home/timeline/submit_post" method="post" enctype="multipart/form-data"></form>
+            <form class="submit_post" name="submit_post" id="submit_post" action="/home/timeline/submit_post" method="post" enctype="multipart/form-data">
+                <!--Source: https://stackoverflow.com/questions/40887210/how-to-change-choose-file-or-browse-button-text-and-no-file-selected-text-->
+                <section class="file">
+                    <label for="file-input">
+                        <img class="photo_icon" src="/static/photo_icon.png" title="Add Media" width="40px" height="40px">
+                    </label>
+
+                    <input type="file" onchange="previewFile();" class="file-input" name="media" id="media" accept="image/*, video/*">
+
+                    <section class="file_preview">
+                        <img class="file_preview_img" src="">
+                        <video class="file_preview_vid" src=""></video>
+                    </section>
+                </section>
+
+                <!--Source: https://stackoverflow.com/questions/16500848/how-to-generate-a-thumbnail-image-after-adding-an-image-inside-an-input-type-fi-->
+                <script>
+                    function previewFile() 
+                    {
+                        var preview_img = document.querySelector('.file_preview_img');
+                        var preview_vid = document.querySelector('.file_preview_vid');
+                        var file    = document.querySelector('input[type=file]').files[0];
+                        var reader  = new FileReader();
+
+                        reader.onloadend = function () 
+                        {
+                            preview_img.src = reader.result;
+                            preview_vid.src = reader.result;
+                        }
+
+                        if (file) 
+                        {
+                            reader.readAsDataURL(file);
+                        } 
+                        else 
+                        {
+                            preview_img.src = "";
+                            preview_vid.src = "";
+                        }
+                    }
+                </script>
+            </form>
 
             <textarea rows="12" cols="72" wrap="soft" style=   "position: absolute;
                                                                 overflow: auto;
@@ -156,7 +197,6 @@
                 0 / 1024
             </section>
 
-            <!--Adapted from Brett's Repository-->
             <script>
                 // Check the post and submit if valid
                 function verify_post() 
@@ -181,7 +221,6 @@
                 }
             </script>
 
-            <!--Adapted from Brett's Repository-->
             <script type="text/javascript">
                 // Display the number of characters used in the post
                 function count_chars() {
@@ -205,43 +244,6 @@
                                                                                                                             <section class="add_attribute_message">
                 Add to your post
             </section>
-
-            <!--Source: https://stackoverflow.com/questions/40887210/how-to-change-choose-file-or-browse-button-text-and-no-file-selected-text-->
-            <section class="file">
-                <label for="file-input">
-                    <img class="photo_icon" src="/static/photo_icon.png" title="Add Media" width="40px" height="40px">
-                </label>
-
-                <input type="file" onchange="previewFile()" class="file-input" name="media" accept="image/*, video/*">
-
-                <section class="file_preview">
-                    <img class="file_preview_img" src="">
-                </section>
-            </section>
-
-            <!--Source: https://stackoverflow.com/questions/16500848/how-to-generate-a-thumbnail-image-after-adding-an-image-inside-an-input-type-fi-->
-            <script>
-                function previewFile() 
-                {
-                    var preview = document.querySelector('.file_preview_img');
-                    var file    = document.querySelector('input[type=file]').files[0];
-                    var reader  = new FileReader();
-
-                    reader.onloadend = function () 
-                    {
-                        preview.src = reader.result;
-                    }
-
-                    if (file) 
-                    {
-                        reader.readAsDataURL(file);
-                    } 
-                    else 
-                    {
-                        preview.src = "";
-                    }
-                }
-            </script>
             
             <section class="create_post_container_submit_button">
                 <input type="submit" class="post_submit_button" style="left: 45%;
