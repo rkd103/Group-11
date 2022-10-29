@@ -66,6 +66,7 @@ UPLOADS = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOADS
 app.config['ALLOWED_MEDIA_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF", "MP4", "MOV", "MKV"]
 app.config['MAX_CONTENT_LENGTH'] = (10 * 1024 * 1024)
+app.config['ALLOWED_IMAGE_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF"]
 
 # Source: https://www.youtube.com/watch?v=6WruncSoCdI
 def allowed_media(filename):
@@ -79,11 +80,28 @@ def allowed_media(filename):
     else:
         return False
 
+def allowed_image_media(filename):
+    if not "." in filename:
+        return False
+
+    ext = filename.rsplit(".", 1)[1]
+
+    if ext.upper() in app.config['ALLOWED_IMAGE_EXTENSIONS']:
+        return True
+    else:
+        return False
+
 # Source: https://stackoverflow.com/questions/19459236/how-to-handle-413-request-entity-too-large-in-python-flask-server
 @app.errorhandler(413)
 def request_entity_too_large(error):
     flash('That file is too large.\n\nIt exceeded the maximum size of 10MB.')
-    return redirect(url_for('user_timeline'))
+    return redirect(url_for('user_account'))
+
+# Customizes the "not found" error
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html')
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -461,6 +479,9 @@ def register():
 @app.route('/home/timeline', methods=['GET', 'POST'])
 @login_required
 def user_timeline():
+    # Retrieves the information associated with the current user to display on the account page
+    queried_user = User.query.filter_by(username = current_user.username).first()
+
     # Get personal posts and order by timestamp
     user_timeline = Post.query.filter_by(username = current_user.username)
     user_timeline = user_timeline.order_by(Post.original_post_time.desc())
@@ -468,7 +489,7 @@ def user_timeline():
 
     # TODO: Get shared posts and order with user posts
 
-    return render_template('personal_timeline.html', timeline = user_timeline)
+    return render_template('personal_timeline.html', timeline = user_timeline, user = queried_user)
 
 #***********************
 #***Submit*a*new*post***
@@ -530,17 +551,29 @@ def delete_post(post_to_delete_id):
             db.session.commit()
     return redirect(url_for('user_timeline'))
 
-#*******************
+#***************
 #***Edit*post***
-#*******************
+#***************
 @app.route('/home/timeline/edit_post/prompt/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post_prompt(post_to_edit_id):
-    return render_template('edit_timeline_post.html', post_to_edit_id=post_to_edit_id)
+    # Retrieves the information associated with the current user to display on the account page
+    queried_user = User.query.filter_by(username = current_user.username).first()
 
-#*************************
+    # Retrieves the content of the original message to populate the edit prompt screen to aid in modifying a post
+    original_post_content = ""
+    original_post_attachment= ""
+    post_database_table = Post.query.all()
+    for post in post_database_table:
+        if (post.post_id == int(post_to_edit_id)):
+            original_post_content = post.post_text
+            original_post_attachment = post.post_media
+
+    return render_template('edit_timeline_post.html', post_to_edit_id=post_to_edit_id, user = queried_user, original_post_content=original_post_content, original_post_attachment=original_post_attachment)
+
+#***********************
 #***Edit*post*(cont.)***
-#*************************
+#***********************
 @app.route('/home/timeline/edit_post/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_to_edit_id):
@@ -574,22 +607,6 @@ def edit_post(post_to_edit_id):
 
     return redirect(url_for('user_timeline'))
 
-#*************************
-#***User's*friends*page***
-#*************************
-@app.route('/home/friends')
-@login_required
-def user_friends():
-    return render_template('friends.html')
-
-#*************************
-#***User's*account*page***
-#*************************
-@app.route('/home/account')
-@login_required
-def user_account():
-    return render_template('account.html')
-
 #***********************
 #***Logout*of*Account***
 #***********************
@@ -598,6 +615,89 @@ def user_account():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+#*************************
+#***User's*account*page***
+#*************************
+@app.route('/home/account')
+@login_required
+def user_account():
+    # Retrieves the information associated with the current user to display on the account page
+    queried_user = User.query.filter_by(username = current_user.username).first()
+
+    return render_template('account.html', user = queried_user)
+
+#***********************
+#***User's*about*page***
+#***********************
+@app.route('/home/account/about')
+@login_required
+def about():
+    # Retrieves the information associated with the current user to display on the account page
+    queried_user = User.query.filter_by(username = current_user.username).first()
+
+    return render_template('about.html', user = queried_user)
+
+#*****************************
+#***User's*account*settings***
+#*****************************
+@app.route('/home/account/settings', methods=['GET', 'POST'])
+@login_required
+def user_settings():
+    # Retrieves the information associated with the current user to display on the account page
+    queried_user = User.query.filter_by(username = current_user.username).first()
+    
+    return render_template('settings.html', user = queried_user)
+
+#******************************
+#***Account*Settings*Editing***
+#******************************
+@app.route('/home/account/settings/editing', methods=['GET', 'POST'])
+@login_required
+def edit_account():
+    # Retrieves the information associated with the current user to display on the account page
+    queried_user = User.query.filter_by(username = current_user.username).first()
+
+    if request.method == "POST":
+        if request.files:
+
+            media_1 = request.files['profile_picture']
+            media_2 = request.files['background_banner_image']
+
+            if not media_1.filename == "":
+                if allowed_image_media(media_1.filename):
+                    filename = secure_filename(media_1.filename)
+                    media_1.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+                    queried_user.profile_picture = filename
+                    
+                else:
+                    flash('That file extension is not allowed.')
+                    return redirect(url_for('user_settings'))
+            else:
+                None
+
+            if not media_2.filename == "":
+                if allowed_image_media(media_2.filename):
+                    filename = secure_filename(media_2.filename)
+                    media_2.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+                    queried_user.background_banner_image = filename
+                    
+                else:
+                    flash('That file extension is not allowed.')
+                    return redirect(url_for('user_settings'))
+            else:
+                None
+
+    queried_user.user_description = request.form.get('user_description')
+    queried_user.objective = request.form.get('objective')
+    queried_user.phone_number = request.form.get('phone_number')
+
+    db.session.commit()
+
+    return redirect(url_for('user_settings'))
+
 
 #*****************
 #***Driver*code***

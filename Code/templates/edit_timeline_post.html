@@ -57,10 +57,17 @@
 
                     <input type="file" id="edit_file" onchange="previewFile();" class="file-input" name="edit_media" id="edit_media" accept="image/*, video/*">
 
+                    {% if original_post_attachment %}
+                    <section class="file_preview">
+                        <img class="file_preview_img" id="edit_file_preview_img" src="/static/uploads/{{ original_post_attachment }}">
+                        <video class="file_preview_vid" id="edit_file_preview_vid" src="/static/uploads/{{ original_post_attachment }}"></video>
+                    </section>
+                    {% else %}
                     <section class="file_preview">
                         <img class="file_preview_img" id="edit_file_preview_img" src="">
                         <video class="file_preview_vid" id="edit_file_preview_vid" src=""></video>
                     </section>
+                    {% endif %}
                 </section>
 
                 <!--Source: https://stackoverflow.com/questions/16500848/how-to-generate-a-thumbnail-image-after-adding-an-image-inside-an-input-type-fi-->
@@ -69,7 +76,7 @@
                     {
                         var preview_img = document.getElementById('edit_file_preview_img');
                         var preview_vid = document.getElementById('edit_file_preview_vid');
-				var file    = document.getElementById('edit_file').files[0];
+				        var file    = document.getElementById('edit_file').files[0];
                         var reader  = new FileReader();
 
                         reader.onloadend = function () 
@@ -96,11 +103,11 @@
                                                                 resize: none;
                                                                 background-color: rgb(206, 206, 206);
                                                                 text-decoration: none;"
-                                                                                            placeholder="What's on your mind?" form="submit_edit" oninput="count_chars()" title="Status Content" name="edit_text" id="edit_text_box"></textarea> <br/>
+                                                                                            placeholder="What's on your mind?" form="submit_edit" oninput="count_chars()" title="Status Content" name="edit_text" id="edit_text_box">{{ original_post_content }}</textarea> <br/>
             
             
 
-            <section class="char_counter" id="edit_char_counter">
+            <section class="char_counter" id="edit_char_counter" onload="count_chars()">
                 0 / 1024
             </section>
 
@@ -143,6 +150,7 @@
                         document.getElementById("edit_submit_button").style.backgroundColor = "#00808080";
                     }
                 }
+                window.onload = count_chars;
             </script>
                                                                                             
             <section class="close_button" onclick="off()" title="Cancel Status">
