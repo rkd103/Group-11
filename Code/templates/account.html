@@ -1,0 +1,152 @@
+<style>
+    .timeline_account_button, .timeline_account_button:visited, .timeline_account_button:active
+    {
+        text-decoration: none;
+        color: black;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        font-weight: bold;
+    }
+    .timeline_account_button:hover
+    {
+        color:#00A3AD;
+        border-bottom: 2px solid #00A3AD;
+        padding-bottom: 10px;
+    }
+    .friends_account_button, .friends_account_button:visited, .friends_account_button:active
+    {
+        text-decoration: none;
+        color: black;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 17%;
+        font-weight: bold;
+    }
+    .friends_account_button:hover
+    {
+        color:#00A3AD;
+        border-bottom: 2px solid #00A3AD;
+        padding-bottom: 10px;
+    }
+    .about_account_button, .about_account_button:visited, .about_account_button:active
+    {
+        text-decoration: none;
+        color: black;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 24%;
+        font-weight: bold;
+    }
+    .about_account_button:hover
+    {
+        color:#00A3AD;
+        border-bottom: 2px solid #00A3AD;
+        padding-bottom: 10px;
+    }
+    .settings_account_button, .settings_account_button:visited, .settings_account_button:active
+    {
+        text-decoration: none;
+        color: black;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 31%;
+        font-weight: bold;
+    }
+    .settings_account_button:hover
+    {
+        color:#00A3AD;
+        border-bottom: 2px solid #00A3AD;
+        padding-bottom: 10px;
+    }
+</style>
+
+<!--Code block that enables flashes-->
+{% set ns = namespace(messages="") %}
+{% for message in get_flashed_messages() %}
+    <!-- Only get one message -->
+    {% if ns.messages == "" %} 
+        {% set ns.messages = ns.messages + message %}
+    {% endif %}
+{% endfor %}
+<script>
+    function display_flashes() {
+        if ({{ ns.messages|tojson }}) { alert({{ ns.messages|tojson }}); }
+    }
+    display_flashes();
+</script>
+
+{% extends 'navigation_overlay.html' %}
+{% block user_account_image %}
+    {% if user.profile_picture %}
+        <a href="/home/account">
+            <img class="user_account_image" src="/static/uploads/{{ user.profile_picture }}" width="48px" height="48px" title="User Account">
+        </a>
+    {% else %}
+        <a href="/home/account">
+            <img class="user_account_image" src="/static/default_user_account_icon.png" width="48px" height="48px" title="User Account">
+        </a>
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <!--Conditionally displays ther user's account image-->
+    {% if user.profile_picture %}
+        <a href="/home/account">
+            <img class="user_account_image" src="/static/uploads/{{ user.profile_picture }}" width="48px" height="48px" title="User Account" style="width: 200px; height: 200px; position: absolute; top: 19%; left: 15%; border-radius: 50%; border-width: 5px; z-index: 1;">
+        </a>
+    {% else %}
+        <a href="/home/account">
+            <img class="user_account_image" src="/static/default_user_account_icon.png" width="48px" height="48px" title="User Account" style="width: 200px; height: 200px; position: absolute; top: 19%; left: 15%; border-radius: 50%; border-width: 5px; z-index: 1; background: #777777ce;">
+        </a>
+    {% endif %}
+
+    <!--Conditionally displays the user's background banner image-->
+    {% if user.background_banner_image %}
+        <img src="/static/uploads/{{ user.background_banner_image }}"style="position: absolute; top: 5%; left: 10%; width: 80%; height: 30%; background: linear-gradient(to bottom, #777777 0%, #C1C6C8 100%); border: none; border-radius: 10px; ">     
+    {% else %}
+        <div style="position: absolute; top: 5%; left: 10%; width: 80%; height: 30%; background: linear-gradient(to bottom, #acacac 0%, #00A3AD 100%); border: none; border-radius: 10px; ">
+
+        </div>
+    {% endif %}
+
+    <!--Displays the user's name and the various button's related to an account-->
+    <div style="position: absolute; top: 5%; left: 0%; width: 100%; height: 50%; border: none; background: #acacac; z-index: -1;">
+
+    </div>
+
+    <!--Displays the block containing the user's information-->
+    <div id="user_information_block">
+
+        <div style="left: 32%; top: 40%; position: absolute; font-size: 30px; font-weight: bold;">
+            {{ user.username }}
+        </div>
+
+        <div >
+            <hr style="overflow-x: fit; width: 95%; position: absolute; top: 47%; color: #777777 noshade; background-color: #777777; height: 1px;">
+        </div>
+
+        <div>
+            <a href="/home/timeline" class="timeline_account_button">
+                Timeline
+            </a>
+            <a href="/home/account/about" class="about_account_button">
+                About
+            </a>
+            <a href="/home/account/friends" class="friends_account_button">
+                Friends
+            </a>
+            <a href="/home/account/settings" class="settings_account_button">
+                Settings
+            </a>
+        </div> 
+    </div>
+
+    {% block account_body %}
+
+    {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,59 @@
+<style>
+    .message_stop
+    {
+        color: grey;
+        font-family: Impact;
+        font-size: 300px;
+        position: absolute;
+        left: 25vw;
+        top: 20vh;
+    }
+    .message_warning
+    {
+        color: grey;
+        font-family: Impact;
+        font-size: 100px;
+        position: absolute;
+        left: 13vw;
+        top: 75vh;
+    }
+    .message_image
+    {
+        position: absolute;
+        left: 25vw;
+        z-index: -1;
+    }
+    .message_image:hover
+    {
+        filter: brightness(50%);
+    }
+</style>
+
+<!doctype html>
+<html lang="en"></html>
+<head>
+
+    <meta charset="utf-8"/>
+
+    <title>
+        404 Page Not Found
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
+
+</head>
+
+<body style="width: fit-content; height: auto;">
+    <a href="javascript:window.history.back();" title="Click this to return to the previous page">
+        <div>
+            <img class="message_image" src="/static/page_not_found_image.png">
+        </div>
+        <div class="message_stop">
+            Stop!
+        </div>
+        <div class="message_warning">
+            This page does not exist.
+        </div>
+    </a>
+        
+</body>
