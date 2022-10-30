@@ -66,6 +66,7 @@ UPLOADS = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOADS
 app.config['ALLOWED_MEDIA_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF", "MP4", "MOV", "MKV"]
 app.config['MAX_CONTENT_LENGTH'] = (10 * 1024 * 1024)
+app.config['ALLOWED_IMAGE_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF"]
 
 # Source: https://www.youtube.com/watch?v=6WruncSoCdI
 def allowed_media(filename):
@@ -79,11 +80,27 @@ def allowed_media(filename):
     else:
         return False
 
+def allowed_image_media(filename):
+    if not "." in filename:
+        return False
+
+    ext = filename.rsplit(".", 1)[1]
+
+    if ext.upper() in app.config['ALLOWED_IMAGE_EXTENSIONS']:
+        return True
+    else:
+        return False
+
 # Source: https://stackoverflow.com/questions/19459236/how-to-handle-413-request-entity-too-large-in-python-flask-server
 @app.errorhandler(413)
 def request_entity_too_large(error):
     flash('That file is too large.\n\nIt exceeded the maximum size of 10MB.')
-    return redirect(url_for('user_timeline'))
+    return redirect(url_for('user_account'))
+
+# Customizes the "not found" error
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -611,7 +628,7 @@ def user_account():
     # Retrieves the information associated with the current user to display on the account page
     queried_user = User.query.filter_by(username = current_user.username).first()
 
-    return render_template('account.html')
+    return render_template('account.html', user = queried_user)
 
 #***********************
 #***User's*about*page***
