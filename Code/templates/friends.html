@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+
+    <body>
+        <div id="friends">
+            <h> Friends </h>
+            {% for friend in friends %}
+                <div class="friend">
+                    <div> {{ friend }} </div>
+                    <button> Remove friend </button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <br> <br> <br>
+
+        <div id="sent_requests" value="Sent friend requests">
+            <h> You have sent friend requests to these users </h>
+            {% for receiver in sent_requests %}
+                <div class="sent_request">
+                    <div> {{ receiver }} </div>
+                    <button> Cancel friend request </button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <br> <br> <br>
+
+        <div id="received_requests" value="Received friend requests">
+            <h> You have received friend requests from these users </h>
+            {% for sender in received_requests %}
+                <div class="received_request"> 
+                    <div> {{ sender }} </div>
+                    <button> Accept </button>
+                    <button> Reject </button>
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

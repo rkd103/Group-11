@@ -66,7 +66,6 @@ UPLOADS = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOADS
 app.config['ALLOWED_MEDIA_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF", "MP4", "MOV", "MKV"]
 app.config['MAX_CONTENT_LENGTH'] = (10 * 1024 * 1024)
-app.config['ALLOWED_IMAGE_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF"]
 
 # Source: https://www.youtube.com/watch?v=6WruncSoCdI
 def allowed_media(filename):
@@ -80,28 +79,11 @@ def allowed_media(filename):
     else:
         return False
 
-def allowed_image_media(filename):
-    if not "." in filename:
-        return False
-
-    ext = filename.rsplit(".", 1)[1]
-
-    if ext.upper() in app.config['ALLOWED_IMAGE_EXTENSIONS']:
-        return True
-    else:
-        return False
-
 # Source: https://stackoverflow.com/questions/19459236/how-to-handle-413-request-entity-too-large-in-python-flask-server
 @app.errorhandler(413)
 def request_entity_too_large(error):
     flash('That file is too large.\n\nIt exceeded the maximum size of 10MB.')
-    return redirect(url_for('user_account'))
-
-# Customizes the "not found" error
-@app.errorhandler(404)
-def page_not_found(error):
-    return render_template('page_not_found.html')
-
+    return redirect(url_for('user_timeline'))
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -131,10 +113,11 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return self.username
 
-# username_1 and username_2 based on alphabetical order
+# username_1 < username_2
 # username_1 (relationship) username_2
 # No row in table -> no relationship
 class RelationshipType(enum.Enum):
+    NO_RELATIONSHIP = 0 # Used for backend purposes, not stored in db
     SENT_REQUEST = 1
     RECEIVED_REQUEST = 2
     FRIEND = 3
@@ -163,11 +146,10 @@ class Comment(db.Model):
     original_comment_time = db.Column(db.TIMESTAMP, nullable=False)
     last_edit_time = db.Column(db.TIMESTAMP, nullable=True)
 
-class Share(db.Model):
+class Repost(db.Model):
     post_id = db.Column(db.Integer, nullable=False, primary_key=True)
-    username_receiver = db.Column(db.String(1024), nullable=False, primary_key=True)
-    username_sender = db.Column(db.String(1024), nullable=False, primary_key=True)
-    shared_time = db.Column(db.TIMESTAMP, nullable=False)
+    username = db.Column(db.String(1024), nullable=False, primary_key=True)
+    repost_time = db.Column(db.TIMESTAMP, nullable=False)
 
 class PostLikes(db.Model):
     post_id = db.Column(db.Integer, nullable=False, primary_key=True)
@@ -482,12 +464,10 @@ def user_timeline():
     # Retrieves the information associated with the current user to display on the account page
     queried_user = User.query.filter_by(username = current_user.username).first()
 
-    # Get personal posts and order by timestamp
     user_timeline = Post.query.filter_by(username = current_user.username)
-    user_timeline = user_timeline.order_by(Post.original_post_time.desc())
-    user_timeline = user_timeline.all()
+    user_timeline = user_timeline.order_by(Post.original_post_time.desc()).all()
 
-    # TODO: Get shared posts and order with user posts
+    # TODO: Reorder with reposts
 
     return render_template('personal_timeline.html', timeline = user_timeline, user = queried_user)
 
@@ -503,15 +483,15 @@ def submit_post():
         new_post_id = randrange(pow(2, 31) - 1)
 
     new_post = Post(
-        post_id = new_post_id,
-        username = current_user.username,
-        post_text = request.form.get('post_text'),
-        num_likes = 0,
-        num_shares = 0,
-        num_comments = 0,
-        original_post_time = datetime.now(),
-        last_edit_time = None,
-        post_media = ""
+      post_id = new_post_id,
+      username = current_user.username,
+      post_text = request.form.get('post_text'),
+      num_likes = 0,
+      num_shares = 0,
+      num_comments = 0,
+      original_post_time = datetime.now(),
+      last_edit_time = None,
+      post_media = ""
     )
 
     # Reads in the media attached to a post
@@ -544,16 +524,23 @@ def submit_post():
 @app.route('/home/timeline/delete_post/<post_to_delete_id>')
 @login_required
 def delete_post(post_to_delete_id):
-    post_database_table = Post.query.all()
-    for post in post_database_table:
-        if (post.post_id == int(post_to_delete_id)):
-            db.session.delete(post)
-            db.session.commit()
+    post_id = int(post_to_delete_id)
+    post = Post.query.filter_by(post_id = int(post_to_delete_id))
+
+    if post.username == current_user.username: # Owned post
+        db.session.delete(post)
+        db.session.commit()
+    else: # Repost
+        repost = Repost.query.filter_by(post_id = post_id, 
+          username = current_user.username).first()
+        db.session.delete(repost)
+        db.session.commit()
+
     return redirect(url_for('user_timeline'))
 
-#***************
+#*******************
 #***Edit*post***
-#***************
+#*******************
 @app.route('/home/timeline/edit_post/prompt/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post_prompt(post_to_edit_id):
@@ -571,9 +558,9 @@ def edit_post_prompt(post_to_edit_id):
 
     return render_template('edit_timeline_post.html', post_to_edit_id=post_to_edit_id, user = queried_user, original_post_content=original_post_content, original_post_attachment=original_post_attachment)
 
-#***********************
+#*************************
 #***Edit*post*(cont.)***
-#***********************
+#*************************
 @app.route('/home/timeline/edit_post/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_to_edit_id):
@@ -604,7 +591,6 @@ def edit_post(post_to_edit_id):
     
     db.session.commit()
 
-
     return redirect(url_for('user_timeline'))
 
 #***********************
@@ -625,7 +611,7 @@ def user_account():
     # Retrieves the information associated with the current user to display on the account page
     queried_user = User.query.filter_by(username = current_user.username).first()
 
-    return render_template('account.html', user = queried_user)
+    return render_template('account.html')
 
 #***********************
 #***User's*about*page***
@@ -698,6 +684,125 @@ def edit_account():
 
     return redirect(url_for('user_settings'))
 
+#*************************
+#***User's*friends*page***
+#*************************
+@app.route('/home/account/friends')
+@login_required
+def user_friends():
+    friends, sent_requests, received_requests = [], [], []
+
+    # Friends
+    friends_1 = Relationship.query.filter_by(
+      username_1 = current_user.username, 
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    friends_2 = Relationship.query.filter_by(
+      username_2 = current_user.username,
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    for friend in friends_1:
+        friends.append(friend.username_2)
+    for friend in friends_2:
+        friends.append(friend.username_1)
+
+    # Users you have sent a friend request
+    sent_requests_1 = Relationship.query.filter_by(
+      username_1 = current_user.username,
+      relationship_type = RelationshipType.SENT_REQUEST
+    ).all()
+    sent_requests_2 = Relationship.query.filter_by(
+      username_2 = current_user.username, 
+      relationship_type = RelationshipType.RECEIVED_REQUEST
+    ).all()
+    for receiver in sent_requests_1:
+        sent_requests.append(receiver.username_2)
+    for receiver in sent_requests_2:
+        sent_requests.append(receiver.username_1)
+
+    # Users you have received a friend request from
+    received_requests_1 = Relationship.query.filter_by(
+      username_1 = current_user.username,
+      relationship_type = RelationshipType.RECEIVED_REQUEST
+    ).all()
+    received_requests_2 = Relationship.query.filter_by(
+      username_2 = current_user.username,
+      relationship_type = RelationshipType.SENT_REQUEST
+    ).all()
+    for sender in received_requests_1:
+        received_requests.append(sender.username_2)
+    for sender in received_requests_2:
+        received_requests.append(sender.username_1)
+
+
+    return render_template('friends.html', friends=friends, 
+      received_requests=received_requests, sent_requests=sent_requests)
+
+#***************************************
+#***Change relationship between users***
+#***************************************
+@app.route('/modify_relationship/<username>?redirect=<redirect_page>')
+@login_required
+def modify_relationship(username, redirect_page):
+    # current_user (new_relationship) foreign_user
+    foreign_user = User.query.filter_by(username = username).first()
+    new_relationship = request.form.get('new_relationship')
+
+    # Page was accessed by typing in the url
+    if new_relationship == None:
+        flash('You do not have permission to use that url')
+        return redirect(url_for('user_timeline'))
+
+    # Change database to reflect new relationship between users
+
+#************
+#***Search***
+#************
+@app.route('/search', methods=['GET', 'POST'])
+@login_required
+def search():
+    username = request.form.get('search_bar_input')
+    foreign_user = User.query.filter_by(username = username).first()
+
+    if foreign_user == None:
+        flash('There is no account with that username.')
+        return redirect(url_for('user_timeline'))
+
+    if foreign_user.username == current_user.username:
+        return redirect(url_for('user_timeline'))
+
+    return redirect(url_for('foreign_timeline', username=username))
+
+#***********************
+#***Foreign*Timeline****
+#***********************
+@app.route('/user/<username>')
+@login_required
+def foreign_timeline(username):
+    foreign_user = User.query.filter_by(username = username).first()
+
+    # Determine order in database
+    username_1, username_2 = current_user.username, foreign_user.username
+    if current_user.username > foreign_user.username:
+        username_1 = foreign_user.username
+        username_2 = current_user.username
+    relationship = Relationship.query.filter_by(username_1 = username_1,
+      username_2 = username_2).first()
+
+    # Not friends
+    if relationship == None:
+        return render_template('foreign_timeline_locked.html', username=username)
+    if relationship.relationship_type != RelationshipType.FRIEND:
+        return render_template('foreign_timeline_locked.html', username=username)
+
+    foreign_timeline = Post.query.filter_by(username = foreign_user.username)
+    foreign_timeline = foreign_timeline.order_by(Post.original_post_time.desc())
+    foreign_timeline = foreign_timeline.all()
+
+    # TODO: Order with reposts
+
+    return render_template('foreign_timeline.html', username=username, 
+      timeline = foreign_timeline)
 
 #*****************
 #***Driver*code***
