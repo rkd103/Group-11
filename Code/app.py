@@ -1,8 +1,9 @@
 #**********************
 #***Library*Includes***
 #**********************
+from tempfile import tempdir
 from requests import post
-from flask import Flask, render_template, redirect, request, url_for, flash, session
+from flask import Flask, render_template, redirect, request, url_for, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 from rstr import Rstr, rstr, xeger
@@ -135,6 +136,7 @@ class User(db.Model, UserMixin):
 # username_1 (relationship) username_2
 # No row in table -> no relationship
 class RelationshipType(enum.Enum):
+    NO_RELATIONSHIP = 0 # Used only for backend purposes, not stored in db
     SENT_REQUEST = 1
     RECEIVED_REQUEST = 2
     FRIEND = 3
@@ -165,8 +167,7 @@ class Comment(db.Model):
 
 class Share(db.Model):
     post_id = db.Column(db.Integer, nullable=False, primary_key=True)
-    username_receiver = db.Column(db.String(1024), nullable=False, primary_key=True)
-    username_sender = db.Column(db.String(1024), nullable=False, primary_key=True)
+    username = db.Column(db.String(1024), nullable=False, primary_key=True)
     shared_time = db.Column(db.TIMESTAMP, nullable=False)
 
 class PostLikes(db.Model):
@@ -267,6 +268,25 @@ class LoginForm(FlaskForm):
     account_identifier = StringField(validators=[InputRequired()])
     password = PasswordField(validators=[InputRequired()])
     submit = SubmitField('Login')
+
+#**********************
+#***Helper*functions***
+#**********************
+
+def verify_friendship(username_1, username_2):
+    if username_1 > username_2:
+        temp = username_2
+        username_2 = username_1
+        username_1 = temp
+    
+    relationship = Relationship.query.filter_by(username_1 = username_1,
+      username_2 = username_2).first()
+
+    if relationship == None:
+        return False
+    if relationship.relationship_type != RelationshipType.FRIEND:
+        return False
+    return True
 
 #****************************************
 #***Web*Application*Pages*and*Routines***
@@ -479,9 +499,6 @@ def register():
 @app.route('/home/timeline', methods=['GET', 'POST'])
 @login_required
 def user_timeline():
-    # Retrieves the information associated with the current user to display on the account page
-    queried_user = User.query.filter_by(username = current_user.username).first()
-
     # Get personal posts and order by timestamp
     user_timeline = Post.query.filter_by(username = current_user.username)
     user_timeline = user_timeline.order_by(Post.original_post_time.desc())
@@ -489,7 +506,7 @@ def user_timeline():
 
     # TODO: Get shared posts and order with user posts
 
-    return render_template('personal_timeline.html', timeline = user_timeline, user = queried_user)
+    return render_template('personal_timeline.html', timeline = user_timeline, user = current_user)
 
 #***********************
 #***Submit*a*new*post***
@@ -619,13 +636,12 @@ def logout():
 #*************************
 #***User's*account*page***
 #*************************
+@app.route('/home')
+@app.route('/home/')
 @app.route('/home/account')
 @login_required
 def user_account():
-    # Retrieves the information associated with the current user to display on the account page
-    queried_user = User.query.filter_by(username = current_user.username).first()
-
-    return render_template('account.html', user = queried_user)
+    return render_template('account.html', user = current_user)
 
 #***********************
 #***User's*about*page***
@@ -633,10 +649,71 @@ def user_account():
 @app.route('/home/account/about')
 @login_required
 def about():
-    # Retrieves the information associated with the current user to display on the account page
-    queried_user = User.query.filter_by(username = current_user.username).first()
+    return render_template('about.html', user = current_user)
 
-    return render_template('about.html', user = queried_user)
+@app.route('/home/account/friends')
+@login_required
+def user_friends():
+    friends, sent_requests, received_requests = [], [], []
+
+    # Friends
+    friends_1 = Relationship.query.filter_by(
+      username_1 = current_user.username, 
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    friends_2 = Relationship.query.filter_by(
+      username_2 = current_user.username,
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    for relationship in friends_1:
+        friends.append(
+          User.query.filter_by(username = relationship.username_2).first()
+        )
+    for relationship in friends_2:
+        friends.append(
+          User.query.filter_by(username = relationship.username_1).first()
+        )
+
+    # Users you have sent a friend request
+    sent_requests_1 = Relationship.query.filter_by(
+      username_1 = current_user.username,
+      relationship_type = RelationshipType.SENT_REQUEST
+    ).all()
+    sent_requests_2 = Relationship.query.filter_by(
+      username_2 = current_user.username, 
+      relationship_type = RelationshipType.RECEIVED_REQUEST
+    ).all()
+    for relationship in sent_requests_1:
+        sent_requests.append(
+          User.query.filter_by(username = relationship.username_2).first()
+        )
+    for relationship in sent_requests_2:
+        sent_requests.append(
+          User.query.filter_by(username = relationship.username_1).first()
+        )
+
+    # Users you have received a friend request from
+    received_requests_1 = Relationship.query.filter_by(
+      username_1 = current_user.username,
+      relationship_type = RelationshipType.RECEIVED_REQUEST
+    ).all()
+    received_requests_2 = Relationship.query.filter_by(
+      username_2 = current_user.username,
+      relationship_type = RelationshipType.SENT_REQUEST
+    ).all()
+    for relationship in received_requests_1:
+        received_requests.append(
+          User.query.filter_by(username = relationship.username_2).first()
+        )
+    for relationship in received_requests_2:
+        received_requests.append(
+          User.query.filter_by(username = relationship.username_1).first()
+        )
+
+    return render_template(
+      'user_friends.html', user = current_user, friends = friends, 
+      sent_requests = sent_requests, received_requests = received_requests
+    )
 
 #*****************************
 #***User's*account*settings***
@@ -644,10 +721,7 @@ def about():
 @app.route('/home/account/settings', methods=['GET', 'POST'])
 @login_required
 def user_settings():
-    # Retrieves the information associated with the current user to display on the account page
-    queried_user = User.query.filter_by(username = current_user.username).first()
-    
-    return render_template('settings.html', user = queried_user)
+    return render_template('settings.html', user = current_user)
 
 #******************************
 #***Account*Settings*Editing***
@@ -687,8 +761,6 @@ def edit_account():
                 else:
                     flash('That file extension is not allowed.')
                     return redirect(url_for('user_settings'))
-            else:
-                None
 
     queried_user.user_description = request.form.get('user_description')
     queried_user.objective = request.form.get('objective')
@@ -698,6 +770,209 @@ def edit_account():
 
     return redirect(url_for('user_settings'))
 
+#**********************
+#***Search*for*Users***
+#**********************
+@app.route('/search', methods=['GET', 'POST'])
+@login_required
+def search():
+    username = request.form.get('search_bar_input')
+    foreign_user = User.query.filter_by(username = username).first()
+
+    if foreign_user == None:
+        flash("The queried user does not exist.")
+        return redirect(url_for('user_account'))
+    if current_user.username == foreign_user.username:
+        flash("You are currently logged in. Search for another user.")
+        return redirect(url_for('user_account'))
+
+    return redirect(url_for('foreign_account', username = username))
+
+#**************************
+#***Foreign*User*Account***
+#**************************
+@app.route('/user/<username>', methods=['GET', 'POST'])
+@login_required
+def foreign_account(username):
+    foreign_user = User.query.filter_by(username = username).first()
+    if current_user.username == foreign_user.username:
+        return redirect(url_for('user_timeline'))
+
+    # Determine order in database
+    username_1, username_2 = current_user.username, foreign_user.username
+    if current_user.username > foreign_user.username:
+        username_1 = foreign_user.username
+        username_2 = current_user.username
+
+    relationship = Relationship.query.filter_by(
+      username_1 = username_1, username_2 = username_2
+    ).first()
+
+    # Not friends
+    pending_request = False
+    if relationship == None:
+        return render_template(
+          'foreign_account_locked.html', user = current_user, 
+          foreign_user = foreign_user, pending_request = pending_request
+        )
+    if relationship.relationship_type != RelationshipType.FRIEND:
+        if username_1 == current_user.username:
+            if relationship.relationship_type == RelationshipType.SENT_REQUEST:
+                pending_request = True
+        else:
+            if relationship.relationship_type == RelationshipType.RECEIVED_REQUEST:
+                pending_request = True
+        return render_template(
+          'foreign_account_locked.html', user = current_user, 
+          foreign_user = foreign_user, pending_request = pending_request
+        )
+
+    # Friends
+    return render_template('foreign_account.html', user = current_user, 
+      foreign_user = foreign_user)
+
+@app.route('/user/<username>/timeline')
+@login_required
+def foreign_timeline(username):
+    foreign_user = User.query.filter_by(username = username).first()
+
+    if not verify_friendship(current_user.username, foreign_user.username):
+        flash('You must be friends to view that page.')
+        return redirect(url_for('foreign_account', username = foreign_user.username))
+    
+    # TODO: Get posts + reposts and order by timestamp
+    timeline = None
+
+    return render_template('foreign_timeline.html', user = current_user, 
+      foreign_user = foreign_user, timeline = timeline)
+
+@app.route('/user/<username>/about')
+@login_required
+def foreign_about(username):
+    foreign_user = User.query.filter_by(username = username).first()
+
+    if not verify_friendship(current_user.username, foreign_user.username):
+        flash('You must be friends to view that page.')
+        return redirect(url_for(
+          'foreign_account', username = foreign_user.username
+        ))
+    
+    return render_template('foreign_about.html', user = current_user, 
+      foreign_user = foreign_user)
+
+@app.route('/user/<username>/friends')
+@login_required
+def foreign_friends(username):
+    foreign_user = User.query.filter_by(username = username).first()
+
+    if not verify_friendship(current_user.username, foreign_user.username):
+        flash('You must be friends to view that page.')
+        return redirect(url_for('foreign_account', username = foreign_user.username))
+
+    # Friends
+    friends = []
+    friends_1 = Relationship.query.filter_by(
+      username_1 = foreign_user.username, 
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    friends_2 = Relationship.query.filter_by(
+      username_2 = foreign_user.username,
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    for relationship in friends_1:
+        friends.append(
+          User.query.filter_by(username = relationship.username_2).first()
+        )
+    for relationship in friends_2:
+        friends.append(
+          User.query.filter_by(username = relationship.username_1).first()
+        )
+
+    return render_template('foreign_friends.html', user = current_user, 
+      foreign_user = foreign_user, friends = friends)
+
+# TODO: Redirect to previous page
+@app.route('/modify_relationship/<username>', methods=['GET', 'POST'])
+@login_required
+def modify_relationship(username):
+    if request.method != 'POST':
+        flash('You do not have permission to access that url.')
+        return redirect(url_for('user_account'))
+
+    # current_user (relationship) foreign_user
+    new_relationship_type = request.form.get('new_relationship_type')
+    foreign_user = User.query.filter_by(username = username).first()
+    
+    # Determine order of usernames in database
+    inverted_relationship = False
+    username_1, username_2 = current_user.username, foreign_user.username
+    if current_user.username > foreign_user.username:
+        username_1 = foreign_user.username
+        username_2 = current_user.username
+        inverted_relationship = True
+
+    new_relationship_type = RelationshipType[new_relationship_type]
+    if inverted_relationship: # foreign_user (relationship) current_user
+        if new_relationship_type == RelationshipType.SENT_REQUEST:
+            new_relationship_type = RelationshipType.RECEIVED_REQUEST
+
+    current_relationship = Relationship.query.filter_by(
+      username_1 = username_1, username_2 = username_2
+    ).first()
+
+    # This prevents someone from modifying form data with inspect
+    # and adding friends that way.
+    if new_relationship_type == RelationshipType.FRIEND:
+        return redirect(url_for('user_account'))
+    
+    # TODO: remove unnecessary deletions
+    if current_relationship == None:
+        new_relationship = Relationship(
+          username_1 = username_1, username_2 = username_2,
+          relationship_type = new_relationship_type
+        )
+        db.session.add(new_relationship)
+        db.session.commit()
+    elif new_relationship_type == RelationshipType.NO_RELATIONSHIP:
+        db.session.delete(current_relationship)
+        db.session.commit()
+    # Mutual friend requests were sent (a user accepting a friend request
+    # functions as them sending a friend request to the sender which is
+    # automatically accepted)
+    else:
+        username_1 = current_relationship.username_1
+        username_2 = current_relationship.username_2
+        relationship_type = RelationshipType.FRIEND
+
+        db.session.delete(current_relationship)
+        new_relationship = Relationship(
+          username_1 = username_1, username_2 = username_2, 
+          relationship_type = relationship_type
+        )
+        db.session.add(new_relationship)
+        db.session.commit()
+
+    return redirect(url_for('user_account'))
+
+@app.route('/<post_id>/comments')
+@login_required
+def comments(post_id):
+    pass
+
+@app.route('/share_post/<post_id>')
+@login_required
+def share_post():
+    pass
+
+@app.route('/modify_post_likes/<post_id>')
+@login_required
+def modify_post_likes(post_id):
+    pass
+
+@app.route('/modify_comment_likes/<post_id>')
+@login_required
+def modify_comment_likes(comment_id):
+    pass
 
 #*****************
 #***Driver*code***

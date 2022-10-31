@@ -41,7 +41,7 @@
                                                                                                                     title="Home">
             </a>
             
-            <form action="/home/search" method="post">
+            <form action="/search" method="post">
 
                 <section id="search_bar">
                     <input type="text" name="search_bar_input" placeholder="Search Hand-in-Hand" style="border-style: none;
@@ -54,7 +54,7 @@
                                                                                                         width: 48%;
                                                                                                         padding-left: 45px;
                                                                                                         padding-block: 12px;"
-                                                                                                                                        title="Search Bar" onlick="submit" pattern=".{1,1024}">
+                                                                                                                                        title="Search Bar: The maximum query length is 1024 characters. Spaces, tabs, carriage returns, and newline characters are not allowed." onlick="submit" pattern="[^\n\t\r\s]{1,1024}">
                     <input type="submit" style="display: none" />
                     <img src="/static/search_icon.png" width="24px" height="24px" style=   "left: 26%;
                                                                                             position: absolute;
@@ -272,7 +272,6 @@
                         width: fit-content;
                         height: auto;">
             {% block body %}
-
             {% endblock %}
         </body>
 </html>
