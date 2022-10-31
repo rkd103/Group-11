@@ -147,9 +147,9 @@
         {% endif %}
 
         <div class="timeline_post_footer">
-            <div> <br/> <img src="/static/like_icon.png" width="20px" title="Likes"> {{ timeline_post.num_likes }} </div>
-            <div> <br/> <img src="/static/share_icon.png" width="20px" title="Shares"> {{ timeline_post.num_shares }} </div>
-            <div> <br/> <img src="/static/comment_count_icon.png" width="20px" title="Comments"> {{ timeline_post.num_comments }} </div>
+            <button class="likes"> <img src="/static/like_icon.png" width="20px" title="Likes"> {{ timeline_post.num_likes }} </button>
+            <button class="shares"> <img src="/static/share_icon.png" width="20px" title="Shares"> {{ timeline_post.num_shares }} </button>
+            <button class=""> <img src="/static/comment_count_icon.png" width="20px" title="Comments"> {{ timeline_post.num_comments }} </button>
         </div>
     </div>
     {% endfor %}
