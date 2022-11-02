@@ -760,6 +760,14 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
                             last_name = 'Meredith',
                             email = 'jm2@gmail.com'
                         ))
+    flask_login.logout_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
 
     # Searches for the user jm2
     response = app.test_client().post(url, data=data, follow_redirects=True)
