@@ -9,6 +9,7 @@ import flask_login
 from Code import app
 from Code.app import app, RegisterForm
 
+
 #*************************
 #***Fixture Definitions***
 #*************************
@@ -63,7 +64,7 @@ def test_valid_user_login_and_logout():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -74,7 +75,7 @@ def test_valid_user_login_and_logout():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import User, bcrypt
     # Creates a temporary user to interface with the web application
     user_1 = User   (
                         username = 'js1',
@@ -165,7 +166,7 @@ def account_creation():
 
     # Imports the instance of the database (db) initialized in the file "app.py"
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db, User, bcrypt, Flask
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -228,7 +229,7 @@ def test_valid_credential_retrival():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -239,7 +240,7 @@ def test_valid_credential_retrival():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import User, bcrypt
     # Creates a temporary user to interface with the web application
     user_1 = User   (
                         username = 'js1',
@@ -346,7 +347,7 @@ def test_valid_user_post_and_timeline_visibility():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -357,7 +358,7 @@ def test_valid_user_post_and_timeline_visibility():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import User, bcrypt
     # Creates a temporary user to interface with the web application
     user_1 = User   (
                         username = 'js1',
@@ -412,7 +413,7 @@ def test_valid_user_post_and_timeline_visibility():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    # Ignore 
+    from Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -468,7 +469,7 @@ def test_valid_status_deletion_and_editing():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -479,7 +480,7 @@ def test_valid_status_deletion_and_editing():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import User, bcrypt
     # Creates a temporary user to interface with the web application
     user_1 = User   (
                         username = 'js1',
@@ -532,7 +533,7 @@ def test_valid_status_deletion_and_editing():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    # Ignore 
+    from Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -626,7 +627,7 @@ def test_valid_media_attachment():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -637,7 +638,7 @@ def test_valid_media_attachment():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import User, bcrypt
     # Creates a temporary user to interface with the web application
     user_1 = User   (
                         username = 'js1',
@@ -754,7 +755,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -765,7 +766,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import User, bcrypt
     # Creates a temporary user to interface with the web application
     user_1 = User   (
                         username = 'js1',
@@ -903,7 +904,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -914,7 +915,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import User, bcrypt
     # Creates a temporary user to interface with the web application
     user_1 = User   (
                         username = 'js1',
@@ -1196,7 +1197,7 @@ def test_reject_friend_request():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    # Ignore 
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -1207,7 +1208,7 @@ def test_reject_friend_request():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    # Ignore 
+    from Code.app import User, bcrypt
     # Creates a temporary user to interface with the web application
     user_1 = User   (
                         username = 'js1',
