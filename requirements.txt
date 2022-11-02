@@ -1,0 +1,14 @@
+flask 
+flask_sqlalchemy 
+sqlalchemy 
+rstr 
+flask_mail
+flask_login 
+flask_bcrypt 
+flask_wtf 
+wtforms 
+wtforms.validators 
+werkzeug 
+pytest 
+wtforms_test 
+operator
