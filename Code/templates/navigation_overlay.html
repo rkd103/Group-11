@@ -201,7 +201,7 @@
                 // Check the post and submit if valid
                 function verify_post() 
                 {
-                    document.getElementById("post_text_box").click()
+                    document.getElementById("post_text_box").click();
                     let text = document.getElementById("post_text_box").value;
                     let num_chars = text.length;
                     if (num_chars == 0 || num_chars > 1024) {
@@ -241,15 +241,15 @@
             <section class="close_button" onclick="off()" title="Cancel Status">
                 &times;
             </section title="Attach video or images">
-                                                                                                                            <section class="add_attribute_message">
+            <section class="add_attribute_message">
                 Add to your post
             </section>
             
             <section class="create_post_container_submit_button">
-                <input type="submit" class="post_submit_button" style="left: 45%;
+                <input type="submit" class="post_submit_button" style=  "left: 45%;
                                                                         bottom: 0%;
                                                                         position: absolute;" 
-                                                                                                value="Post" id="post_submit_button" name="post_submit_button" title="Submit Status" onclick="verify_post()">
+                                                                        value="Post" id="post_submit_button" name="post_submit_button" title="Submit Status" onclick="verify_post()">
             </section>
 
         </section>
@@ -272,6 +272,7 @@
                         width: fit-content;
                         height: auto;">
             {% block body %}
+
             {% endblock %}
         </body>
 </html>
