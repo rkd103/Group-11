@@ -6,7 +6,7 @@ from atexit import register
 import pytest
 import flask_login
 # Imports the instance of the web application instantiated in the file "app.py"
-from Code.app.py import app, RegisterForm
+from Code import Code.app.app
 
 #*************************
 #***Fixture Definitions***
