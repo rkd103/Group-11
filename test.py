@@ -233,7 +233,7 @@ def account_creation():
     assert b'Mississippi State University | CSE 4214: Introduction to Software Engineering | Group 11' in response.data
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
 
     # Deletes the context object
     test_request_context.pop()
@@ -346,6 +346,7 @@ def test_valid_credential_retrival():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
+    db.drop_all()
     
 
     # Deletes the context object
@@ -473,6 +474,7 @@ def test_valid_user_post_and_timeline_visibility():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
+    db.drop_all()
     
 
     # Deletes the context object
