@@ -593,20 +593,7 @@ def test_valid_media_attachment():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
-    
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1) 
+    from Code.app import User, bcrypt 
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
