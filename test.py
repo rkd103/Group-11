@@ -405,6 +405,7 @@ def test_valid_user_post_and_timeline_visibility():
                                     middle_name = '',
                                     last_name = 'Smith',
                                     email = 'js1@gmail.com'
+                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
