@@ -248,6 +248,14 @@ def test_valid_credential_retrival():
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
     # Source: https://github.com/pytest-dev/pytest-flask/issues/40
+    flask_login.login_user(     User   (
+                                    username = 'js1',
+                                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                    first_name = 'James',
+                                    middle_name = '',
+                                    last_name = 'Smith',
+                                    email = 'js1@gmail.com'
+                                ))
     
 
     # Initializes a response object to automate testing
