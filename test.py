@@ -346,7 +346,7 @@ def test_valid_credential_retrival():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
     
 
     # Deletes the context object
