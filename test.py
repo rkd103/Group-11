@@ -689,7 +689,7 @@ def test_valid_media_attachment():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-
+    db.drop_all()
     
 
     # Deletes the context object
