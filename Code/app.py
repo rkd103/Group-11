@@ -985,4 +985,4 @@ if __name__ == "__main__":
         # db.drop_all()      
         db.create_all()
     # Specifies the localhost
-    app.run(host='0.0.0.0', )
+    app.run(host='0.0.0.0', debug=False,)
