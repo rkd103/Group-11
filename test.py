@@ -863,6 +863,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
                             middle_name = '',
                             last_name = 'Meredith',
                             email = 'jm2@gmail.com'
+                        ))
 
     
     # Initializes a response object to automate testing
