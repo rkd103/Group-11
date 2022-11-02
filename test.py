@@ -671,7 +671,6 @@ def test_valid_media_attachment():
     assert b"Original Post Time" not in response.data
     assert b"Edit Time" not in response.data
     assert b"test_file_upload.txt" not in response.data
-    assert b'That file extension is not allowed.' in response.data
 
     # </TESTING PLACEHOLDER> : testing statements end
 
