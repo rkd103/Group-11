@@ -566,7 +566,7 @@ def test_valid_status_deletion_and_editing():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
     
 
     # Deletes the context object
