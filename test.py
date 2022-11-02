@@ -142,71 +142,6 @@ def test_valid_user_login_and_logout():
     # Deletes the context object
     test_request_context.pop()
 
-#*************
-#***Test 03***
-#*************
-# Does not work; there is an issue with the data being passed to the register form; the test client populates the variables but the web application remains unresponsive
-def account_creation():
-    '''
-    Ensures that the create account feature runs successfully
-    '''
-
-    # Imports the instance of the database (db) initialized in the file "app.py"
-    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import db, User, bcrypt, Flask
-
-    # Creates a context object to set up the web application's context
-    test_request_context = app.test_request_context()
-
-    # Appends the context object
-    test_request_context.push()
-
-    # Builds the database and creates the tables
-    db.create_all()
-
-    # Initializes a response object to automate testing
-    # Build the arguments that will be passed to the response object
-    url = '/register'
-    data = {
-        "first_name": "John",
-        "middle_name": "ddd",
-        "last_name": "Doe",
-        "username": "jd123",
-        "email": "jd123@gmail.com",
-        "password": "aA1@sldkepwnwkf",
-        "password_confirmation": "aA1@sldkepwnwkf",
-    }
-    data = dict(
-        first_name="John",
-        middle_name="ddd",
-        last_name="Doe",
-        username="jd123",
-        email="jd123@gmail.com",
-        password="aA1@sldkepwnwkf",
-        password_confirmation="aA1@sldkepwnwkf",
-    )
-
-    # Does not work
-    response = app.test_client().post(url, data=data, follow_redirects=True)
-
-    # A successfully loaded page should return a response status code of 200
-    assert response.status_code == 200
-
-    # Tests whether the substring appears in the webpage's output
-    assert b'Welcome to Hand-in-Hand! Login to access your account.' in response.data
-    assert b'With hands clasped, we cohabitate in close association.' in response.data
-    assert b'Hand-in-Hand' in response.data
-    assert b'Create new account' in response.data
-    assert b'Forgot password?' in response.data
-    assert b'Log In' in response.data
-    assert b'Mississippi State University | CSE 4214: Introduction to Software Engineering | Group 11' in response.data
-
-    # Cleans the database dropping its tables
-    
-
-
-    # Deletes the context object
-    test_request_context.pop()
 
 #*************
 #***Test 03***
@@ -1379,3 +1314,29 @@ def test_reject_friend_request():
 
     # Deletes the context object
     test_request_context.pop()
+
+
+#******************
+#***User Story D***
+#******************
+
+#*************
+#***Test 10***
+#*************
+'''
+Ensures that a user can like another user's post.
+'''
+
+#*************
+#***Test 11***
+#*************
+'''
+Ensures that a user can share another user's post.
+'''
+
+#*************
+#***Test 12***
+#*************
+'''
+Ensures that a user can comment on another user's post.
+'''
