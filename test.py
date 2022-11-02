@@ -847,9 +847,6 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
 
     # Builds the database and creates the tables
     db.create_all()
-
-    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
         
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -872,8 +869,6 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
                                 last_name = 'Smith',
                                 email = 'js1@gmail.com'
                             ))
-    flask_login.logout_user()
-
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
