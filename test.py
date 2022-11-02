@@ -864,7 +864,16 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
                             last_name = 'Meredith',
                             email = 'jm2@gmail.com'
                         ))
+    flask_login.logout_user()
 
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -887,6 +896,23 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     assert b'Timeline' in response.data
     assert b'Settings' in response.data
     assert b'js1' in response.data
+
+    flask_login.login_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
