@@ -362,19 +362,7 @@ def test_valid_user_post_and_timeline_visibility():
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
     from Code.app import User, bcrypt
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)        
+      
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -390,7 +378,28 @@ def test_valid_user_post_and_timeline_visibility():
                                     email = 'js1@gmail.com'
                             ))
     
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "js123",
+        "password": "aA1@sldkepwnwkf",
+    }
 
+    # The response statement requires the necessary argument "follow_redirects=True"
+    # This allows the web application to load the response page when provided input data
+    # In the case of this test, it permits the website to navigate to the user's account from the login page
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # First, tests whether the web application successfully loaded the page
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b'About' in response.data
+    assert b'Friends' in response.data
+    assert b'Timeline' in response.data
+    assert b'Settings' in response.data
+    assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
     from Code.app import Post, randrange, datetime
