@@ -6,11 +6,12 @@ from atexit import register
 import pytest
 import flask_login
 # Imports the instance of the web application instantiated in the file "app.py"
-from Code import app.py
+from Code import app
 
 #*************************
 #***Fixture Definitions***
 #*************************
+app.create_app()
 
 
 #******************
