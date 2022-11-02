@@ -76,21 +76,7 @@ def test_valid_user_login_and_logout():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)
-        
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begi
 
@@ -243,20 +229,6 @@ def test_valid_credential_retrival():
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
     from Code.app import User, bcrypt
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)
-        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -361,8 +333,7 @@ def test_valid_user_post_and_timeline_visibility():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
-      
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -468,20 +439,6 @@ def test_valid_status_deletion_and_editing():
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
     from Code.app import User, bcrypt
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)
-        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -624,20 +581,6 @@ def test_valid_media_attachment():
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
     from Code.app import User, bcrypt
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)
-        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -753,30 +696,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
     from Code.app import User, bcrypt
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-    user_2 = User   (
-                    username = 'jm2',
-                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                    first_name = 'Jane',
-                    middle_name = '',
-                    last_name = 'Meredith',
-                    email = 'jm2@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)
-        db.session.add(user_2)
         
-
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Directly loggs in a user using the specified paramters
@@ -902,29 +822,6 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
     from Code.app import User, bcrypt
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-    user_2 = User   (
-                    username = 'jm2',
-                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                    first_name = 'Jane',
-                    middle_name = '',
-                    last_name = 'Meredith',
-                    email = 'jm2@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)
-        db.session.add(user_2)
-        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -1195,30 +1092,7 @@ def test_reject_friend_request():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-    user_2 = User   (
-                    username = 'jm2',
-                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                    first_name = 'Jane',
-                    middle_name = '',
-                    last_name = 'Meredith',
-                    email = 'jm2@gmail.com'
-                    )
-
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)
-        db.session.add(user_2)
-        
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
