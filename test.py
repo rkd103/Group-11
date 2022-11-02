@@ -640,7 +640,7 @@ def test_valid_media_attachment():
     # The extension is valid, ergo it is accpeted
     filename = "test_file_upload.png"
     # Specifies a byte stream of data
-    file_byte_encoding = (io.BytesIO(b"iVBORw0KGgoAAAAo3OUtmVjPb0yHcu3y6UvBaXN/uRt5d/lnFDzwRyQs/dWptdC6kyObH1xQS1hPdENjL5BgZ5cqt8yj0X15MuRYsMdCM")
+    file_byte_encoding = (io.BytesIO(b"iVBORw0KGgoAAAAo3OUtmVjPb0yHcu3y6UvBaXN/uRt5d/lnFDzwRyQs/dWptdC6kyObH1xQS1hPdENjL5BgZ5cqt8yj0X15MuRYsMdCM"))
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
