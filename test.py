@@ -87,7 +87,7 @@ def test_valid_user_login_and_logout():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.commit()
 
@@ -252,7 +252,7 @@ def test_valid_credential_retrival():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.commit()
 
@@ -370,7 +370,7 @@ def test_valid_user_post_and_timeline_visibility():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.commit()
 
@@ -434,7 +434,7 @@ def test_valid_user_post_and_timeline_visibility():
     )
 
     # Saves the newly created post into the database
-    if (1):
+    if (0):
         db.session.add(new_post)
         db.session.commit()
 
@@ -492,7 +492,7 @@ def test_valid_status_deletion_and_editing():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.commit()
 
@@ -554,7 +554,7 @@ def test_valid_status_deletion_and_editing():
     )
 
     # Saves the newly created post into the database
-    if (1):
+    if (0):
         db.session.add(new_post)
         db.session.commit()
 
@@ -650,7 +650,7 @@ def test_valid_media_attachment():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.commit()
 
@@ -786,7 +786,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.add(user_2)
         db.session.commit()
@@ -935,7 +935,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.add(user_2)
         db.session.commit()
@@ -1228,7 +1228,7 @@ def test_reject_friend_request():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.add(user_2)
         db.session.commit()
