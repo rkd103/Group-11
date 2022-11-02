@@ -21,8 +21,24 @@ from Code.app import app, RegisterForm
 
 #*************
 #***Test 01***
-#*************
 #************* 
+def test_clean():
+    # Imports the instance of the database (db) initialized in the file "app.py"
+    from Code.app import db
+
+    # Creates a context object to set up the web application's context
+    test_request_context = app.test_request_context()
+    # Appends the context object
+    test_request_context.push()
+
+    # Builds the database and creates the tables
+    db.create_all()
+
+    # Cleans the database dropping its tables
+    
+
+    # Deletes the context object
+    test_request_context.pop()
 
 def test_load_login_page():
     '''
@@ -152,7 +168,7 @@ def test_valid_user_login_and_logout():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -217,7 +233,7 @@ def account_creation():
     assert b'Mississippi State University | CSE 4214: Introduction to Software Engineering | Group 11' in response.data
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -330,7 +346,7 @@ def test_valid_credential_retrival():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -457,7 +473,7 @@ def test_valid_user_post_and_timeline_visibility():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -614,7 +630,7 @@ def test_valid_status_deletion_and_editing():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -737,7 +753,7 @@ def test_valid_media_attachment():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -889,7 +905,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -1184,7 +1200,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -1432,7 +1448,7 @@ def test_reject_friend_request():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
