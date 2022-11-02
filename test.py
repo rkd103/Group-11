@@ -230,19 +230,24 @@ def test_valid_credential_retrival():
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
     from Code.app import User, bcrypt
 
+    user_1 = User   (
+                        username = 'js1',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'James',
+                        middle_name = '',
+                        last_name = 'Smith',
+                        email = 'js1@gmail.com'
+                    )
+
+    # Saves the newly created user into the database
+    if (1):
+        db.session.add(user_1) 
+
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
     # Source: https://github.com/pytest-dev/pytest-flask/issues/40
-    flask_login.login_user(     User   (
-                                    username = 'js1',
-                                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                                    first_name = 'James',
-                                    middle_name = '',
-                                    last_name = 'Smith',
-                                    email = 'js1@gmail.com'
-                                ))
     
 
     # Initializes a response object to automate testing
