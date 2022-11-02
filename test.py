@@ -390,19 +390,7 @@ def test_valid_user_post_and_timeline_visibility():
                                     email = 'js1@gmail.com'
                             ))
     
-    # Initializes a response object to automate testing
-    # Build the arguments that will be passed to the response object
-    url = '/login'
-    data = {
-        "account_identifier": "js123",
-        "password": "aA1@sldkepwnwkf",
-    }
 
-    # The response statement requires the necessary argument "follow_redirects=True"
-    # This allows the web application to load the response page when provided input data
-    # In the case of this test, it permits the website to navigate to the user's account from the login page
-    # Logs the user into their account
-    response = app.test_client().post(url, data=data, follow_redirects=True)
 
     # First, tests whether the web application successfully loaded the page
     # A successfully loaded page should return a response status code of 200
