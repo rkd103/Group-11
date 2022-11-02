@@ -10,5 +10,4 @@ wtforms
 wtforms.validators 
 werkzeug 
 pytest 
-wtforms_test 
-operator
+wtforms_test
