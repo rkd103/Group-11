@@ -112,7 +112,7 @@
 {% block body %}
     <!--Conditionally displays ther user's account image-->
     {% if foreign_user.profile_picture %}
-        <a href="{{ url_for('foreign_account', username = foreign_user.username) }}}">
+        <a href="{{ url_for('foreign_account', username = foreign_user.username) }}">
             <img class="user_account_image" src="/static/uploads/{{ foreign_user.profile_picture }}" width="48px" height="48px" title="User Account" style="width: 200px; height: 200px; position: absolute; top: 19%; left: 15%; border-radius: 50%; border-width: 5px; z-index: 1;">
         </a>
     {% else %}
