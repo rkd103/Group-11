@@ -715,6 +715,16 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # The user should only be logged in for the test
     # Source: https://github.com/pytest-dev/pytest-flask/issues/40
     flask_login.login_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
+    flask_login.logout_user()
+    
+    flask_login.login_user(     User   (
                                 username = 'js1',
                                 password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
                                 first_name = 'James',
@@ -751,16 +761,6 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     data = {
         'search_bar_input': "jm2",
     }
-
-    flask_login.login_user(     User   (
-                            username = 'jm2',
-                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                            first_name = 'Jane',
-                            middle_name = '',
-                            last_name = 'Meredith',
-                            email = 'jm2@gmail.com'
-                        ))
-    flask_login.logout_user()
 
     # Searches for the user jm2
     response = app.test_client().post(url, data=data, follow_redirects=True)
