@@ -2,7 +2,6 @@
 #***Library*Includes***
 #**********************
 from tempfile import tempdir
-from requests import post
 from flask import Flask, render_template, redirect, request, url_for, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
