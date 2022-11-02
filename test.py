@@ -7,7 +7,7 @@ import pytest
 import flask_login
 # Imports the instance of the web application instantiated in the file "app.py"
 from Code import app
-from Code.app import app, RegisterForm
+from Code.app import app, RegisterForm, account
 
 
 #*************************
@@ -87,9 +87,9 @@ def test_valid_user_login_and_logout():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
-        db.session.commit()
+        
 
     # <TESTING PLACEHOLDER> : testing statements begi
 
@@ -252,9 +252,9 @@ def test_valid_credential_retrival():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
-        db.session.commit()
+        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -370,9 +370,9 @@ def test_valid_user_post_and_timeline_visibility():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
-        db.session.commit()
+        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -434,9 +434,9 @@ def test_valid_user_post_and_timeline_visibility():
     )
 
     # Saves the newly created post into the database
-    if (1):
+    if (0):
         db.session.add(new_post)
-        db.session.commit()
+        
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -492,9 +492,9 @@ def test_valid_status_deletion_and_editing():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
-        db.session.commit()
+        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -554,9 +554,9 @@ def test_valid_status_deletion_and_editing():
     )
 
     # Saves the newly created post into the database
-    if (1):
+    if (0):
         db.session.add(new_post)
-        db.session.commit()
+        
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -650,9 +650,9 @@ def test_valid_media_attachment():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
-        db.session.commit()
+        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -786,10 +786,10 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -935,10 +935,10 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -1228,10 +1228,10 @@ def test_reject_friend_request():
                     )
 
     # Saves the newly created user into the database
-    if (1):
+    if (0):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
