@@ -29,15 +29,6 @@ def generate_password():
 
 # Source: https://www.geeksforgeeks.org/sending-emails-using-api-in-flask-mail/
 def send_email(recipient_email, email_subject_line, email_content):
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USERNAME'] = 'cse.4212.group.11@gmail.com'
-    app.config['MAIL_PASSWORD'] = base64.b64decode('amVvemZwaGxjdWthd3dtZQ==').decode("utf-8")
-
-    app.config['MAIL_USE_TLS'] = False
-    app.config['MAIL_USE_SSL'] = True
-    mail = Mail(app)
-
     message = Message   (
                             email_subject_line,
                             sender='cse.4212.group.11@gmail.com',
@@ -46,26 +37,59 @@ def send_email(recipient_email, email_subject_line, email_content):
     message.body = email_content
 
     mail.send(message)
-    return ("Email Sent")
 
 
 #********************************************
 #***Object*Instantiation*and*Configuration***
 #********************************************
 
-# Creates an instance of a Flask object
-app = Flask(__name__)
-# Creates the database extension
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-# Configures the SQLite database
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
-app.config['SECRET_KEY'] = 'T@&5RcGyBwXbVjb^%VX3'
-UPLOADS = os.path.join('static', 'uploads')
-app.config['UPLOAD_FOLDER'] = UPLOADS
-app.config['ALLOWED_MEDIA_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF", "MP4", "MOV", "MKV"]
-app.config['MAX_CONTENT_LENGTH'] = (10 * 1024 * 1024)
-app.config['ALLOWED_IMAGE_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF"]
+# Declares the web application's extensions
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+mail = Mail()
+login_manager = LoginManager()
+
+# Further configures the login manager
+login_manager.login_view = 'login'
+@login_manager.user_loader
+def user_loader(username):
+    return User.query.get(username)
+
+# Application Factory: Packages the process of setting up a web application in a function.
+def create_app():
+    # Creates an instance of a Flask object
+    app = Flask(__name__)
+
+    # Configures the SQLite database
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+    app.config['SECRET_KEY'] = 'T@&5RcGyBwXbVjb^%VX3'
+
+    # Configures storage mechanism and file/text handlers
+    UPLOADS = os.path.join('static', 'uploads')
+    app.config['UPLOAD_FOLDER'] = UPLOADS
+    app.config['ALLOWED_MEDIA_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF", "MP4", "MOV", "MKV"]
+    app.config['MAX_CONTENT_LENGTH'] = (10 * 1024 * 1024)
+    app.config['ALLOWED_IMAGE_EXTENSIONS'] = ["PNG", "JPEG", "JPG", "GIF"]
+
+    # Configures mail subsystem
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USERNAME'] = 'cse.4212.group.11@gmail.com'
+    app.config['MAIL_PASSWORD'] = base64.b64decode('amVvemZwaGxjdWthd3dtZQ==').decode("utf-8")
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+
+    # Initializes
+    db.init_app(app)
+    bcrypt.init_app(app)
+    mail.init_app(app)
+    login_manager.init_app(app)
+
+    return app
+
+# Using the application factory, sets up an instance of the website
+app = create_app()
+
 
 # Source: https://www.youtube.com/watch?v=6WruncSoCdI
 def allowed_media(filename):
@@ -101,14 +125,6 @@ def request_entity_too_large(error):
 def page_not_found(error):
     return render_template('page_not_found.html')
 
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
-
-@login_manager.user_loader
-def user_loader(username):
-    return User.query.get(username)
 
 #*********************
 #***Database*Tables***
