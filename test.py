@@ -566,7 +566,6 @@ def test_valid_status_deletion_and_editing():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
     
 
     # Deletes the context object
@@ -641,7 +640,7 @@ def test_valid_media_attachment():
     # The extension is valid, ergo it is accpeted
     filename = "test_file_upload.png"
     # Specifies a byte stream of data
-    file_byte_encoding = io.BytesIO(b"some initial text data")
+    file_byte_encoding = str(io.BytesIO(b"some initial text data"))
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
