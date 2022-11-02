@@ -633,14 +633,14 @@ def test_valid_media_attachment():
     # Creates a post used to test the functionality of the user's timeline
 
     # Imports the library io
-    import io
+    from io import BytesIO, io
 
     # Specifics the name of the uploaded file
     # The web application should accpet the file despite it being a textfile
     # The extension is valid, ergo it is accpeted
     filename = "test_file_upload.png"
     # Specifies a byte stream of data
-    file_byte_encoding = b"iVBORw0KGgoAAAAo3OUtmVjPb0yHcu3y6UvBaXN/uRt5d/lnFDzwRyQs/dWptdC6kyObH1xQS1hPdENjL5BgZ5cqt8yj0X15MuRYsMdCM"
+    file_byte_encoding = (io.BytesIO(b"iVBORw0KGgoAAAAo3OUtmVjPb0yHcu3y6UvBaXN/uRt5d/lnFDzwRyQs/dWptdC6kyObH1xQS1hPdENjL5BgZ5cqt8yj0X15MuRYsMdCM")
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
