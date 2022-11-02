@@ -897,36 +897,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     assert b'Settings' in response.data
     assert b'js1' in response.data
 
-    flask_login.login_user(     User   (
-                            username = 'jm2',
-                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                            first_name = 'Jane',
-                            middle_name = '',
-                            last_name = 'Meredith',
-                            email = 'jm2@gmail.com'
-                        ))
-
-    # Initializes a response object to automate testing
-    # Build the arguments that will be passed to the response object
-    url = '/login'
-    data = {
-        "account_identifier": "js123",
-        "password": "aA1@sldkepwnwkf",
-    }
-
-    # The response statement requires the necessary argument "follow_redirects=True"
-    # This allows the web application to load the response page when provided input data
-    # Logs the user into their account
-    response = app.test_client().post(url, data=data, follow_redirects=True)
-
-    # First, tests whether the web application successfully loaded the page
-    # A successfully loaded page should return a response status code of 200
-    assert response.status_code == 200
-    assert b'About' in response.data
-    assert b'Friends' in response.data
-    assert b'Timeline' in response.data
-    assert b'Settings' in response.data
-    assert b'js1' in response.data
+    flask_login.logout_user()
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
