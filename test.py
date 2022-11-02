@@ -667,8 +667,8 @@ def test_valid_media_attachment():
     assert response.status_code == 200
     assert b"Test Post #1" not in response.data
     assert b"js1" in response.data
-    assert b"Username" in response.data
-    assert b"Original Post Time" in response.data
+    assert b"Username" not in response.data
+    assert b"Original Post Time" not in response.data
     assert b"Edit Time" not in response.data
     assert b"test_file_upload.txt" not in response.data
     assert b'That file extension is not allowed.' in response.data
