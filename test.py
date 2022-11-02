@@ -151,7 +151,7 @@ def test_valid_user_login_and_logout():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -216,7 +216,7 @@ def account_creation():
     assert b'Mississippi State University | CSE 4214: Introduction to Software Engineering | Group 11' in response.data
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
 
     # Deletes the context object
@@ -330,7 +330,7 @@ def test_valid_credential_retrival():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
 
     # Deletes the context object
@@ -455,7 +455,7 @@ def test_valid_user_post_and_timeline_visibility():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
 
     # Deletes the context object
@@ -610,7 +610,7 @@ def test_valid_status_deletion_and_editing():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
 
     # Deletes the context object
@@ -734,7 +734,7 @@ def test_valid_media_attachment():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
 
     # Deletes the context object
@@ -887,7 +887,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -1182,7 +1182,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
 
     # Deletes the context object
@@ -1431,7 +1431,7 @@ def test_reject_friend_request():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
 
     # Deletes the context object
