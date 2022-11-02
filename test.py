@@ -638,7 +638,7 @@ def test_valid_media_attachment():
     # Specifics the name of the uploaded file
     # The web application should accpet the file despite it being a textfile
     # The extension is valid, ergo it is accpeted
-    filename = "test_file_upload.png"
+    filename = "test_file_upload.txt"
     # Specifies a byte stream of data
     file_byte_encoding = (io.BytesIO(b"iVBORw0KGgoAAAAo3OUtmVjPb0yHcu3y6UvBaXN/uRt5d/lnFDzwRyQs/dWptdC6kyObH1xQS1hPdENjL5BgZ5cqt8yj0X15MuRYsMdCM"))
 
@@ -665,12 +665,13 @@ def test_valid_media_attachment():
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
-    assert b"Test Post #1" in response.data
+    assert b"Test Post #1" not in response.data
     assert b"js1" in response.data
     assert b"Username" in response.data
     assert b"Original Post Time" in response.data
     assert b"Edit Time" not in response.data
-    assert b"test_file_upload.png" in response.data
+    assert b"test_file_upload.txt" not in response.data
+    assert b'That file extension is not allowed.' in response.data
 
     # </TESTING PLACEHOLDER> : testing statements end
 
