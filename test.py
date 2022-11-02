@@ -407,7 +407,16 @@ def test_valid_user_post_and_timeline_visibility():
                                     email = 'js1@gmail.com'
                                 ))
     
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/logout'
 
+    # Logs the user out of their account
+    response = app.test_client().get(url, follow_redirects=True)
+    
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
     url = '/login'
