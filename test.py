@@ -908,6 +908,28 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "js123",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # The response statement requires the necessary argument "follow_redirects=True"
+    # This allows the web application to load the response page when provided input data
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # First, tests whether the web application successfully loaded the page
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b'About' in response.data
+    assert b'Friends' in response.data
+    assert b'Timeline' in response.data
+    assert b'Settings' in response.data
+    assert b'js1' in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
     url = '/search'
     data = {
         'search_bar_input': "jm2",
