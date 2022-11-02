@@ -897,15 +897,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     assert b'Settings' in response.data
     assert b'js1' in response.data
 
-    flask_login.login_user(     User   (
-                            username = 'jm2',
-                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                            first_name = 'Jane',
-                            middle_name = '',
-                            last_name = 'Meredith',
-                            email = 'jm2@gmail.com'
-                        ))
-    flask_login.logout_user()
+
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
