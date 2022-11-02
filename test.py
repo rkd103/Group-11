@@ -633,7 +633,7 @@ def test_valid_media_attachment():
     # Creates a post used to test the functionality of the user's timeline
 
     # Imports the library io
-    from io import BytesIO
+    import io
 
     # Specifics the name of the uploaded file
     # The web application should accpet the file despite it being a textfile
