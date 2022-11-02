@@ -391,6 +391,7 @@ def test_valid_user_post_and_timeline_visibility():
     # Saves the newly created user into the database
     if (1):
         db.session.add(user_1)
+        db.session.commit()
         
 
     # <TESTING PLACEHOLDER> : testing statements begin
