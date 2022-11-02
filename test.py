@@ -21,7 +21,26 @@ from Code.app import app, RegisterForm
 
 #*************
 #***Test 01***
+#*************
 #************* 
+def test_clean():
+    # Imports the instance of the database (db) initialized in the file "app.py"
+    from Code.app import db
+
+    # Creates a context object to set up the web application's context
+    test_request_context = app.test_request_context()
+    # Appends the context object
+    test_request_context.push()
+
+    # Builds the database and creates the tables
+    db.create_all()
+
+    # Cleans the database dropping its tables
+    db.drop_all()
+
+    # Deletes the context object
+    test_request_context.pop()
+
 def test_load_login_page():
     '''
     Ensures that the login page successfully loads and is responsive. 
