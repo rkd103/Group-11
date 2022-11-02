@@ -392,15 +392,6 @@ def test_valid_user_post_and_timeline_visibility():
     
 
 
-    # First, tests whether the web application successfully loaded the page
-    # A successfully loaded page should return a response status code of 200
-    assert response.status_code == 200
-    assert b'About' in response.data
-    assert b'Friends' in response.data
-    assert b'Timeline' in response.data
-    assert b'Settings' in response.data
-    assert b'js1' in response.data
-
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
     from Code.app import Post, randrange, datetime
 
