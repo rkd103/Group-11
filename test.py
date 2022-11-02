@@ -968,7 +968,8 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
+
 
     # Deletes the context object
     test_request_context.pop()
@@ -1023,7 +1024,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
         db.session.add(user_1)
         db.session.add(user_2)
         db.session.commit()
-        
+
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
     # Source: https://github.com/pytest-dev/pytest-flask/issues/40
@@ -1264,8 +1265,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
-    
+    db.drop_all()
 
     # Deletes the context object
     test_request_context.pop()
