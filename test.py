@@ -1603,7 +1603,7 @@ def test_valid_post_like():
     assert b"Username" in response.data
     assert b"Original Post Time" in response.data
     assert b"jm2" in response.data
-    assert b"1" in response.data
+    assert b"0" in response.data
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -1629,7 +1629,7 @@ def test_valid_post_like():
     assert b"Username" in response.data
     assert b"Original Post Time" in response.data
     assert b"jm2" in response.data
-    assert b"2" in response.data
+    assert b"title=\"Likes\"> 1 </button>" in response.data
 
     # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
 
