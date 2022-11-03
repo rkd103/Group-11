@@ -1601,6 +1601,7 @@ def test_valid_post_like():
     assert b"js1" in response.data
     assert b"Username" in response.data
     assert b"Original Post Time" in response.data
+    assert b"jm2" in response.data
 
     # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
 
