@@ -1579,6 +1579,328 @@ def test_valid_post_like():
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
+
+    # <TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; test case turning point begin
+    url = '/share_post/' + str(new_post_id)
+
+    # Shares a post from "js1" that should then appeat in "jm2's" timeline
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/home/timeline'
+
+    # Loads the user's timeline
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"Test Post #1" in response.data
+    assert b"js1" in response.data
+    assert b"Username" in response.data
+    assert b"Original Post Time" in response.data
+    assert b"jm2" in response.data
+    assert b"1" in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/modify_post_likes/' + str(new_post_id)
+
+    # Shares a post from "js1" that should then appeat in "jm2's" timeline
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/home/timeline'
+
+    # Loads the user's timeline
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"Test Post #1" in response.data
+    assert b"js1" in response.data
+    assert b"Username" in response.data
+    assert b"Original Post Time" in response.data
+    assert b"jm2" in response.data
+    assert b"2" in response.data
+
+    # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
+
+    # </TESTING PLACEHOLDER> : testing statements end
+
+    # Cleans the database dropping its tables
+    db.drop_all()
+    
+    # Deletes the context object
+    test_request_context.pop()
+
+#*************
+#***Test 11***
+#*************
+def test_valid_post_share():
+    '''
+    Ensures that a user can share another user's post.
+    '''
+
+    # Imports the instance of the database (db) initialized in the file "app.py"
+    from Code.app import db
+
+    # Creates a context object to set up the web application's context
+    test_request_context = app.test_request_context()
+    # Appends the context object
+    test_request_context.push()
+
+    # Builds the database and creates the tables
+    db.create_all()
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    from Code.app import User, bcrypt   
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    from Code.app import User, bcrypt
+
+    # Creates a temporary user to interface with the web application
+    user_1 = User   (
+                        username = 'js1',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'James',
+                        middle_name = '',
+                        last_name = 'Smith',
+                        email = 'js1@gmail.com'
+                    )
+    user_2 = User   (
+                    username = 'jm2',
+                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                    first_name = 'Jane',
+                    middle_name = '',
+                    last_name = 'Meredith',
+                    email = 'jm2@gmail.com'
+                    )
+
+    # Saves the newly created user into the database
+    if (1):
+        db.session.add(user_1)
+        db.session.add(user_2)
+        db.session.commit()
+
+    # Directly loggs in a user using the specified paramters
+    # The user should only be logged in for the test
+    # Source: https://github.com/pytest-dev/pytest-flask/issues/40
+    flask_login.login_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
+    
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "js123",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # The response statement requires the necessary argument "follow_redirects=True"
+    # This allows the web application to load the response page when provided input data
+    # In the case of this test, it permits the website to navigate to the user's account from the login page
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # First, tests whether the web application successfully loaded the page
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b'About' in response.data
+    assert b'Friends' in response.data
+    assert b'Timeline' in response.data
+    assert b'Settings' in response.data
+    assert b'js1' in response.data
+
+    # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
+    from Code.app import Post, randrange, datetime
+
+    # Creates a post used to test the functionality of the user's timeline
+
+    # Generates a unique post id
+    new_post_id = randrange(pow(2, 31) - 1)
+
+    # Composes a status using the Post table constructor
+    new_post = Post(
+        post_id = new_post_id,
+        username = "js1",
+        post_text = "Test Post #1",
+        original_post_time = datetime.now(),
+        last_edit_time = None,
+        post_media = ""
+    )
+
+    # Saves the newly created post into the database
+    if (1):
+        db.session.add(new_post)
+        db.session.commit()
+        
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/home/timeline'
+
+    # Loads the user's timeline
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"Test Post #1" in response.data
+    assert b"js1" in response.data
+    assert b"Username" in response.data
+    assert b"Original Post Time" in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/search'
+    data = {
+        'search_bar_input': "jm2",
+    }
+
+    # Searches for the user jm2
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b'About' in response.data
+    assert b'Friends' in response.data
+    assert b'Timeline' in response.data
+    assert b'Settings' in response.data
+    assert b'js1' not in response.data
+    assert b'jm2' in response.data
+    assert b"You can only view jm2\'s account if you are friends" in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/modify_relationship/' + str("jm2")
+    data = {
+        'new_relationship_type': "SENT_REQUEST",
+    }
+
+    # Sends a friend request from js1 to jm2
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/home/account/friends'
+
+    # Views the friend page of the current user    
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b'About' in response.data
+    assert b'Friends' in response.data
+    assert b'Timeline' in response.data
+    assert b'Settings' in response.data
+    assert b'js1' in response.data
+    assert b'jm2' in response.data
+
+    flask_login.login_user(     User   (
+                        username = 'jm2',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'Jane',
+                        middle_name = '',
+                        last_name = 'Meredith',
+                        email = 'jm2@gmail.com'
+                    ))
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "jm2",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # Logs into the user who received the friend request
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # First, tests whether the web application successfully loaded the page
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b'About' in response.data
+    assert b'Friends' in response.data
+    assert b'Timeline' in response.data
+    assert b'Settings' in response.data
+    assert b'jm2' in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/home/account/friends'
+
+    # Views the friend page of the current user
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b'About' in response.data
+    assert b'Friends' in response.data
+    assert b'Timeline' in response.data
+    assert b'Settings' in response.data
+    assert b'js1' in response.data
+    assert b'jm2' in response.data
+    assert b'Received friend requests' in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/modify_relationship/' + str("js1")
+    data = {
+        'new_relationship_type': "SENT_REQUEST",
+    }
+
+    # Accepts a friend request
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/home/account/friends'
+
+    # Views the friend page of the current user
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b'About' in response.data
+    assert b'Friends' in response.data
+    assert b'Timeline' in response.data
+    assert b'Settings' in response.data
+    assert b'js1' in response.data
+    assert b'jm2' in response.data
+    assert b'Friends' in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+
     # <TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; test case turning point begin
     url = '/share_post/' + str(new_post_id)
 
@@ -1612,13 +1934,6 @@ def test_valid_post_like():
     
     # Deletes the context object
     test_request_context.pop()
-
-#*************
-#***Test 11***
-#*************
-'''
-Ensures that a user can share another user's post.
-'''
 
 #*************
 #***Test 12***
