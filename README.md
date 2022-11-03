@@ -73,8 +73,6 @@ Hand-in-Hand
 * Database Connector:
   * Flask-SQLAlchemy
   * SQLite
-* Cloud Object Storage Service:
-  * Cloudinary
 * Test Suite:
-  * Selenium WebDriver
-  * PyAutoGUI
+  * PyTest
+  * Circle Continuous Integration (CI) Service
