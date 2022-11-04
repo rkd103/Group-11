@@ -498,15 +498,11 @@ def test_valid_status_deletion_and_editing():
     response = app.test_client().post(url, data=data, follow_redirects=True)
     
     # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
-    from Code.app import url_for, session
-    
-    # Creates a context object to set up the web application's context
-    context = app.app_context()
-    # Appends the context object
-    context.push()
+    from Code.app import url_for
 
-    # Sets the session variable to the previous page, i.e. the user's timeline
-    session['url'] = url_for('user_timeline')
+    with app.test_client().session_transaction() as session:
+        # Sets the session variable to the previous page, i.e. the user's timeline
+        session['url'] = url_for('user_timeline')
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -517,10 +513,7 @@ def test_valid_status_deletion_and_editing():
     }
     
     # Edits an existing post in the user's timeline
-    response = app.test_client().post(url, data=data, follow_redirects=True)
-
-    # Deletes the context object
-    context.pop()
+    response = app.test_client().post(url, data=data, follow_redirects=True))
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
@@ -550,7 +543,6 @@ def test_valid_status_deletion_and_editing():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
 
     # Deletes the context object
     test_request_context.pop()
