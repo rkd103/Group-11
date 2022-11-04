@@ -487,7 +487,6 @@ def test_valid_status_deletion_and_editing():
     from Code.app import url_for
 
     session = app.test_client().session_transaction()
-    session.push()
 
     # Sets the session variable to the previous page, i.e. the user's timeline
     session['url'] = url_for('user_timeline')
@@ -503,9 +502,6 @@ def test_valid_status_deletion_and_editing():
     
     # Edits an existing post in the user's timeline
     response = app.test_client().post(url, data=data, follow_redirects=True)
-
-    session.pop()
-
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
