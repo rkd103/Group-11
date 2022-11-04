@@ -460,13 +460,6 @@ def test_valid_status_deletion_and_editing():
     assert b"Username" in response.data
     assert b"Original Post Time" in response.data
     assert b"Edit Time" not in response.data
-    
-    # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
-    from Code.app import url_for, session
-
-    # Sets the session variable to the previous page, i.e. the user's timeline
-    with app.test_client().session_transaction() as session:
-        session['url'] = url_for('user_timeline')
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
