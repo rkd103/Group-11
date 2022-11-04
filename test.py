@@ -89,8 +89,7 @@ def test_valid_user_login_and_logout():
                                     first_name = 'James',
                                     middle_name = '',
                                     last_name = 'Smith',
-                                    email = 'js1@gmail.com'
-                                ))
+                                    email = 'james_smith_1@gmail.com'                                ))
     
 
     # Initializes a response object to automate testing
@@ -171,8 +170,7 @@ def test_valid_credential_retrival():
                         first_name = 'James',
                         middle_name = '',
                         last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
+                        email = 'james_smith_1@gmail.com'                    )
 
     # Saves the newly created user into the database
     if (1):
@@ -189,8 +187,7 @@ def test_valid_credential_retrival():
                                     first_name = 'James',
                                     middle_name = '',
                                     last_name = 'Smith',
-                                    email = 'js1@gmail.com'
-                                ))
+                                    email = 'james_smith_1@gmail.com'                                ))
     
 
     # Initializes a response object to automate testing
@@ -294,8 +291,7 @@ def test_valid_user_post_and_timeline_visibility():
                                     first_name = 'James',
                                     middle_name = '',
                                     last_name = 'Smith',
-                                    email = 'js1@gmail.com'
-                            ))
+                                    email = 'james_smith_1@gmail.com'                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -402,8 +398,7 @@ def test_valid_media_attachment():
                                     first_name = 'James',
                                     middle_name = '',
                                     last_name = 'Smith',
-                                    email = 'js1@gmail.com'
-                                ))
+                                    email = 'james_smith_1@gmail.com'                                ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -514,8 +509,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
                         first_name = 'James',
                         middle_name = '',
                         last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
+                        email = 'james_smith_1@gmail.com'                    )
     user_2 = User   (
                     username = 'jm2',
                     password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
@@ -548,8 +542,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
                                 first_name = 'James',
                                 middle_name = '',
                                 last_name = 'Smith',
-                                email = 'js1@gmail.com'
-                            ))
+                                email = 'james_smith_1@gmail.com'                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -665,8 +658,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
                         first_name = 'James',
                         middle_name = '',
                         last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
+                        email = 'james_smith_1@gmail.com'                    )
     user_2 = User   (
                     username = 'jm2',
                     password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
@@ -699,8 +691,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
                                 first_name = 'James',
                                 middle_name = '',
                                 last_name = 'Smith',
-                                email = 'js1@gmail.com'
-                            ))
+                                email = 'james_smith_1@gmail.com'                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -959,8 +950,7 @@ def test_reject_friend_request():
                         first_name = 'James',
                         middle_name = '',
                         last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
+                        email = 'james_smith_1@gmail.com'                    )
     user_2 = User   (
                     username = 'jm2',
                     password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
@@ -993,8 +983,7 @@ def test_reject_friend_request():
                                 first_name = 'James',
                                 middle_name = '',
                                 last_name = 'Smith',
-                                email = 'js1@gmail.com'
-                            ))
+                                email = 'james_smith_1@gmail.com'                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -1215,8 +1204,7 @@ def test_valid_post_like():
                         first_name = 'James',
                         middle_name = '',
                         last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
+                        email = 'james_smith_1@gmail.com'                    )
     user_2 = User   (
                     username = 'jm2',
                     password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
@@ -1249,8 +1237,7 @@ def test_valid_post_like():
                                 first_name = 'James',
                                 middle_name = '',
                                 last_name = 'Smith',
-                                email = 'js1@gmail.com'
-                            ))
+                                email = 'james_smith_1@gmail.com'                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -1536,8 +1523,7 @@ def test_valid_post_share():
                         first_name = 'James',
                         middle_name = '',
                         last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
+                        email = 'james_smith_1@gmail.com'                    )
     user_2 = User   (
                     username = 'jm2',
                     password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
@@ -1570,8 +1556,7 @@ def test_valid_post_share():
                                 first_name = 'James',
                                 middle_name = '',
                                 last_name = 'Smith',
-                                email = 'js1@gmail.com'
-                            ))
+                                email = 'james_smith_1@gmail.com'                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -1830,8 +1815,7 @@ def test_valid_post_commenting():
                         first_name = 'James',
                         middle_name = '',
                         last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
+                        email = 'james_smith_1@gmail.com'                    )
     user_2 = User   (
                     username = 'jm2',
                     password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
@@ -1864,8 +1848,7 @@ def test_valid_post_commenting():
                                 first_name = 'James',
                                 middle_name = '',
                                 last_name = 'Smith',
-                                email = 'js1@gmail.com'
-                            ))
+                                email = 'james_smith_1@gmail.com'                            ))
     
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
