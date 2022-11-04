@@ -776,7 +776,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
 
     # Deletes the context object
@@ -1073,7 +1073,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -1322,7 +1322,7 @@ def test_reject_friend_request():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -1648,7 +1648,7 @@ def test_valid_post_like():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
     # Deletes the context object
     test_request_context.pop()
@@ -1942,7 +1942,7 @@ def test_valid_post_share():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
     # Deletes the context object
     test_request_context.pop()
@@ -2239,7 +2239,7 @@ def test_valid_post_commenting():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    db.drop_all()
+    
     
     # Deletes the context object
     test_request_context.pop()
