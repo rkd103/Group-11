@@ -30,7 +30,7 @@ Design and develop a Facebook-like social media platform that will have several 
 https://github.com/rkd103/Group-11/blob/Master/CSE-4212_SRS_Document_Group_11.pdf
 
 # Test Plan Document: #
-TBD
+https://github.com/rkd103/Group-11/blob/Master/CSE-4214_Test_Plan_Document_Group_11.pdf
 
 # Group Number: #
 11
