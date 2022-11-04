@@ -82,21 +82,6 @@
     }
 </style>
 
-<!--Code block that enables flashes-->
-{% set ns = namespace(messages="") %}
-{% for message in get_flashed_messages() %}
-    <!-- Only get one message -->
-    {% if ns.messages == "" %} 
-        {% set ns.messages = ns.messages + message %}
-    {% endif %}
-{% endfor %}
-<script>
-    function display_flashes() {
-        if ({{ ns.messages|tojson }}) { alert({{ ns.messages|tojson }}); }
-    }
-    display_flashes();
-</script>
-
 {% extends 'navigation_overlay.html' %}
 {% block user_account_image %}
     {% if user.profile_picture %}

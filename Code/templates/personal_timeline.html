@@ -373,9 +373,12 @@
                             <br/><br/><br/>
             
                             <div class="dropdown_menu_content" style="background: rgb(128, 128, 128, .70); border-radius: 5px; padding: 10px;">
+
+                                
                                 <button class="comment" name="{{ timeline_comment.comment.comment_id }}" onclick="on_edited_comment(name)" style="text-decoration: none;">
                                     <img src="/static/edit_icon.png" width="30px" title="Edit post">
                                 </button>
+
                                 <a class="delete" href="{{ url_for('delete_comment', comment_id = timeline_comment.comment.comment_id) }}" onclick="submit">
                                     <img src="/static/delete_icon.png" width="30px" title="Delete post">
                                 </a>
@@ -424,9 +427,13 @@
                     </button>
 
                     <form action="" method="post">
+
+                        {% if not timeline_post.is_share %}
                         <a class="edit" href="/home/timeline/edit_post/prompt/{{ timeline_post.post.post_id }}" style="text-decoration: none;">
                             <img src="/static/edit_icon.png" width="30px" title="Edit post">
                         </a>
+                        {% endif %}
+
                         <a class="delete" href="/home/timeline/delete_post/{{ timeline_post.post.post_id }}" onclick="submit">
                             <img src="/static/delete_icon.png" width="30px" title="Delete post">
                         </a>
