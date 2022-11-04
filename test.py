@@ -366,158 +366,7 @@ def test_valid_user_post_and_timeline_visibility():
     # Deletes the context object
     test_request_context.pop()
 
-#*************
-#***Test 05***
-#*************
-def test_valid_status_deletion_and_editing():
-    try:    
-        '''
-        Ensures that a user can edit and delete existing statuses
-        '''
 
-        # Imports the instance of the database (db) initialized in the file "app.py"
-        from Code.app import db
-
-        # Creates a context object to set up the web application's context
-        test_request_context = app.test_request_context()
-        # Appends the context object
-        test_request_context.push()
-
-        # Builds the database and creates the tables
-        db.create_all()
-
-        # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-        from Code.app import User, bcrypt
-
-        # <TESTING PLACEHOLDER> : testing statements begin
-
-        # Directly loggs in a user using the specified paramters
-        # The user should only be logged in for the test
-        # Source: https://github.com/pytest-dev/pytest-flask/issues/40
-        flask_login.login_user(     User   (
-                                        username = 'js1',
-                                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                                        first_name = 'James',
-                                        middle_name = '',
-                                        last_name = 'Smith',
-                                        email = 'js1@gmail.com'
-                                    ))
-        
-        # Initializes a response object to automate testing
-        # Build the arguments that will be passed to the response object
-        url = '/login'
-        data = {
-            "account_identifier": "js123",
-            "password": "aA1@sldkepwnwkf",
-        }
-
-        # The response statement requires the necessary argument "follow_redirects=True"
-        # This allows the web application to load the response page when provided input data
-        # Logs the user into their account
-        response = app.test_client().post(url, data=data, follow_redirects=True)
-
-        # First, tests whether the web application successfully loaded the page
-        # A successfully loaded page should return a response status code of 200
-        assert response.status_code == 200
-        assert b'About' in response.data
-        assert b'Friends' in response.data
-        assert b'Timeline' in response.data
-        assert b'Settings' in response.data
-        assert b'js1' in response.data
-
-        # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-        from Code.app import Post, randrange, datetime
-
-        # Creates a post used to test the functionality of the user's timeline
-
-        # Generates a unique post id
-        new_post_id = randrange(pow(2, 31) - 1)
-
-        # Composes a status using the Post table constructor
-        new_post = Post(
-            post_id = new_post_id,
-            username = "js1",
-            post_text = "Test Post #1",
-            original_post_time = datetime.now(),
-            last_edit_time = None,
-            post_media = ""
-        )
-
-        # Saves the newly created post into the database
-        if (1):
-            db.session.add(new_post)
-            
-
-        # Initializes a response object to automate testing
-        # Build the arguments that will be passed to the response object
-        url = '/home/timeline'
-
-        # Loads the user's timeline
-        response = app.test_client().get(url, follow_redirects=True)
-
-        # A successfully loaded page should return a response status code of 200
-        assert response.status_code == 200
-        assert b"Test Post #1" in response.data
-        assert b"js1" in response.data
-        assert b"Username" in response.data
-        assert b"Original Post Time" in response.data
-        assert b"Edit Time" not in response.data
-        
-        # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
-        from Code.app import url_for, session
-        
-        # Creates a context object to set up the web application's context
-        context = app.app_context()
-        # Appends the context object
-        context.push()
-        # Sets the session variable to the previous page, i.e. the user's timeline
-        session['url'] = url_for('user_timeline')
-
-        # Initializes a response object to automate testing
-        # Build the arguments that will be passed to the response object
-        url = '/home/timeline/edit_post/' + str(new_post_id)
-
-        data = {
-            "edit_text": "Test Post #2",
-        }
-        
-        # Edits an existing post in the user's timeline
-        response = app.test_client().post(url, data=data, follow_redirects=True)
-
-        # A successfully loaded page should return a response status code of 200
-        assert response.status_code == 200
-        assert b"Test Post #2" in response.data
-        assert b"Test Post #1" not in response.data
-        assert b"js1" in response.data
-        assert b"Username" in response.data
-        assert b"Original Post Time" in response.data
-        assert b"Edit Time" in response.data
-
-        # Initializes a response object to automate testing
-        # Build the arguments that will be passed to the response object
-        url = '/home/timeline/delete_post/' + str(new_post_id)
-
-        # Deletes a user's post
-        response = app.test_client().get(url, follow_redirects=True)
-
-        # A successfully loaded page should return a response status code of 200
-        assert response.status_code == 200
-        assert b"Test Post #2" not in response.data
-        assert b"Test Post #1" not in response.data
-        assert b"js1" in response.data
-        assert b"Username" not in response.data
-        assert b"Original Post Time" not in response.data
-        assert b"Edit Time" not in response.data
-
-        # </TESTING PLACEHOLDER> : testing statements end
-
-        # Cleans the database dropping its tables
-        
-
-        # Deletes the context object
-        test_request_context.pop()
-    except(BaseException):
-        None
 
 #*************
 #***Test 06***
@@ -680,7 +529,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        
+        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -776,7 +625,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
 
 
     # Deletes the context object
@@ -831,7 +680,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        
+        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -1073,7 +922,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
 
     # Deletes the context object
     test_request_context.pop()
@@ -1125,7 +974,7 @@ def test_reject_friend_request():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        
+        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -1322,7 +1171,7 @@ def test_reject_friend_request():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
 
     # Deletes the context object
     test_request_context.pop()
@@ -1381,7 +1230,7 @@ def test_valid_post_like():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        
+        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -1447,7 +1296,7 @@ def test_valid_post_like():
     # Saves the newly created post into the database
     if (1):
         db.session.add(new_post)
-        
+        db.session.commit()
         
 
     # Initializes a response object to automate testing
@@ -1648,7 +1497,7 @@ def test_valid_post_like():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
     
     # Deletes the context object
     test_request_context.pop()
@@ -1702,7 +1551,7 @@ def test_valid_post_share():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        
+        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -1768,7 +1617,7 @@ def test_valid_post_share():
     # Saves the newly created post into the database
     if (1):
         db.session.add(new_post)
-        
+        db.session.commit()
         
 
     # Initializes a response object to automate testing
@@ -1942,7 +1791,7 @@ def test_valid_post_share():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
     
     # Deletes the context object
     test_request_context.pop()
@@ -1996,7 +1845,7 @@ def test_valid_post_commenting():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        
+        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -2062,7 +1911,7 @@ def test_valid_post_commenting():
     # Saves the newly created post into the database
     if (1):
         db.session.add(new_post)
-        
+        db.session.commit()
         
 
     # Initializes a response object to automate testing
@@ -2239,7 +2088,7 @@ def test_valid_post_commenting():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
     
     # Deletes the context object
     test_request_context.pop()
