@@ -586,6 +586,7 @@ def register():
 @app.route('/home/timeline', methods=['GET', 'POST'])
 @login_required
 def user_timeline():
+    session['url'] = url_for('user_timeline')
     timeline = []
 
     # Get all user posts
@@ -609,7 +610,7 @@ def user_timeline():
 #***********************
 @app.route('/home/timeline/submit_post', methods=['GET', 'POST'])
 @login_required
-def submit_post():      
+def submit_post():
     if request.method != 'POST':
         return redirect(url_for('user_timeline')) 
 
@@ -650,9 +651,9 @@ def submit_post():
 
     return redirect(url_for('user_timeline'))
 
-#*******************
-#***Delete*a*post***
-#*******************
+#****************************
+#***Delete*a*post*or*share***
+#****************************
 @app.route('/home/timeline/delete_post/<post_to_delete_id>')
 @login_required
 def delete_post(post_to_delete_id):
@@ -696,19 +697,26 @@ def delete_post(post_to_delete_id):
 @app.route('/home/timeline/edit_post/prompt/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post_prompt(post_to_edit_id):
-    # Retrieves the information associated with the current user to display on the account page
-    queried_user = User.query.filter_by(username = current_user.username).first()
-
-    # Retrieves the content of the original message to populate the edit prompt screen to aid in modifying a post
+    # Retrieves the content of the original message to populate the edit prompt
+    # screen to aid in modifying a post
     original_post_content = ""
     original_post_attachment= ""
-    post_database_table = Post.query.all()
-    for post in post_database_table:
-        if (post.post_id == int(post_to_edit_id)):
-            original_post_content = post.post_text
-            original_post_attachment = post.post_media
 
-    return render_template('edit_timeline_post.html', post_to_edit_id=post_to_edit_id, user = queried_user, original_post_content=original_post_content, original_post_attachment=original_post_attachment)
+    post = Post.query.filter_by(post_id = int(post_to_edit_id)).first()
+
+    if post == None:
+        return redirect(session['url'])
+    if post.username != current_user.username:
+        return redirect(session['url'])
+    
+    original_post_content = post.post_text
+    original_post_attachment = post.post_media
+
+    return render_template(
+      'edit_timeline_post.html', post_to_edit_id=post_to_edit_id, 
+      user = current_user, original_post_content=original_post_content, 
+      original_post_attachment=original_post_attachment
+    )
 
 #***********************
 #***Edit*post*(cont.)***
@@ -716,35 +724,35 @@ def edit_post_prompt(post_to_edit_id):
 @app.route('/home/timeline/edit_post/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_to_edit_id):
-    post_database_table = Post.query.all()
-    for post in post_database_table:
-        if (post.post_id == int(post_to_edit_id)):
-            post.post_text = request.form.get('edit_text')
-            post.last_edit_time = datetime.now()
+    post = Post.query.filter_by(post_id = int(post_to_edit_id)).first()
+
+    if post == None:
+        return redirect(session['url'])
+    if post.username != current_user.username:
+        return redirect(session['url'])
     
-            # Reads in the media attached to a post
-            # Source: https://www.youtube.com/watch?v=6WruncSoCdI
-            if request.method == "POST":
-                if request.files:
+    post.post_text = request.form.get('edit_text')
+    post.last_edit_time = datetime.now()
+    
+    # Reads in the media attached to a post
+    # Source: https://www.youtube.com/watch?v=6WruncSoCdI
+    if request.method == "POST":
+        if request.files:
 
-                    media = request.files['edit_media']
+            media = request.files['edit_media']
 
-                    if not media.filename == "":
-                        if allowed_media(media.filename):
-                            filename = secure_filename(media.filename)
-                            media.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            if not media.filename == "":
+                if allowed_media(media.filename):
+                    filename = secure_filename(media.filename)
+                    media.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
-                            post.post_media = filename
-                            
-                        else:
-                            flash('That file extension is not allowed.')
-                    else:
-                        None
+                    post.post_media = filename
+                    
+                else:
+                    flash('That file extension is not allowed.')
     
     db.session.commit()
-
-
-    return redirect(url_for('user_timeline'))
+    return redirect(session['url'])
 
 #***********************
 #***Logout*of*Account***
@@ -776,6 +784,7 @@ def about():
 @app.route('/home/account/friends')
 @login_required
 def user_friends():
+    session['url'] = url_for('user_friends')
     friends, sent_requests, received_requests = [], [], []
 
     # Friends
@@ -916,7 +925,9 @@ def search():
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def foreign_account(username):
+    session['url'] = url_for('foreign_account', username = username)
     foreign_user = User.query.filter_by(username = username).first()
+
     if current_user.username == foreign_user.username:
         return redirect(url_for('user_timeline'))
 
@@ -953,22 +964,25 @@ def foreign_account(username):
     return render_template('foreign_account.html', user = current_user, 
       foreign_user = foreign_user)
 
+#***************************
+#***Foreign*User*Timeline***
+#***************************
 @app.route('/user/<username>/timeline')
 @login_required
 def foreign_timeline(username):
+    session['url'] = url_for('foreign_timeline', username = username)
     foreign_user = User.query.filter_by(username = username).first()
     timeline = []
 
     if not verify_friendship(current_user.username, foreign_user.username):
         flash('You must be friends to view that page.')
-        return redirect(url_for('foreign_account', username = foreign_user.username))
+        return redirect(url_for(
+          'foreign_account', username = foreign_user.username
+        ))
     
     # Get all foreign user posts
-    foreign_posts = Post.query.filter_by(
-      username = foreign_user.username
-    ).all()
-    for post in foreign_posts:
-        print(post.post_id)
+    posts = Post.query.filter_by(username = foreign_user.username).all()
+    for post in posts:
         timeline.append(TimelinePost(post, False))
     
     # Get friends of user
@@ -989,7 +1003,8 @@ def foreign_timeline(username):
     # Get shares of mutual friends
     shares = Share.query.filter_by(username = foreign_user.username).all()
     for share in shares:
-        if share.username not in friends:
+        original_post = Post.query.filter_by(post_id = share.post_id).first()
+        if original_post.username not in friends:
             continue
 
         post = Post.query.filter_by(post_id = share.post_id).first()
@@ -1014,6 +1029,9 @@ def foreign_timeline(username):
       already_shared = already_shared 
     )
 
+#***************************
+#***Foreign*User*About******
+#***************************
 @app.route('/user/<username>/about')
 @login_required
 def foreign_about(username):
@@ -1035,7 +1053,9 @@ def foreign_friends(username):
 
     if not verify_friendship(current_user.username, foreign_user.username):
         flash('You must be friends to view that page.')
-        return redirect(url_for('foreign_account', username = foreign_user.username))
+        return redirect(url_for(
+          'foreign_account', username = foreign_user.username
+        ))
 
     # Friends
     friends = []
@@ -1059,13 +1079,16 @@ def foreign_friends(username):
     return render_template('foreign_friends.html', user = current_user, 
       foreign_user = foreign_user, friends = friends)
 
-# TODO: Redirect to previous page
+#****************************************
+#***Change*relationships*between*users***
+#****************************************
+# Change the database to reflect the new relationship between users
+# when friend requests are sent/received and accepted/rejected
 @app.route('/modify_relationship/<username>', methods=['GET', 'POST'])
 @login_required
 def modify_relationship(username):
     if request.method != 'POST':
-        flash('You do not have permission to access that url.')
-        return redirect(url_for('user_account'))
+        return redirect(session['url'])
 
     # current_user (relationship) foreign_user
     new_relationship_type = request.form.get('new_relationship_type')
@@ -1091,9 +1114,8 @@ def modify_relationship(username):
     # This prevents someone from modifying form data with inspect
     # and adding friends that way.
     if new_relationship_type == RelationshipType.FRIEND:
-        return redirect(url_for('user_account'))
+        return redirect(session['url'])
     
-    # TODO: remove unnecessary deletions
     if current_relationship == None:
         new_relationship = Relationship(
           username_1 = username_1, username_2 = username_2,
@@ -1101,66 +1123,46 @@ def modify_relationship(username):
         )
         db.session.add(new_relationship)
         db.session.commit()
-    elif new_relationship_type == RelationshipType.NO_RELATIONSHIP:
+    elif new_relationship_type == RelationshipType.NO_RELATIONSHIP: 
         # Remove user's likes, shares, and comments on foreign user's posts
         posts = Post.query.filter_by(username = foreign_user.username).all()
         for post in posts:
-            like = PostLikes.query.filter_by(
+            PostLikes.query.filter_by(
               post_id = post.post_id, username = current_user.username
-            ).first()
-            if like != None:
-                db.session.delete(like)
-
-            share = Share.query.filter_by(
+            ).delete()
+            Share.query.filter_by(
               post_id = post.post_id, username = current_user.username
-            ).first()
-            if share != None:
-                db.session.delete(share)
-
-            comments = Comment.query.filter_by(
+            ).delete()
+            Comment.query.filter_by(
               parent_id = post.post_id, username = current_user.username
-            ).all()
-            for comment in comments:
-                db.session.delete(comment)
+            ).delete()
     
         # Remove user's likes on foreign user's comments
         comments = Comment.query.filter_by(username = foreign_user.username).all()
         for comment in comments:
-            like = CommentLikes.query.filter_by(
+            CommentLikes.query.filter_by(
               comment_id = comment.comment_id, username = current_user.username
-            ).first()
-            if like != None:
-                db.session.delete(like)
+            ).delete()
 
         # Remove foreign user's likes, shares, and comments on user's posts
         posts = Post.query.filter_by(username = current_user.username).all()
         for post in posts:
-            like = PostLikes.query.filter_by(
+            PostLikes.query.filter_by(
               post_id = post.post_id, username = foreign_user.username
-            ).first()
-            if like != None:
-                db.session.delete(like)
-
-            share = Share.query.filter_by(
+            ).delete()
+            Share.query.filter_by(
               post_id = post.post_id, username = foreign_user.username
-            ).first()
-            if share != None:
-                db.session.delete(share)
-
-            comments = Comment.query.filter_by(
-              parent_id = post.post_id, username = current_user.username
-            ).all()
-            for comment in comments:
-                db.session.delete(comment)
+            ).delete()
+            Comment.query.filter_by(
+              parent_id = post.post_id, username = foreign_user.username
+            ).delete()
 
         # Remove foreign user's likes on user's comments
         comments = Comment.query.filter_by(username = current_user.username).all()
         for comment in comments:
-            like = CommentLikes.query.filter_by(
-              comment_id = comment.comment_id, username = current_user.username
-            ).first()
-            if like != None:
-                db.session.delete(like)
+            CommentLikes.query.filter_by(
+              comment_id = comment.comment_id, username = foreign_user.username
+            ).delete()
 
         db.session.delete(current_relationship)
         db.session.commit()
@@ -1180,9 +1182,11 @@ def modify_relationship(username):
         db.session.add(new_relationship)
         db.session.commit()
 
-    return redirect(url_for('user_account'))
+    return redirect(session['url'])
 
-# TODO: Redirect to previous page
+#********************
+#***Submit*comment***
+#********************
 @app.route('/submit_comment/<post_id>', methods = ['GET', 'POST'])
 @login_required
 def submit_comment(post_id):
@@ -1191,12 +1195,12 @@ def submit_comment(post_id):
 
     if post == None:
         flash('That post no longer exists.')
-        return redirect(url_for('user_timeline'))
+        return redirect(session['url'])
     if request.method != 'POST':
-        return redirect(url_for('user_timeline'))
+        return redirect(session['url'])
     if not verify_friendship(post.username, current_user.username):
         if post.username != current_user.username:
-            return redirect(url_for('user_timeline'))
+            return redirect(session['url'])
 
     # Generate a unique comment id
     new_comment_id = randrange(pow(2, 31) - 1)
@@ -1213,9 +1217,11 @@ def submit_comment(post_id):
     db.session.add(new_comment)
     db.session.commit()
 
-    return redirect(url_for('user_timeline'))
+    return redirect(session['url'])
 
-# TODO: Redirect to previous page
+#********************
+#***Delete*comment***
+#********************
 @app.route('/delete_comment/<comment_id>')
 @login_required
 def delete_comment(comment_id):
@@ -1223,19 +1229,19 @@ def delete_comment(comment_id):
     comment = Comment.query.filter_by(comment_id = comment_id).first()
     
     if comment == None:
-        return redirect(url_for('user_timeline'))
+        return redirect(session['url'])
     if comment.username != current_user.username:
-        return redirect(url_for('user_timeline'))
+        return redirect(session['url'])
     
-    likes = CommentLikes.query.filter_by(comment_id = comment_id).all()
-    for like in likes:
-        db.session.delete(like)
-
+    CommentLikes.query.filter_by(comment_id = comment_id).delete()
     db.session.delete(comment)
     db.session.commit()
-    return redirect(url_for('user_timeline'))
+    
+    return redirect(session['url'])
 
-# TODO: Redirect to previous page
+#******************
+#***Edit*comment***
+#******************
 @app.route('/edit_comment/<comment_id>', methods = ['GET', 'POST'])
 @login_required
 def edit_comment(comment_id):
@@ -1254,9 +1260,8 @@ def edit_comment(comment_id):
     
     comment.comment_text = new_comment_text
     db.session.commit()
-    return redirect(url_for('user_timeline'))
+    return redirect(session['url'])
 
-# TODO: Redirect to previous page
 @app.route('/share_post/<post_id>')
 @login_required
 def share_post(post_id):
@@ -1283,9 +1288,11 @@ def share_post(post_id):
     db.session.add(new_share)
     db.session.commit()
 
-    return redirect(url_for('user_timeline'))
+    return redirect(session['url'])
 
-# TODO: Redirect to previous page
+#**************************
+#***Like*and*unlike*post***
+#**************************
 @app.route('/modify_post_likes/<post_id>')
 @login_required
 def modify_post_likes(post_id):
@@ -1293,7 +1300,7 @@ def modify_post_likes(post_id):
     post = Post.query.filter_by(post_id = post_id).first()
     if post == None:
         flash('That post no longer exists.')
-        return redirect(url_for('user_timeline'))
+        return redirect(session['url'])
     if post.username != current_user.username:
         if not verify_friendship(current_user.username, post.username):
             return redirect(url_for('user_timeline'))
@@ -1312,8 +1319,11 @@ def modify_post_likes(post_id):
         db.session.delete(like)
         db.session.commit()
     
-    return redirect(url_for('user_timeline'))
+    return redirect(session['url'])
 
+#*****************************
+#***Like*and*unlike*comment***
+#*****************************
 @app.route('/modify_comment_likes/<comment_id>')
 @login_required
 def modify_comment_likes(comment_id):
@@ -1322,10 +1332,10 @@ def modify_comment_likes(comment_id):
 
     if comment == None:
         flash('That comment no longer exists.')
-        return redirect(url_for('user_timeline'))
+        return redirect(session['url'])
     if current_user.username != comment.username:
         if not verify_friendship(current_user.username, comment.username):
-            return redirect(url_for('user_timeline'))
+            return redirect(session['url'])
     
     like = CommentLikes.query.filter_by(
       comment_id = comment_id, username = current_user.username
@@ -1341,7 +1351,7 @@ def modify_comment_likes(comment_id):
         db.session.delete(like)
         db.session.commit()
     
-    return redirect(url_for('user_timeline'))
+    return redirect(session['url'])
 
 #*****************
 #***Driver*code***
