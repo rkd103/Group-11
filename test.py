@@ -513,7 +513,7 @@ def test_valid_status_deletion_and_editing():
     }
     
     # Edits an existing post in the user's timeline
-    response = app.test_client().post(url, data=data, follow_redirects=True))
+    response = app.test_client().post(url, data=data, follow_redirects=True)
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
