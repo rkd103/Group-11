@@ -462,45 +462,26 @@ def test_valid_status_deletion_and_editing():
     assert b"Original Post Time" in response.data
     assert b"Edit Time" not in response.data
 
-    # Directly loggs in a user using the specified paramters
-    flask_login.login_user(     User   (
-                                    username = 'js1',
-                                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                                    first_name = 'James',
-                                    middle_name = '',
-                                    last_name = 'Smith',
-                                    email = 'js1@gmail.com'
-                                ))
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/home/timeline/edit_post/prompt/' + str(new_post_id)
+
+    # TBD
+    response = app.test_client().get(url, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
-    url = '/login'
+    url = '/home/timeline/edit_post/' + str(new_post_id)
+
     data = {
-        "account_identifier": "js123",
-        "password": "aA1@sldkepwnwkf",
+        "edit_text": "Test Post #2",
     }
-
-    # Logs the user into their account
-    response = app.test_client().post(url, data=data, follow_redirects=True)
     
-    # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
-    from Code.app import url_for
-
-    with app.test_client().session_transaction() as session:
-
-        # Sets the session variable to the previous page, i.e. the user's timeline
-        session['url'] = url_for('user_timeline')
-
-        # Initializes a response object to automate testing
-        # Build the arguments that will be passed to the response object
-        url = '/home/timeline/edit_post/' + str(new_post_id)
-
-        data = {
-            "edit_text": "Test Post #2",
-        }
-        
-        # Edits an existing post in the user's timeline
-        response = app.test_client().post(url, data=data, follow_redirects=True)
+    # Edits an existing post in the user's timeline
+    response = app.test_client().post(url, data=data, follow_redirects=True)
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
@@ -530,6 +511,7 @@ def test_valid_status_deletion_and_editing():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
+    
 
     # Deletes the context object
     test_request_context.pop()
@@ -640,6 +622,7 @@ def test_valid_media_attachment():
     # Cleans the database dropping its tables
     db.drop_all()
     
+
     # Deletes the context object
     test_request_context.pop()
 
@@ -2258,4 +2241,3 @@ def test_valid_post_commenting():
     
     # Deletes the context object
     test_request_context.pop()
-
