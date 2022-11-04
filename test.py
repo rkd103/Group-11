@@ -465,51 +465,52 @@ def test_valid_status_deletion_and_editing():
     from Code.app import url_for, session
 
     # Sets the session variable to the previous page, i.e. the user's timeline
-    app.test_client().session_transaction()['url'] = url_for('user_timeline')
+    with app.test_client().session_transaction() as session:
+        session['url'] = url_for('user_timeline')
 
-    # Initializes a response object to automate testing
-    # Build the arguments that will be passed to the response object
-    url = '/home/timeline/edit_post/' + str(new_post_id)
+        # Initializes a response object to automate testing
+        # Build the arguments that will be passed to the response object
+        url = '/home/timeline/edit_post/' + str(new_post_id)
 
-    data = {
-        "edit_text": "Test Post #2",
-    }
-    
-    # Edits an existing post in the user's timeline
-    response = app.test_client().post(url, data=data, follow_redirects=True)
+        data = {
+            "edit_text": "Test Post #2",
+        }
+        
+        # Edits an existing post in the user's timeline
+        response = app.test_client().post(url, data=data, follow_redirects=True)
 
-    # A successfully loaded page should return a response status code of 200
-    assert response.status_code == 200
-    assert b"Test Post #2" in response.data
-    assert b"Test Post #1" not in response.data
-    assert b"js1" in response.data
-    assert b"Username" in response.data
-    assert b"Original Post Time" in response.data
-    assert b"Edit Time" in response.data
+        # A successfully loaded page should return a response status code of 200
+        assert response.status_code == 200
+        assert b"Test Post #2" in response.data
+        assert b"Test Post #1" not in response.data
+        assert b"js1" in response.data
+        assert b"Username" in response.data
+        assert b"Original Post Time" in response.data
+        assert b"Edit Time" in response.data
 
-    # Initializes a response object to automate testing
-    # Build the arguments that will be passed to the response object
-    url = '/home/timeline/delete_post/' + str(new_post_id)
+        # Initializes a response object to automate testing
+        # Build the arguments that will be passed to the response object
+        url = '/home/timeline/delete_post/' + str(new_post_id)
 
-    # Deletes a user's post
-    response = app.test_client().get(url, follow_redirects=True)
+        # Deletes a user's post
+        response = app.test_client().get(url, follow_redirects=True)
 
-    # A successfully loaded page should return a response status code of 200
-    assert response.status_code == 200
-    assert b"Test Post #2" not in response.data
-    assert b"Test Post #1" not in response.data
-    assert b"js1" in response.data
-    assert b"Username" not in response.data
-    assert b"Original Post Time" not in response.data
-    assert b"Edit Time" not in response.data
+        # A successfully loaded page should return a response status code of 200
+        assert response.status_code == 200
+        assert b"Test Post #2" not in response.data
+        assert b"Test Post #1" not in response.data
+        assert b"js1" in response.data
+        assert b"Username" not in response.data
+        assert b"Original Post Time" not in response.data
+        assert b"Edit Time" not in response.data
 
-    # </TESTING PLACEHOLDER> : testing statements end
+        # </TESTING PLACEHOLDER> : testing statements end
 
-    # Cleans the database dropping its tables
-    
+        # Cleans the database dropping its tables
+        
 
-    # Deletes the context object
-    test_request_context.pop()
+        # Deletes the context object
+        test_request_context.pop()
 
 
 #*************
