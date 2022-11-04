@@ -507,29 +507,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
     from Code.app import User, bcrypt
 
-    # Creates a temporary user to interface with the web application
-    user_1 = User   (
-                        username = 'js1',
-                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                        first_name = 'James',
-                        middle_name = '',
-                        last_name = 'Smith',
-                        email = 'js1@gmail.com'
-                    )
-    user_2 = User   (
-                    username = 'jm2',
-                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
-                    first_name = 'Jane',
-                    middle_name = '',
-                    last_name = 'Meredith',
-                    email = 'jm2@gmail.com'
-                    )
 
-    # Saves the newly created user into the database
-    if (1):
-        db.session.add(user_1)
-        db.session.add(user_2)
-        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
