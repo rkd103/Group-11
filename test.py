@@ -362,7 +362,6 @@ def test_valid_user_post_and_timeline_visibility():
     # Cleans the database dropping its tables
     
     
-
     # Deletes the context object
     test_request_context.pop()
 
@@ -463,7 +462,7 @@ def test_valid_status_deletion_and_editing():
     assert b"Edit Time" not in response.data
     
     # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
-    from Code.app import url_for, session
+    from Code.app import url_for, session, user_timeline
     
     # Creates a context object to set up the web application's context
     context = app.app_context()
@@ -514,6 +513,7 @@ def test_valid_status_deletion_and_editing():
     
 
     # Deletes the context object
+    context.pop()
     test_request_context.pop()
 
 
@@ -829,6 +829,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
+        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
