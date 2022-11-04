@@ -677,7 +677,6 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
