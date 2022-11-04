@@ -486,22 +486,21 @@ def test_valid_status_deletion_and_editing():
     # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
     from Code.app import url_for
 
-    session = app.test_client().session_transaction()
+    with app.test_client().session_transaction() as session:
 
-    # Sets the session variable to the previous page, i.e. the user's timeline
-    session['url'] = url_for('user_timeline')
+        # Sets the session variable to the previous page, i.e. the user's timeline
+        session['url'] = url_for('user_timeline')
 
+        # Initializes a response object to automate testing
+        # Build the arguments that will be passed to the response object
+        url = '/home/timeline/edit_post/' + str(new_post_id)
 
-    # Initializes a response object to automate testing
-    # Build the arguments that will be passed to the response object
-    url = '/home/timeline/edit_post/' + str(new_post_id)
-
-    data = {
-        "edit_text": "Test Post #2",
-    }
-    
-    # Edits an existing post in the user's timeline
-    response = app.test_client().post(url, data=data, follow_redirects=True)
+        data = {
+            "edit_text": "Test Post #2",
+        }
+        
+        # Edits an existing post in the user's timeline
+        response = app.test_client().post(url, data=data, follow_redirects=True)
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
