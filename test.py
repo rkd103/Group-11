@@ -680,7 +680,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -831,7 +831,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -1125,7 +1125,7 @@ def test_reject_friend_request():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -1381,7 +1381,7 @@ def test_valid_post_like():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -1447,7 +1447,7 @@ def test_valid_post_like():
     # Saves the newly created post into the database
     if (1):
         db.session.add(new_post)
-        db.session.commit()
+        
         
 
     # Initializes a response object to automate testing
@@ -1702,7 +1702,7 @@ def test_valid_post_share():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -1768,7 +1768,7 @@ def test_valid_post_share():
     # Saves the newly created post into the database
     if (1):
         db.session.add(new_post)
-        db.session.commit()
+        
         
 
     # Initializes a response object to automate testing
@@ -1996,7 +1996,7 @@ def test_valid_post_commenting():
     if (1):
         db.session.add(user_1)
         db.session.add(user_2)
-        db.session.commit()
+        
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -2062,7 +2062,7 @@ def test_valid_post_commenting():
     # Saves the newly created post into the database
     if (1):
         db.session.add(new_post)
-        db.session.commit()
+        
         
 
     # Initializes a response object to automate testing
