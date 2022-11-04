@@ -465,7 +465,7 @@ def test_valid_status_deletion_and_editing():
     from Code.app import url_for, session
 
     # Sets the session variable to the previous page, i.e. the user's timeline
-    session['url'] = url_for('user_timeline')
+    app.test_client().session_transaction()['url'] = url_for('user_timeline')
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
