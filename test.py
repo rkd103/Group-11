@@ -390,6 +390,21 @@ def test_valid_status_deletion_and_editing():
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
+    # Creates a temporary user to interface with the web application
+    user_1 = User   (
+                        username = 'js1',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'James',
+                        middle_name = '',
+                        last_name = 'Smith',
+                        email = 'js1@gmail.com'
+                    )
+
+    # Saves the newly created user into the database
+    if (1):
+        db.session.add(user_1)
+        db.session.commit()
+
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
     # Source: https://github.com/pytest-dev/pytest-flask/issues/40
@@ -471,6 +486,17 @@ def test_valid_status_deletion_and_editing():
                                     last_name = 'Smith',
                                     email = 'js1@gmail.com'
                                 ))
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "js123",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
     
     # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
     from Code.app import url_for, session
@@ -525,7 +551,7 @@ def test_valid_status_deletion_and_editing():
     # </TESTING PLACEHOLDER> : testing statements end
 
     # Cleans the database dropping its tables
-    
+    db.drop_all()
 
     # Deletes the context object
     test_request_context.pop()
@@ -636,7 +662,6 @@ def test_valid_media_attachment():
     # Cleans the database dropping its tables
     db.drop_all()
     
-
     # Deletes the context object
     test_request_context.pop()
 
