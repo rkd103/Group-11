@@ -464,9 +464,6 @@ def test_valid_status_deletion_and_editing():
 
     from Code.app import user_timeline
 
-    # A successfully loaded page should return a response status code of 200
-    assert response.status_code == 200
-
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
     url = '/home/timeline/edit_post/' + str(new_post_id)
