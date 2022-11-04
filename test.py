@@ -461,6 +461,16 @@ def test_valid_status_deletion_and_editing():
     assert b"Username" in response.data
     assert b"Original Post Time" in response.data
     assert b"Edit Time" not in response.data
+    
+    # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
+    from Code.app import url_for, session
+    
+    # Creates a context object to set up the web application's context
+    context = app.app_context()
+    # Appends the context object
+    context.push()
+    # Sets the session variable to the previous page, i.e. the user's timeline
+    session['url'] = url_for('user_timeline')
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -2231,3 +2241,4 @@ def test_valid_post_commenting():
     
     # Deletes the context object
     test_request_context.pop()
+
