@@ -516,7 +516,7 @@ def test_valid_status_deletion_and_editing():
 
         # Deletes the context object
         test_request_context.pop()
-    except(...):
+    except(BaseException):
         None
 
 #*************
