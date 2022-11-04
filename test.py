@@ -462,12 +462,7 @@ def test_valid_status_deletion_and_editing():
     assert b"Original Post Time" in response.data
     assert b"Edit Time" not in response.data
 
-    # Initializes a response object to automate testing
-    # Build the arguments that will be passed to the response object
-    url = '/home/timeline/edit_post/prompt/' + str(new_post_id)
-
-    # TBD
-    response = app.test_client().get(url, follow_redirects=True)
+    from Code.app import user_timeline
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
