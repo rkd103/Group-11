@@ -66,6 +66,9 @@ def test_valid_user_login_and_logout():
 
     # Imports the instance of the database (db) initialized in the file "app.py"
     from Code.app import db
+    
+    # Comment out
+    db.drop_all()
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
