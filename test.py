@@ -500,7 +500,7 @@ def test_valid_status_deletion_and_editing():
     # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
     from Code.app import url_for
 
-    session = app.test_client().session_transaction()
+    session = test_request_context.session_transaction()
     session.push()
 
     # Sets the session variable to the previous page, i.e. the user's timeline
