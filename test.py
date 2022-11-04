@@ -462,12 +462,8 @@ def test_valid_status_deletion_and_editing():
     assert b"Edit Time" not in response.data
     
     # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
-    from Code.app import url_for, session, user_timeline
-    
-    # Creates a context object to set up the web application's context
-    context = app.app_context()
-    # Appends the context object
-    context.push()
+    from Code.app import url_for, session
+
     # Sets the session variable to the previous page, i.e. the user's timeline
     session['url'] = url_for('user_timeline')
 
@@ -513,7 +509,6 @@ def test_valid_status_deletion_and_editing():
     
 
     # Deletes the context object
-    context.pop()
     test_request_context.pop()
 
 
