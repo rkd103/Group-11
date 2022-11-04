@@ -72,9 +72,6 @@ def test_valid_user_login_and_logout():
     # Appends the context object
     test_request_context.push()
 
-    # Comment out
-    db.drop_all()
-
     # Builds the database and creates the tables
     db.create_all()
 
@@ -406,7 +403,6 @@ def test_valid_status_deletion_and_editing():
     # Saves the newly created user into the database
     if (1):
         db.session.add(user_1)
-        db.session.commit()
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
