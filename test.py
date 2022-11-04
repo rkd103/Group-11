@@ -379,8 +379,10 @@ def test_valid_status_deletion_and_editing():
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
+    context = app.app_context()
     # Appends the context object
     test_request_context.push()
+    context.push()
 
     # Builds the database and creates the tables
     db.create_all()
@@ -461,14 +463,20 @@ def test_valid_status_deletion_and_editing():
     assert b"Username" in response.data
     assert b"Original Post Time" in response.data
     assert b"Edit Time" not in response.data
+
+    # Directly loggs in a user using the specified paramters
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
     
     # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
     from Code.app import url_for, session
     
-    # Creates a context object to set up the web application's context
-    context = app.app_context()
-    # Appends the context object
-    context.push()
     # Sets the session variable to the previous page, i.e. the user's timeline
     session['url'] = url_for('user_timeline')
 
@@ -514,6 +522,7 @@ def test_valid_status_deletion_and_editing():
     
 
     # Deletes the context object
+    context.pop()
     test_request_context.pop()
 
 #*************
