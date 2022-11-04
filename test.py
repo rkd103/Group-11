@@ -390,8 +390,6 @@ def test_valid_status_deletion_and_editing():
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
-
-
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
     # Source: https://github.com/pytest-dev/pytest-flask/issues/40
@@ -488,13 +486,12 @@ def test_valid_status_deletion_and_editing():
     # Imports the required packages to enable the execution of the "url_for" command when evoked by the "session" variable
     from Code.app import url_for
 
-    session = test_request_context.session_transaction()
+    session = app.test_client().session_transaction()
     session.push()
 
     # Sets the session variable to the previous page, i.e. the user's timeline
     session['url'] = url_for('user_timeline')
 
-    session.pop()
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
@@ -506,6 +503,9 @@ def test_valid_status_deletion_and_editing():
     
     # Edits an existing post in the user's timeline
     response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    session.pop()
+
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
