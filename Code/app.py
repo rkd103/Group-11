@@ -65,6 +65,7 @@ def create_app():
     app = Flask(__name__)
 
     # Configures the session variable
+    app.secret_key = 'super secret key'
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_TYPE"] = "filesystem"
 
