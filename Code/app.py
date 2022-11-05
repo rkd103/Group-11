@@ -67,6 +67,7 @@ def create_app():
     # Configures the session variable
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_TYPE"] = "filesystem"
+    app.config['SERVER_NAME'] = 'localhost'
 
     # Configures the SQLite database
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
