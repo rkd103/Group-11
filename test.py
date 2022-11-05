@@ -444,6 +444,7 @@ def test_valid_status_deletion_and_editing():
     # Saves the newly created post into the database
     if (1):
         db.session.add(new_post)
+        db.session.commit()
         
 
     # Initializes a response object to automate testing
@@ -460,16 +461,6 @@ def test_valid_status_deletion_and_editing():
     assert b"Username" in response.data
     assert b"Original Post Time" in response.data
     assert b"Edit Time" not in response.data
-
-        
-    # Initializes a response object to automate testing
-    # Build the arguments that will be passed to the response object
-    url = '/home/timeline/edit_post/' + str(new_post_id)
-
-    response = app.test_client().get(url, follow_redirects=True)
-
-    assert response.status_code == 200
-
 
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
