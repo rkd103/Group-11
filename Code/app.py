@@ -20,6 +20,7 @@ from wtforms_validators import Alpha
 import os
 from werkzeug.utils import secure_filename
 import operator
+from flask_session import Session
 
 
 #******************************************
@@ -50,6 +51,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 mail = Mail()
 login_manager = LoginManager()
+server_session = Session()
 
 # Further configures the login manager
 login_manager.login_view = 'login'
@@ -61,6 +63,10 @@ def user_loader(username):
 def create_app():
     # Creates an instance of a Flask object
     app = Flask(__name__)
+
+    # Configures the session variable
+    app.config["SESSION_PERMANENT"] = False
+    app.config["SESSION_TYPE"] = "filesystem"
 
     # Configures the SQLite database
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
@@ -81,11 +87,12 @@ def create_app():
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
 
-    # Initializes
+    # Initializes the subsystems
     db.init_app(app)
     bcrypt.init_app(app)
     mail.init_app(app)
     login_manager.init_app(app)
+    server_session.init_app(app)
 
     return app
 
