@@ -451,7 +451,7 @@ def test_valid_status_deletion_and_editing():
     url = '/home/timeline'
 
     # Loads the user's timeline
-    response = app.test_client().get(url)
+    response = app.test_client().get(url, follow_redirects=True)
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
@@ -470,7 +470,7 @@ def test_valid_status_deletion_and_editing():
     }
     
     # Edits an existing post in the user's timeline
-    response = app.test_client().post(url, data=data,)
+    response = app.test_client().post(url, data=data, url='user_timeline', follow_redirects=True)
 
     # A successfully loaded page should return a response status code of 200
     assert response.status_code == 200
