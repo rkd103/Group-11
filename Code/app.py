@@ -69,6 +69,7 @@ def create_app():
     app.config["SESSION_TYPE"] = "filesystem"
     app.config['SERVER_NAME'] = 'localhost'
     app.config.update(SESSION_COOKIE_DOMAIN = None)
+    SESSION_TYPE = 'redis'
 
     # Configures the SQLite database
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
