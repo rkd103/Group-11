@@ -593,6 +593,8 @@ def register():
 @app.route('/home/timeline', methods=['GET', 'POST'])
 @login_required
 def user_timeline():
+    # Retains the value of the url so that it persists across various webpage redirections
+    session.permanent = True
     session['url'] = url_for('user_timeline')
     timeline = []
 
