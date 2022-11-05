@@ -12,3 +12,5 @@ werkzeug
 pytest 
 wtforms_test
 flask_session
+Werkzeug~=2.0.0
+jinja2~=3.0.3
