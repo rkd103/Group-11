@@ -67,7 +67,10 @@ def create_app():
     # Configures the session variable
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_TYPE"] = "filesystem"
-    app.config['SERVER_NAME'] = 'localhost'
+    app.config['SERVER_TYPE'] = 'sqlalchemy'
+    app.config.update(                                                     
+    SESSION_COOKIE_DOMAIN = None                                                
+)
 
     # Configures the SQLite database
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
@@ -732,6 +735,8 @@ def edit_post_prompt(post_to_edit_id):
 @app.route('/home/timeline/edit_post/<post_to_edit_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_to_edit_id):
+    session['url'] = url_for('user_timeline')
+
     post = Post.query.filter_by(post_id = int(post_to_edit_id)).first()
 
     if post == None:
@@ -1372,4 +1377,4 @@ if __name__ == "__main__":
         # db.drop_all()      
         db.create_all()
     # Specifies the localhost
-    app.run(host='0.0.0.0', )
+    app.run(host='0.0.0.0', port=5000,)
