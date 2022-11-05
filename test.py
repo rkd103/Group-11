@@ -461,17 +461,23 @@ def test_valid_status_deletion_and_editing():
     assert b"Original Post Time" in response.data
     assert b"Edit Time" not in response.data
 
+        
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/home/timeline/edit_post/' + str(new_post_id)
+
+    response = app.test_client().get(url, follow_redirects=True)
+
+    assert response.status_code == 200
+
+
     # Initializes a response object to automate testing
     # Build the arguments that will be passed to the response object
     url = '/home/timeline/edit_post/' + str(new_post_id)
 
     data = {
         "edit_text": "Test Post #2",
-        "current_user": "js1",
     }
-
-    with app.test_client().session_transaction() as session:
-        session['url'] = 'user_timeline'
     
     # Edits an existing post in the user's timeline
     response = app.test_client().post(url, data=data, follow_redirects=True)
