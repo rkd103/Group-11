@@ -467,10 +467,11 @@ def test_valid_status_deletion_and_editing():
 
     data = {
         "edit_text": "Test Post #2",
+        "current_user": "js1",
     }
 
     with app.test_client().session_transaction() as session:
-        session.post(url, data=data, follow_redirects=True)
+        session['url'] = 'user_timeline'
     
     # Edits an existing post in the user's timeline
     response = app.test_client().post(url, data=data, follow_redirects=True)
