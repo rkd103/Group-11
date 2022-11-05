@@ -12,4 +12,3 @@ werkzeug
 pytest 
 wtforms_test
 flask_session
-Werkzeug~=2.0.0
