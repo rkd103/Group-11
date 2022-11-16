@@ -199,7 +199,7 @@ class CommentLikes(db.Model):
     comment_id = db.Column(db.Integer, nullable=False, primary_key=True)
     username = db.Column(db.String(1024), nullable=False, primary_key=True)
 
-class Message(db.Model):
+class FriendMessage(db.Model):
     message_id = db.Column(db.Integer, primary_key=True)
     sender = db.Column(db.String(1024), nullable=False)
     receiver = db.Column(db.String(1024), nullable=False)
@@ -1185,10 +1185,10 @@ def modify_relationship(username):
             ).delete()
 
         # Remove messages between users
-        Message.query.filter_by(
+        FriendMessage.query.filter_by(
           sender = current_user.username, receiver = foreign_user.username
         ).delete()
-        Message.query.filter_by(
+        FriendMessage.query.filter_by(
           sender = foreign_user.username, receiver = current_user.username
         ).delete()
 
@@ -1441,10 +1441,10 @@ def chat_log(username):
         )
 
     # Get chat log
-    messages_1 = Message.query.filter_by(
+    messages_1 = FriendMessage.query.filter_by(
       sender = current_user.username, receiver = foreign_user.username
     ).all()
-    messages_2 = Message.query.filter_by(
+    messages_2 = FriendMessage.query.filter_by(
       receiver = current_user.username, sender = foreign_user.username
     ).all()
     messages = messages_1 + messages_2
@@ -1474,10 +1474,10 @@ def send_message(username):
 
     # Generate unique message id
     new_message_id = randrange(pow(2, 31) - 1)
-    while Message.query.filter_by(message_id = new_message_id).first() != None:
+    while FriendMessage.query.filter_by(message_id = new_message_id).first() != None:
         new_message_id = randrange(pow(2, 31) - 1)
 
-    new_message = Message(
+    new_message = FriendMessage(
       message_id = new_message_id,
       sender = current_user.username, 
       receiver = foreign_user.username,
