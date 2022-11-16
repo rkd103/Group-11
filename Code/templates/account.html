@@ -63,6 +63,22 @@
         border-bottom: 2px solid #00A3AD;
         padding-bottom: 10px;
     }
+    .messages_account_button, .messages_account_button:visited, .messages_account_button:active
+    {
+        text-decoration: none;
+        color: black;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 38%;
+        font-weight: bold;
+    }
+    .messages_account_button:hover
+    {
+        color:#00A3AD;
+        border-bottom: 2px solid #00A3AD;
+        padding-bottom: 10px;
+    }
 </style>
 
 <!--Code block that enables flashes-->
@@ -141,6 +157,9 @@
             </a>
             <a href="/home/account/settings" class="settings_account_button">
                 Settings
+            </a>
+            <a href="{{ url_for('messages') }}" class="messages_account_button">
+                Messages
             </a>
         </div> 
     </div>

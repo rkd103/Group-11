@@ -199,6 +199,13 @@ class CommentLikes(db.Model):
     comment_id = db.Column(db.Integer, nullable=False, primary_key=True)
     username = db.Column(db.String(1024), nullable=False, primary_key=True)
 
+class FriendMessage(db.Model):
+    message_id = db.Column(db.Integer, primary_key=True)
+    sender = db.Column(db.String(1024), nullable=False)
+    receiver = db.Column(db.String(1024), nullable=False)
+    message_text = db.Column(db.String(1024), nullable=False)
+    time = db.Column(db.TIMESTAMP, nullable=False)
+
 #*****************
 #***Flask*Forms***
 #*****************
@@ -627,7 +634,7 @@ def submit_post():
 
     # Generate unique post id
     new_post_id = randrange(pow(2, 31) - 1)
-    if Post.query.filter_by(post_id = new_post_id).first() != None:
+    while Post.query.filter_by(post_id = new_post_id).first() != None:
         new_post_id = randrange(pow(2, 31) - 1)
 
     # Add new post to database
@@ -1177,6 +1184,14 @@ def modify_relationship(username):
               comment_id = comment.comment_id, username = foreign_user.username
             ).delete()
 
+        # Remove messages between users
+        FriendMessage.query.filter_by(
+          sender = current_user.username, receiver = foreign_user.username
+        ).delete()
+        FriendMessage.query.filter_by(
+          sender = foreign_user.username, receiver = current_user.username
+        ).delete()
+
         db.session.delete(current_relationship)
         db.session.commit()
     # Mutual friend requests were sent (a user accepting a friend request
@@ -1217,7 +1232,7 @@ def submit_comment(post_id):
 
     # Generate a unique comment id
     new_comment_id = randrange(pow(2, 31) - 1)
-    if Comment.query.filter_by(comment_id = new_comment_id).first() != None:
+    while Comment.query.filter_by(comment_id = new_comment_id).first() != None:
         new_comment_id = randrange(pow(2, 31) - 1)
     
     # Add new comment to database
@@ -1365,6 +1380,119 @@ def modify_comment_likes(comment_id):
         db.session.commit()
     
     return redirect(session['url'])
+
+@app.route('/messages')
+@login_required
+def messages():
+    session['url'] = url_for('messages')
+
+    friends = []
+    friends_1 = Relationship.query.filter_by(
+      username_1 = current_user.username, 
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    friends_2 = Relationship.query.filter_by(
+      username_2 = current_user.username,
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    for relationship in friends_1:
+        friends.append(
+          User.query.filter_by(username = relationship.username_2).first()
+        )
+    for relationship in friends_2:
+        friends.append(
+          User.query.filter_by(username = relationship.username_1).first()
+        )
+
+    print(friends)
+
+    return render_template(
+      'messages.html', user = current_user, friends = friends
+    )
+
+@app.route('/messages/<username>')
+@login_required
+def chat_log(username):
+    session['url'] = url_for('chat_log', username = username)
+    foreign_user = User.query.filter_by(username = username).first()
+
+    if foreign_user == None:
+        return redirect('messages')
+    if not verify_friendship(current_user.username, foreign_user.username):
+        return redirect('messages')
+
+    # User friends
+    friends = []
+    friends_1 = Relationship.query.filter_by(
+      username_1 = current_user.username, 
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    friends_2 = Relationship.query.filter_by(
+      username_2 = current_user.username,
+      relationship_type = RelationshipType.FRIEND
+    ).all()
+    for relationship in friends_1:
+        friends.append(
+          User.query.filter_by(username = relationship.username_2).first()
+        )
+    for relationship in friends_2:
+        friends.append(
+          User.query.filter_by(username = relationship.username_1).first()
+        )
+
+    # Get chat log
+    messages_1 = FriendMessage.query.filter_by(
+      sender = current_user.username, receiver = foreign_user.username
+    ).all()
+    messages_2 = FriendMessage.query.filter_by(
+      receiver = current_user.username, sender = foreign_user.username
+    ).all()
+    messages = messages_1 + messages_2
+    messages = sorted(
+      messages, key = operator.attrgetter('time')
+    )
+
+    return render_template(
+      'chat_log.html', user = current_user, foreign_user = foreign_user,
+      friends = friends, messages = messages
+    )
+
+#*********************
+#***Message*Friends***
+#*********************
+@app.route('/send_message/<username>', methods = ['GET', 'POST'])
+@login_required
+def send_message(username):
+    foreign_user = User.query.filter_by(username = username).first()
+
+    if request.method != 'POST':
+        return redirect(session['url'])
+    if foreign_user == None:
+        return redirect(session['url'])
+    if not verify_friendship(current_user.username, foreign_user.username):
+        return redirect(session['url'])
+
+    # Generate unique message id
+    new_message_id = randrange(pow(2, 31) - 1)
+    while FriendMessage.query.filter_by(message_id = new_message_id).first() != None:
+        new_message_id = randrange(pow(2, 31) - 1)
+
+    new_message = FriendMessage(
+      message_id = new_message_id,
+      sender = current_user.username, 
+      receiver = foreign_user.username,
+      message_text = request.form.get('message_text_box'), 
+      time = datetime.now()
+    )
+    db.session.add(new_message)
+    db.session.commit()
+
+    send_notification()
+    
+    return redirect(session['url'])
+
+def send_notification():
+    pass
 
 #*****************
 #***Driver*code***
