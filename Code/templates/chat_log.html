@@ -1,0 +1,129 @@
+<style>
+    .chat_region {
+        padding-left: 3vmin;
+        padding-right: 3vmin;
+    }
+    #send_message_overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0; bottom: 0; left: 0; right: 0;
+        background-color: rgba(0,0,0,0.6);
+        z-index: 6;
+    }
+</style>
+
+{% extends 'messages.html' %}
+{% block chat_log %}
+
+<div class="chat_region">
+    <div class="chat_log">
+        {% if not messages %}
+            <div> 
+                Your chat history with {{ foreign_user.username }} is empty. 
+            </div>
+        {% endif %}
+
+        {% for message in messages %}
+            {% if message.sender == user.username %} 
+                <div class="message_sender"> 
+                    <div class="message_header">
+                        <div> {{ user.username }} </div>
+                        <div> {{ message.time }} </div>
+                    </div>
+                    <div class="message_content"> {{ message.message_text }} </div>
+                </div>
+            {% else %}
+                <div class="message_receiver"> 
+                    <div class="message_header">
+                        <div> {{ foreign_user.username }} </div>
+                        <div> {{ message.time }} </div>
+                    </div>
+                    <div class="message_content"> {{ message.message_text }} </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <button onclick="on_message()"> Send message </button>
+</div>
+
+<script>
+    function on_message() {
+        document.getElementById("send_message_overlay").style.display = "flex";
+    }
+    function off_message() {
+        document.getElementById("send_message_overlay").style.display = "none";
+    }
+
+    function count_chars_message() {
+        let text = document.getElementById("message_text_box").value;
+        let num_chars = text.length;
+    
+        document.getElementById("message_char_counter").innerHTML = num_chars + " / 1024";
+    
+        if (num_chars > 0 && num_chars <= 1024) {
+            document.getElementById("message_submit_button").style.backgroundColor = "#008080";
+        }
+        else {
+            document.getElementById("message_submit_button").style.backgroundColor = "#00808080";
+        }
+    }
+
+    function verify_message() {
+        document.getElementById("message_text_box").click();
+        let text = document.getElementById("message_text_box").value;
+        let num_chars = text.length;
+        if (num_chars == 0 || num_chars > 1024) {
+            alert("Invalid number of characters in message");
+            return;
+        }
+        if ((text.match(/\n/g) || []).length > 10) {
+            alert("Too many line breaks in message");
+            return;
+        }
+        if (text && !text.trim()) {
+            alert("Message must contain more than whitespace");
+            return;
+        }
+
+        document.forms["submit_message"].submit();
+    }
+</script>
+
+<!-- Copy of standard overlay for creating a post -->
+<section id="send_message_overlay">
+    <section class="create_post_container">
+        <section style="text-align: center;
+                        font-weight: bolder;
+                        font-size: large;">
+            Send {{ foreign_user.username }} a message
+
+            <br/> <hr>
+        </section>
+        <form class="submit_message" name="submit_message" id="submit_message" action="{{ url_for('send_message', username = foreign_user.username) }}" method="post" enctype="multipart/form-data">
+        </form>
+        <textarea rows="12" cols="72" wrap="soft" style=   "position: absolute;
+                                                            overflow: auto;
+                                                            resize: none;
+                                                            background-color: rgb(206, 206, 206);
+                                                            text-decoration: none;"
+                                                            form="submit_message" oninput="count_chars_message()" title="Send message" name="message_text_box" id="message_text_box"></textarea> <br/>
+
+        <section class="char_counter" id="message_char_counter">
+            0 / 1024
+        </section>                                                                     
+        <section class="close_button" onclick="off_message()" title="Cancel message">
+            &times;
+        </section>
+        <section class="create_post_container_submit_button">
+            <input type="submit" class="post_submit_button" style=  "left: 45%;
+                                                                    bottom: 0%;
+                                                                    position: absolute;" 
+                                                                    value="Send message" id="message_submit_button" name="message_submit_button" title="Submit message" onclick="verify_message()">
+        </section>
+    </section>
+</section>
+    
+{% endblock %}
