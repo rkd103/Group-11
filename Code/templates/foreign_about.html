@@ -1,0 +1,87 @@
+<style>
+    .about_container
+    {
+        border: none;
+        border-radius: 10px;;
+        background-color: #acacac;
+        position: absolute;
+        top: 58vh;
+        left: 14vw;
+        width: 75vw;
+        min-height: 30vh;
+        padding: 10px;
+        overflow: auto;
+        word-break: break-all;
+    }
+    .about_headers
+    {
+        font-weight: bold;
+        color:#00A3AD;
+        text-align: center;
+        font-size: 30px;
+    }
+    .about_account_button, .about_account_button:visited, .about_account_button:hover, .about_account_button:active
+    {
+        border-bottom: 2px solid #00A3AD;
+        padding-bottom: 10px;
+    }
+</style>
+
+{% extends 'foreign_account.html' %}
+{% block account_body %}
+    <div class="about_container">
+
+        <div class="about_headers" style="color:white; background: rgba(0, 128, 128, 0.50); padding: 20px; margin: 20px; border-radius: 5px;">
+            About Profile
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.5); padding: 20px; margin: 20px; border-radius: 5px;">
+
+            <div class="about_headers">
+                Name
+            </div>
+            <div style="text-align: center; padding: 10px;">
+                {{ foreign_user.first_name }} {{ foreign_user.middle_name }} {{ foreign_user.last_name }}
+            </div>
+            <hr style="overflow-x: fit; width: 120vh; color: #777777 noshade; background-color: #777777; height: 1px;">
+    
+            <!-- <div class="about_headers">
+                Email
+            </div> -->
+            <!-- <div style="text-align: center; padding: 10px;">
+                {{ foreign_user.email }}
+            </div> -->
+            <!-- <hr style="overflow-x: fit; width: 120vh; color: #777777 noshade; background-color: #777777; height: 1px;"> -->
+    
+            <div class="about_headers">
+                Description
+            </div>
+            <div style="text-align: center; padding: 10px;">
+                {% if foreign_user.user_description %}
+                    {{ foreign_user.user_description }}
+                {% endif %}
+            </div>
+            <hr style="overflow-x: fit; width: 120vh; color: #777777 noshade; background-color: #777777; height: 1px;">
+    
+            <div class="about_headers">
+                Objective
+            </div>
+            <div style="text-align: center; padding: 10px;">
+                {% if foreign_user.objective %}
+                    {{ foreign_user.objective }}
+                {% endif %}
+            </div>
+            <hr style="overflow-x: fit; width: 120vh; color: #777777 noshade; background-color: #777777; height: 1px;">
+    
+            <!-- <div class="about_headers">
+                Phone Number
+            </div> -->
+            <!-- <div style="text-align: center; padding: 10px;">
+                {% if  foreign_user.phone_number %}
+                    {{  foreign_user.phone_number }}
+                {% endif %}
+            </div> -->
+        </div>
+
+    </div>
+{% endblock %}

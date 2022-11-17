@@ -1,0 +1,18 @@
+<style> .page_content { color: white; } </style>
+
+{% extends 'foreign_account.html' %}
+{% block account_body %}
+<div class="page_content">
+    <!-- Remove these line breaks and modify as needed -->
+    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    <br> <br> <br> <br> <br> <br> <br> <br>
+
+    <div id="friends"> Friends
+        {% for friend in friends %}
+        <div class="friend">
+            <div> {{ friend.username }} </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
