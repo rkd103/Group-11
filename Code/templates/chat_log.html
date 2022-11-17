@@ -30,7 +30,7 @@
                 <div class="message_sender"> 
                     <div class="message_header">
                         <div> {{ user.username }} </div>
-                        <div> {{ message.time }} </div>
+                        <div> {{ message.time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
                     </div>
                     <div class="message_content"> {{ message.message_text }} </div>
                 </div>
@@ -38,7 +38,7 @@
                 <div class="message_receiver"> 
                     <div class="message_header">
                         <div> {{ foreign_user.username }} </div>
-                        <div> {{ message.time }} </div>
+                        <div> {{ message.time.strftime('Date: %Y-%m-%d\n\nTime: %H:%M:%S') }} </div>
                     </div>
                     <div class="message_content"> {{ message.message_text }} </div>
                 </div>
@@ -121,7 +121,7 @@
             <input type="submit" class="post_submit_button" style=  "left: 45%;
                                                                     bottom: 0%;
                                                                     position: absolute;" 
-                                                                    value="Send message" id="message_submit_button" name="message_submit_button" title="Submit message" onclick="verify_message()">
+                                                                    value="Send message" id="message_submit_button" name="message_submit_button" title="Submit message" onclick="verify_message(); this.disabled=true;">
         </section>
     </section>
 </section>

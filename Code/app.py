@@ -1487,12 +1487,24 @@ def send_message(username):
     db.session.add(new_message)
     db.session.commit()
 
-    send_notification()
+    send_notification(foreign_user)
+    flash('A message has been successfully sent to ' + foreign_user.username + ".")
     
     return redirect(session['url'])
 
-def send_notification():
-    pass
+def send_notification(foreign_user): 
+    text_file = open('direct_messaging_notification_email.txt', 'r')
+    msg = text_file.read()
+    msg = msg.replace('messaage_sender', current_user.first_name)
+    msg = msg.replace('first_name', foreign_user.first_name)
+    text_file.close()
+
+    send_email(
+        recipient_email = foreign_user.email,
+        email_subject_line = 'Hand-in-Hand™ Notification System',
+        email_content = msg
+    )
+
 
 #*****************
 #***Driver*code***
