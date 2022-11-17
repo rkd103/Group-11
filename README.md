@@ -32,6 +32,9 @@ https://github.com/rkd103/Group-11/blob/Master/CSE-4212_SRS_Document_Group_11.pd
 # Test Plan Document: #
 https://github.com/rkd103/Group-11/blob/Master/CSE-4214_Test_Plan_Document_Group_11.pdf
 
+# Project Release Document: #
+https://github.com/rkd103/Group-11/blob/Master/CSE-4214_Project_Release_Document_Group_11.pdf
+
 # Group Number: #
 11
 
