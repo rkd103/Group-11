@@ -7,7 +7,7 @@ import pytest
 import flask_login
 # Imports the instance of the web application instantiated in the file "app.py"
 from Code import app
-Code.app import app, RegisterForm
+from Code.app import app, RegisterForm
 
 
 #*************************
@@ -65,7 +65,7 @@ def test_valid_user_login_and_logout():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -76,7 +76,7 @@ def test_valid_user_login_and_logout():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -152,7 +152,7 @@ def test_valid_credential_retrival():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -163,7 +163,7 @@ def test_valid_credential_retrival():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     user_1 = User   (
                         username = 'js1',
@@ -269,7 +269,7 @@ def test_valid_user_post_and_timeline_visibility():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -280,7 +280,7 @@ def test_valid_user_post_and_timeline_visibility():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -320,7 +320,7 @@ def test_valid_user_post_and_timeline_visibility():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    Code.app import Post, randrange, datetime
+    from Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -372,7 +372,7 @@ def test_valid_status_deletion_and_editing():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -383,7 +383,7 @@ def test_valid_status_deletion_and_editing():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -422,7 +422,7 @@ def test_valid_status_deletion_and_editing():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    Code.app import Post, randrange, datetime
+    from Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -513,7 +513,7 @@ def test_valid_media_attachment():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -524,7 +524,7 @@ def test_valid_media_attachment():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt 
+    from Code.app import User, bcrypt 
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -628,7 +628,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -641,7 +641,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -744,7 +744,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -796,7 +796,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -807,7 +807,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -912,7 +912,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -1025,7 +1025,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -1073,7 +1073,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Retrieves the relationship created between the user's "js1" and "jm2"
     current_relationship = Relationship.query.filter_by (
@@ -1139,7 +1139,7 @@ def test_reject_friend_request():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -1150,7 +1150,7 @@ def test_reject_friend_request():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -1256,7 +1256,7 @@ def test_reject_friend_request():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -1369,7 +1369,7 @@ def test_reject_friend_request():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Retrieves the relationship created between the user's "js1" and "jm2"
     current_relationship = Relationship.query.filter_by (
@@ -1424,7 +1424,7 @@ def test_valid_post_like():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -1435,12 +1435,12 @@ def test_valid_post_like():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -1510,7 +1510,7 @@ def test_valid_post_like():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    Code.app import Post, randrange, datetime
+    from Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -1583,7 +1583,7 @@ def test_valid_post_like():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -1718,7 +1718,7 @@ def test_valid_post_like():
     '''
 
     # Imports the database table "Share" from the file "app.py"
-    Code.app import Share
+    from Code.app import Share
 
     # Manually creates a new post, circumventing the need to interface with a session variable
     new_share = Share(
@@ -1759,7 +1759,7 @@ def test_valid_post_like():
     '''
 
     # Imports the database table "PostLikes" from the file "app.py"
-    Code.app import PostLikes
+    from Code.app import PostLikes
 
     # Manually likes a post, circumventing the need to interface with a session variable
     new_like = PostLikes(
@@ -1805,7 +1805,7 @@ def test_valid_post_share():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -1816,12 +1816,12 @@ def test_valid_post_share():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -1891,7 +1891,7 @@ def test_valid_post_share():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    Code.app import Post, randrange, datetime
+    from Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -1964,7 +1964,7 @@ def test_valid_post_share():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -2099,7 +2099,7 @@ def test_valid_post_share():
     '''
 
     # Imports the database table "Share" from the file "app.py"
-    Code.app import Share
+    from Code.app import Share
 
     # Manually creates a new post, circumventing the need to interface with a session variable
     new_share = Share(
@@ -2145,7 +2145,7 @@ def test_valid_post_commenting():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -2156,12 +2156,12 @@ def test_valid_post_commenting():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -2231,7 +2231,7 @@ def test_valid_post_commenting():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    Code.app import Post, randrange, datetime
+    from Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -2304,7 +2304,7 @@ def test_valid_post_commenting():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -2441,7 +2441,7 @@ def test_valid_post_commenting():
     '''
 
     # Imports the database table "Comment" from the file "app.py"
-    Code.app import Comment
+    from Code.app import Comment
 
     # Generates and populates the arguments passed to the Comment object constructor
     new_comment_id = randrange(pow(2, 31) - 1)
@@ -2517,7 +2517,7 @@ def test_valid_messaging_between_friends():
     pass
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -2528,12 +2528,12 @@ def test_valid_messaging_between_friends():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -2580,7 +2580,7 @@ def test_valid_messaging_between_friends():
                             ))
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -2642,7 +2642,7 @@ def test_valid_messaging_between_friends():
     assert b"Send message" in response.data
 
     # Imports the database table "FriendMessage" and the datetime function call from the file "app.py"
-    Code.app import FriendMessage, datetime, randrange
+    from Code.app import FriendMessage, datetime, randrange
 
     # Creates a new message between the users "jm2" and "js1"
     new_message_id = randrange(pow(2, 31) - 1)
@@ -2678,7 +2678,7 @@ def test_presence_of_chat_log_between_friends():
     pass
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -2689,12 +2689,12 @@ def test_presence_of_chat_log_between_friends():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -2741,7 +2741,7 @@ def test_presence_of_chat_log_between_friends():
                             ))
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -2803,7 +2803,7 @@ def test_presence_of_chat_log_between_friends():
     assert b"Send message" in response.data
 
     # Imports the database table "FriendMessage" and the datetime function call from the file "app.py"
-    Code.app import FriendMessage, datetime, randrange
+    from Code.app import FriendMessage, datetime, randrange
 
     # Creates a new message between the users "jm2" and "js1"
     new_message_id = randrange(pow(2, 31) - 1)
@@ -2854,7 +2854,7 @@ def test_invalid_messaging_between_strangers():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -2865,7 +2865,7 @@ def test_invalid_messaging_between_strangers():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -2915,7 +2915,7 @@ def test_invalid_messaging_between_strangers():
 
     # In this instance, the users are not friends
     '''# Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # The users are not friends in this instance
     # Creates a new relationship between the test users, "js1" and "jm2"
@@ -3043,7 +3043,7 @@ def test_presence_of_chat_log_from_the_receivers_perspective():
     pass
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -3054,12 +3054,12 @@ def test_presence_of_chat_log_from_the_receivers_perspective():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -3106,7 +3106,7 @@ def test_presence_of_chat_log_from_the_receivers_perspective():
                         ))
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -3168,7 +3168,7 @@ def test_presence_of_chat_log_from_the_receivers_perspective():
     assert b"Send message" in response.data
 
     # Imports the database table "FriendMessage" and the datetime function call from the file "app.py"
-    Code.app import FriendMessage, datetime, randrange
+    from Code.app import FriendMessage, datetime, randrange
 
     # Creates a new message between the users "jm2" and "js1"
     new_message_id = randrange(pow(2, 31) - 1)
@@ -3220,7 +3220,7 @@ def test_ability_to_message_multiple_friends_concurrently():
     pass
 
 # Imports the instance of the database (db) initialized in the file "app.py"
-    Code.app import db
+    from Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -3231,12 +3231,12 @@ def test_ability_to_message_multiple_friends_concurrently():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt   
+    from Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    Code.app import User, bcrypt
+    from Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -3300,7 +3300,7 @@ def test_ability_to_message_multiple_friends_concurrently():
                             ))
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    Code.app import Relationship, RelationshipType
+    from Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -3400,7 +3400,7 @@ def test_ability_to_message_multiple_friends_concurrently():
     assert b"Send message" in response.data
 
     # Imports the database table "FriendMessage" and the datetime function call from the file "app.py"
-    Code.app import FriendMessage, datetime, randrange
+    from Code.app import FriendMessage, datetime, randrange
 
     # Creates a new message between the users "jm2" and "js1"
     new_message_id = randrange(pow(2, 31) - 1)
