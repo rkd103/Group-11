@@ -7,7 +7,7 @@ import pytest
 import flask_login
 # Imports the instance of the web application instantiated in the file "app.py"
 from Code import app
-from Code.app import app, RegisterForm
+Code.app import app, RegisterForm
 
 
 #*************************
@@ -65,7 +65,7 @@ def test_valid_user_login_and_logout():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -76,9 +76,9 @@ def test_valid_user_login_and_logout():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt   
+    Code.app import User, bcrypt   
 
-    # <TESTING PLACEHOLDER> : testing statements begi
+    # <TESTING PLACEHOLDER> : testing statements begin
 
     # Directly loggs in a user using the specified paramters
     # The user should only be logged in for the test
@@ -152,7 +152,7 @@ def test_valid_credential_retrival():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -163,7 +163,7 @@ def test_valid_credential_retrival():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
+    Code.app import User, bcrypt
 
     user_1 = User   (
                         username = 'js1',
@@ -269,7 +269,7 @@ def test_valid_user_post_and_timeline_visibility():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -280,7 +280,7 @@ def test_valid_user_post_and_timeline_visibility():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt   
+    Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -320,7 +320,7 @@ def test_valid_user_post_and_timeline_visibility():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    from Code.app import Post, randrange, datetime
+    Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -372,7 +372,7 @@ def test_valid_status_deletion_and_editing():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -383,7 +383,7 @@ def test_valid_status_deletion_and_editing():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
+    Code.app import User, bcrypt
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -422,7 +422,7 @@ def test_valid_status_deletion_and_editing():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    from Code.app import Post, randrange, datetime
+    Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -513,7 +513,7 @@ def test_valid_media_attachment():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -524,7 +524,7 @@ def test_valid_media_attachment():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt 
+    Code.app import User, bcrypt 
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -628,7 +628,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -641,7 +641,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
+    Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -744,7 +744,7 @@ def test_sending_friend_request_and_verify_obfuscated_foreign_user_content():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -796,7 +796,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -807,7 +807,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
+    Code.app import User, bcrypt
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -912,7 +912,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -1025,7 +1025,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -1073,7 +1073,7 @@ def test_sent_friend_request_account_changes_accpeting_friend_request_and_removi
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Retrieves the relationship created between the user's "js1" and "jm2"
     current_relationship = Relationship.query.filter_by (
@@ -1139,7 +1139,7 @@ def test_reject_friend_request():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -1150,7 +1150,7 @@ def test_reject_friend_request():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt   
+    Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
@@ -1256,7 +1256,7 @@ def test_reject_friend_request():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -1369,7 +1369,7 @@ def test_reject_friend_request():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Retrieves the relationship created between the user's "js1" and "jm2"
     current_relationship = Relationship.query.filter_by (
@@ -1424,7 +1424,7 @@ def test_valid_post_like():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -1435,12 +1435,12 @@ def test_valid_post_like():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt   
+    Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
+    Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -1510,7 +1510,7 @@ def test_valid_post_like():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    from Code.app import Post, randrange, datetime
+    Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -1583,7 +1583,7 @@ def test_valid_post_like():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -1718,7 +1718,7 @@ def test_valid_post_like():
     '''
 
     # Imports the database table "Share" from the file "app.py"
-    from Code.app import Share
+    Code.app import Share
 
     # Manually creates a new post, circumventing the need to interface with a session variable
     new_share = Share(
@@ -1759,7 +1759,7 @@ def test_valid_post_like():
     '''
 
     # Imports the database table "PostLikes" from the file "app.py"
-    from Code.app import PostLikes
+    Code.app import PostLikes
 
     # Manually likes a post, circumventing the need to interface with a session variable
     new_like = PostLikes(
@@ -1805,7 +1805,7 @@ def test_valid_post_share():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -1816,12 +1816,12 @@ def test_valid_post_share():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt   
+    Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
+    Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -1891,7 +1891,7 @@ def test_valid_post_share():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    from Code.app import Post, randrange, datetime
+    Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -1964,7 +1964,7 @@ def test_valid_post_share():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -2099,7 +2099,7 @@ def test_valid_post_share():
     '''
 
     # Imports the database table "Share" from the file "app.py"
-    from Code.app import Share
+    Code.app import Share
 
     # Manually creates a new post, circumventing the need to interface with a session variable
     new_share = Share(
@@ -2145,7 +2145,7 @@ def test_valid_post_commenting():
     '''
 
     # Imports the instance of the database (db) initialized in the file "app.py"
-    from Code.app import db
+    Code.app import db
 
     # Creates a context object to set up the web application's context
     test_request_context = app.test_request_context()
@@ -2156,12 +2156,12 @@ def test_valid_post_commenting():
     db.create_all()
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt   
+    Code.app import User, bcrypt   
 
     # <TESTING PLACEHOLDER> : testing statements begin
 
     # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
-    from Code.app import User, bcrypt
+    Code.app import User, bcrypt
 
     # Creates a temporary user to interface with the web application
     user_1 = User   (
@@ -2231,7 +2231,7 @@ def test_valid_post_commenting():
     assert b'js1' in response.data
 
     # Imports the database user table "Posts," the random subroutine "randrange," and the datetime function call from the file "app.py"
-    from Code.app import Post, randrange, datetime
+    Code.app import Post, randrange, datetime
 
     # Creates a post used to test the functionality of the user's timeline
 
@@ -2304,7 +2304,7 @@ def test_valid_post_commenting():
     '''
 
     # Imports the database table "Relationship" and its helder class "RelationshipType"
-    from Code.app import Relationship, RelationshipType
+    Code.app import Relationship, RelationshipType
 
     # Creates a new relationship between the test users, "js1" and "jm2"
     # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
@@ -2441,7 +2441,7 @@ def test_valid_post_commenting():
     '''
 
     # Imports the database table "Comment" from the file "app.py"
-    from Code.app import Comment
+    Code.app import Comment
 
     # Generates and populates the arguments passed to the Comment object constructor
     new_comment_id = randrange(pow(2, 31) - 1)
@@ -2491,6 +2491,976 @@ def test_valid_post_commenting():
     assert b"Original Post Time" in response.data
     assert b"jm2" in response.data
     assert b"lethologica" in response.data
+
+    # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
+
+    # </TESTING PLACEHOLDER> : testing statements end
+
+    # Cleans the database dropping its tables
+    db.drop_all()
+    
+    # Deletes the context object
+    test_request_context.pop()
+
+
+#***************************
+#***Additional Feature #1***
+#***************************
+
+#*************
+#***Test 13***
+#*************
+def test_valid_messaging_between_friends():
+    '''
+    Ensures that a user can successfully send a messsage to one of his or her friends
+    '''
+    pass
+
+    # Imports the instance of the database (db) initialized in the file "app.py"
+    Code.app import db
+
+    # Creates a context object to set up the web application's context
+    test_request_context = app.test_request_context()
+    # Appends the context object
+    test_request_context.push()
+
+    # Builds the database and creates the tables
+    db.create_all()
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt   
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt
+
+    # Creates a temporary user to interface with the web application
+    user_1 = User   (
+                        username = 'js1',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'James',
+                        middle_name = '',
+                        last_name = 'Smith',
+                        email = 'js1@gmail.com'
+                    )
+    user_2 = User   (
+                    username = 'jm2',
+                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                    first_name = 'Jane',
+                    middle_name = '',
+                    last_name = 'Meredith',
+                    email = 'jm2@gmail.com'
+                    )
+
+    # Saves the newly created user into the database
+    if (1):
+        db.session.add(user_1)
+        db.session.add(user_2)
+        db.session.commit()
+
+    # Directly loggs in a user using the specified paramters
+    # The user should only be logged in for the test
+    # Source: https://github.com/pytest-dev/pytest-flask/issues/40
+    flask_login.login_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
+
+    # Imports the database table "Relationship" and its helder class "RelationshipType"
+    Code.app import Relationship, RelationshipType
+
+    # Creates a new relationship between the test users, "js1" and "jm2"
+    # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
+    # Circumvents the need to modify a session whose value contains arguments
+    # Such a circumstance arises when evoking the url "/modify_relationship/<username>"
+    new_relationship = Relationship (
+                                        username_1 = "js1", username_2 = "jm2",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+
+    # A "Friend" relationship status is not bi-directional
+    # This means that a "Friend" relationship exists between the users "js1" and "jm2" in that order
+    # But the converse is not implicity set, which necessitates the following
+    new_relationship = Relationship (
+                                        username_1 = "jm2", username_2 = "js1",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+    
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "js1",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # The response statement requires the necessary argument "follow_redirects=True"
+    # This allows the web application to load the response page when provided input data
+    # In the case of this test, it permits the website to navigate to the user's account from the login page
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # <TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; test case turning point begin
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/jm2'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"jm2" in response.data
+    assert b"Your chat history with jm2 is empty." in response.data
+    assert b"Send message" in response.data
+
+    # Imports the database table "FriendMessage" and the datetime function call from the file "app.py"
+    Code.app import FriendMessage, datetime, randrange
+
+    # Creates a new message between the users "jm2" and "js1"
+    new_message_id = randrange(pow(2, 31) - 1)
+    new_message = FriendMessage(
+      message_id = new_message_id,
+      sender = "js1", 
+      receiver = "jm2",
+      message_text = "Test Direct Message #1", 
+      time = datetime.now()
+    )
+
+    # Saves the newly created message into the database
+    db.session.add(new_message)
+    db.session.commit()
+
+    # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
+
+    # </TESTING PLACEHOLDER> : testing statements end
+
+    # Cleans the database dropping its tables
+    db.drop_all()
+    
+    # Deletes the context object
+    test_request_context.pop()
+
+#*************
+#***Test 14***
+#*************
+def test_presence_of_chat_log_between_friends():
+    '''
+    Ensures that once a message is sent between mutual friends that the text appears in the sender's chat log
+    '''
+    pass
+
+    # Imports the instance of the database (db) initialized in the file "app.py"
+    Code.app import db
+
+    # Creates a context object to set up the web application's context
+    test_request_context = app.test_request_context()
+    # Appends the context object
+    test_request_context.push()
+
+    # Builds the database and creates the tables
+    db.create_all()
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt   
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt
+
+    # Creates a temporary user to interface with the web application
+    user_1 = User   (
+                        username = 'js1',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'James',
+                        middle_name = '',
+                        last_name = 'Smith',
+                        email = 'js1@gmail.com'
+                    )
+    user_2 = User   (
+                    username = 'jm2',
+                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                    first_name = 'Jane',
+                    middle_name = '',
+                    last_name = 'Meredith',
+                    email = 'jm2@gmail.com'
+                    )
+
+    # Saves the newly created user into the database
+    if (1):
+        db.session.add(user_1)
+        db.session.add(user_2)
+        db.session.commit()
+
+    # Directly loggs in a user using the specified paramters
+    # The user should only be logged in for the test
+    # Source: https://github.com/pytest-dev/pytest-flask/issues/40
+    flask_login.login_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
+
+    # Imports the database table "Relationship" and its helder class "RelationshipType"
+    Code.app import Relationship, RelationshipType
+
+    # Creates a new relationship between the test users, "js1" and "jm2"
+    # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
+    # Circumvents the need to modify a session whose value contains arguments
+    # Such a circumstance arises when evoking the url "/modify_relationship/<username>"
+    new_relationship = Relationship (
+                                        username_1 = "js1", username_2 = "jm2",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+
+    # A "Friend" relationship status is not bi-directional
+    # This means that a "Friend" relationship exists between the users "js1" and "jm2" in that order
+    # But the converse is not implicity set, which necessitates the following
+    new_relationship = Relationship (
+                                        username_1 = "jm2", username_2 = "js1",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+    
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "js1",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # The response statement requires the necessary argument "follow_redirects=True"
+    # This allows the web application to load the response page when provided input data
+    # In the case of this test, it permits the website to navigate to the user's account from the login page
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # <TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; test case turning point begin
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/jm2'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"jm2" in response.data
+    assert b"Your chat history with jm2 is empty." in response.data
+    assert b"Send message" in response.data
+
+    # Imports the database table "FriendMessage" and the datetime function call from the file "app.py"
+    Code.app import FriendMessage, datetime, randrange
+
+    # Creates a new message between the users "jm2" and "js1"
+    new_message_id = randrange(pow(2, 31) - 1)
+    new_message = FriendMessage(
+      message_id = new_message_id,
+      sender = "js1", 
+      receiver = "jm2",
+      message_text = "Test Direct Message #1", 
+      time = datetime.now()
+    )
+
+    # Saves the newly created message into the database
+    db.session.add(new_message)
+    db.session.commit()
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/jm2'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"jm2" in response.data
+    assert b"Your chat history with jm2 is empty." not in response.data
+    assert b"Date" in response.data
+    assert b"Time" in response.data
+    assert b"Test Direct Message #1" in response.data
+    assert b"Send message" in response.data
+
+    # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
+
+    # </TESTING PLACEHOLDER> : testing statements end
+
+    # Cleans the database dropping its tables
+    db.drop_all()
+    
+    # Deletes the context object
+    test_request_context.pop()
+
+#*************
+#***Test 15***
+#*************
+def test_invalid_messaging_between_strangers():
+    '''
+    Ensures that the messaging mechanism is inoperable between users who are not friends
+    '''
+
+    # Imports the instance of the database (db) initialized in the file "app.py"
+    Code.app import db
+
+    # Creates a context object to set up the web application's context
+    test_request_context = app.test_request_context()
+    # Appends the context object
+    test_request_context.push()
+
+    # Builds the database and creates the tables
+    db.create_all()
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt   
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # Creates a temporary user to interface with the web application
+    user_1 = User   (
+                        username = 'js1',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'James',
+                        middle_name = '',
+                        last_name = 'Smith',
+                        email = 'js1@gmail.com'
+                    )
+    user_2 = User   (
+                    username = 'jm2',
+                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                    first_name = 'Jane',
+                    middle_name = '',
+                    last_name = 'Meredith',
+                    email = 'jm2@gmail.com'
+                    )
+
+    # Saves the newly created user into the database
+    if (1):
+        db.session.add(user_1)
+        db.session.add(user_2)
+        db.session.commit()
+
+    # Directly loggs in a user using the specified paramters
+    # The user should only be logged in for the test
+    # Source: https://github.com/pytest-dev/pytest-flask/issues/40
+    flask_login.login_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
+
+    # In this instance, the users are not friends
+    '''# Imports the database table "Relationship" and its helder class "RelationshipType"
+    Code.app import Relationship, RelationshipType
+
+    # The users are not friends in this instance
+    # Creates a new relationship between the test users, "js1" and "jm2"
+    # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
+    # Circumvents the need to modify a session whose value contains arguments
+    # Such a circumstance arises when evoking the url "/modify_relationship/<username>"
+    new_relationship = Relationship (
+                                        username_1 = "js1", username_2 = "jm2",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+
+    # A "Friend" relationship status is not bi-directional
+    # This means that a "Friend" relationship exists between the users "js1" and "jm2" in that order
+    # But the converse is not implicity set, which necessitates the following
+    new_relationship = Relationship (
+                                        username_1 = "jm2", username_2 = "js1",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()'''
+    
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "js1",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # The response statement requires the necessary argument "follow_redirects=True"
+    # This allows the web application to load the response page when provided input data
+    # In the case of this test, it permits the website to navigate to the user's account from the login page
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # <TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; test case turning point begin
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/jm2'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # In this scenario, this page does not exist or contains blank data
+    assert b"jm2" not in response.data
+    assert b"Your chat history with jm2 is empty." not in response.data
+    assert b"Send message" not in response.data
+
+    # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
+
+    # </TESTING PLACEHOLDER> : testing statements end
+
+    # Cleans the database dropping its tables
+    db.drop_all()
+    
+    # Deletes the context object
+    test_request_context.pop()
+
+
+#***************************
+#***Additional Feature #2***
+#***************************
+
+#*************
+#***Test 16***
+#*************
+# Source: https://www.geeksforgeeks.org/fetching-recently-sent-mails-details-sent-via-a-gmail-account-using-python/
+def test_email_delivery_system():
+    '''
+    Ensures that an email is sent to the reciever of a direct message
+    '''
+
+    # Imports the necessary library packages/modules to facilitate the retrival of the total number of messages sent by the development teams automatic email: 'cse.4212.group.11@gmail.com'
+    import imaplib, email, webbrowser, os, base64
+    from email.header import decode_header
+
+    # Establishes a connection with Gmail
+    server = "imap.gmail.com"
+    imap = imaplib.IMAP4_SSL(server)
+
+    # Accesses the gmail account using valid credentials
+    imap.login('cse.4212.group.11@gmail.com', base64.b64decode('amVvemZwaGxjdWthd3dtZQ==').decode("utf-8"))
+
+    # Calculates the total number of sent messages
+    response, current_sent_message_total = imap.select('"[Gmail]/Sent Mail"')
+
+    # Calls an existing, successful test that sends an email during its operation
+    test_valid_credential_retrival()
+
+    # Re-calculates the total number of sent messages and compares it against the former value
+    response, new_sent_message_total = imap.select('"[Gmail]/Sent Mail"')
+
+    # Converts the byte objects into integers for comparision
+    current_sent_message_total = int(str(current_sent_message_total).strip("['b']"))
+    new_sent_message_total = int(str(new_sent_message_total).strip("['b']"))
+
+    # Ensures that the email system has sent one more email before and after the execution of the nested test case
+    if (new_sent_message_total == ( current_sent_message_total + 1 ) ):
+        assert True
+    else:
+        assert False
+
+#*************
+#***Test 17***
+#*************
+def test_presence_of_chat_log_from_the_receivers_perspective():
+    '''
+    Ensures that after a message is sent between two users that the text appears in the chat log of the user receiving the message
+    '''
+    pass
+
+    # Imports the instance of the database (db) initialized in the file "app.py"
+    Code.app import db
+
+    # Creates a context object to set up the web application's context
+    test_request_context = app.test_request_context()
+    # Appends the context object
+    test_request_context.push()
+
+    # Builds the database and creates the tables
+    db.create_all()
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt   
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt
+
+    # Creates a temporary user to interface with the web application
+    user_1 = User   (
+                        username = 'js1',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'James',
+                        middle_name = '',
+                        last_name = 'Smith',
+                        email = 'js1@gmail.com'
+                    )
+    user_2 = User   (
+                    username = 'jm2',
+                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                    first_name = 'Jane',
+                    middle_name = '',
+                    last_name = 'Meredith',
+                    email = 'jm2@gmail.com'
+                    )
+
+    # Saves the newly created user into the database
+    if (1):
+        db.session.add(user_1)
+        db.session.add(user_2)
+        db.session.commit()
+
+    # Directly loggs in a user using the specified paramters
+    # The user should only be logged in for the test
+    # Source: https://github.com/pytest-dev/pytest-flask/issues/40
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
+    flask_login.login_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
+
+    # Imports the database table "Relationship" and its helder class "RelationshipType"
+    Code.app import Relationship, RelationshipType
+
+    # Creates a new relationship between the test users, "js1" and "jm2"
+    # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
+    # Circumvents the need to modify a session whose value contains arguments
+    # Such a circumstance arises when evoking the url "/modify_relationship/<username>"
+    new_relationship = Relationship (
+                                        username_1 = "js1", username_2 = "jm2",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+
+    # A "Friend" relationship status is not bi-directional
+    # This means that a "Friend" relationship exists between the users "js1" and "jm2" in that order
+    # But the converse is not implicity set, which necessitates the following
+    new_relationship = Relationship (
+                                        username_1 = "jm2", username_2 = "js1",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+    
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "jm2",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # The response statement requires the necessary argument "follow_redirects=True"
+    # This allows the web application to load the response page when provided input data
+    # In the case of this test, it permits the website to navigate to the user's account from the login page
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # <TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; test case turning point begin
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/js1'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"js1" in response.data
+    assert b"Your chat history with js1 is empty." in response.data
+    assert b"Send message" in response.data
+
+    # Imports the database table "FriendMessage" and the datetime function call from the file "app.py"
+    Code.app import FriendMessage, datetime, randrange
+
+    # Creates a new message between the users "jm2" and "js1"
+    new_message_id = randrange(pow(2, 31) - 1)
+    new_message = FriendMessage(
+      message_id = new_message_id,
+      sender = "js1", 
+      receiver = "jm2",
+      message_text = "Test Direct Message #1", 
+      time = datetime.now()
+    )
+
+    # Saves the newly created message into the database
+    db.session.add(new_message)
+    db.session.commit()
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/js1'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"js1" in response.data
+    assert b"Your chat history with js1 is empty." not in response.data
+    assert b"Date" in response.data
+    assert b"Time" in response.data
+    assert b"Test Direct Message #1" in response.data
+    assert b"Send message" in response.data
+
+    # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
+
+    # </TESTING PLACEHOLDER> : testing statements end
+
+    # Cleans the database dropping its tables
+    db.drop_all()
+    
+    # Deletes the context object
+    test_request_context.pop()
+
+#*************
+#***Test 18***
+#*************
+def test_ability_to_message_multiple_friends_concurrently():
+    '''
+    Ensures that a user with multiple friends can seamlessly chat with his or her acquaintances
+    '''
+    pass
+
+# Imports the instance of the database (db) initialized in the file "app.py"
+    Code.app import db
+
+    # Creates a context object to set up the web application's context
+    test_request_context = app.test_request_context()
+    # Appends the context object
+    test_request_context.push()
+
+    # Builds the database and creates the tables
+    db.create_all()
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt   
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # Imports the database user table "User" and the instance of the bcrypt object initialized in the file "app.py"
+    Code.app import User, bcrypt
+
+    # Creates a temporary user to interface with the web application
+    user_1 = User   (
+                        username = 'js1',
+                        password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                        first_name = 'James',
+                        middle_name = '',
+                        last_name = 'Smith',
+                        email = 'js1@gmail.com'
+                    )
+    user_2 = User   (
+                    username = 'jm2',
+                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                    first_name = 'Jane',
+                    middle_name = '',
+                    last_name = 'Meredith',
+                    email = 'jm2@gmail.com'
+                    )
+    user_3 = User   (
+                    username = 'jd3',
+                    password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                    first_name = 'John',
+                    middle_name = '',
+                    last_name = 'Doe',
+                    email = 'jd3@gmail.com'
+                    )
+
+    # Saves the newly created user into the database
+    if (1):
+        db.session.add(user_1)
+        db.session.add(user_2)
+        db.session.add(user_3)
+        db.session.commit()
+
+    # Directly loggs in a user using the specified paramters
+    # The user should only be logged in for the test
+    # Source: https://github.com/pytest-dev/pytest-flask/issues/40
+    flask_login.login_user(     User   (
+                            username = 'jd3',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'John',
+                            middle_name = '',
+                            last_name = 'Doe',
+                            email = 'jd3@gmail.com'
+                        ))
+    flask_login.login_user(     User   (
+                            username = 'jm2',
+                            password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                            first_name = 'Jane',
+                            middle_name = '',
+                            last_name = 'Meredith',
+                            email = 'jm2@gmail.com'
+                        ))
+    flask_login.login_user(     User   (
+                                username = 'js1',
+                                password = bcrypt.generate_password_hash('aA1@sldkepwnwkf'),
+                                first_name = 'James',
+                                middle_name = '',
+                                last_name = 'Smith',
+                                email = 'js1@gmail.com'
+                            ))
+
+    # Imports the database table "Relationship" and its helder class "RelationshipType"
+    Code.app import Relationship, RelationshipType
+
+    # Creates a new relationship between the test users, "js1" and "jm2"
+    # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
+    # Circumvents the need to modify a session whose value contains arguments
+    # Such a circumstance arises when evoking the url "/modify_relationship/<username>"
+    new_relationship = Relationship (
+                                        username_1 = "js1", username_2 = "jm2",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+
+    # A "Friend" relationship status is not bi-directional
+    # This means that a "Friend" relationship exists between the users "js1" and "jm2" in that order
+    # But the converse is not implicity set, which necessitates the following
+    new_relationship = Relationship (
+                                        username_1 = "jm2", username_2 = "js1",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+
+    # Creates a new relationship between the test users, "js1" and "jd3"
+    # Sets the relationship between the individuals as friends, meaning that have sent and accpeted a friend request respectively
+    # Circumvents the need to modify a session whose value contains arguments
+    # Such a circumstance arises when evoking the url "/modify_relationship/<username>"
+    new_relationship = Relationship (
+                                        username_1 = "js1", username_2 = "jd3",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+
+    # A "Friend" relationship status is not bi-directional
+    # This means that a "Friend" relationship exists between the users "js1" and "jd3" in that order
+    # But the converse is not implicity set, which necessitates the following
+    new_relationship = Relationship (
+                                        username_1 = "jd3", username_2 = "js1",
+                                        relationship_type = RelationshipType.FRIEND
+                                    )
+
+    # Saves the newly created relationship into the database
+    db.session.add(new_relationship)
+    db.session.commit()
+    
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/login'
+    data = {
+        "account_identifier": "js1",
+        "password": "aA1@sldkepwnwkf",
+    }
+
+    # The response statement requires the necessary argument "follow_redirects=True"
+    # This allows the web application to load the response page when provided input data
+    # In the case of this test, it permits the website to navigate to the user's account from the login page
+    # Logs the user into their account
+    response = app.test_client().post(url, data=data, follow_redirects=True)
+
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+
+    # <TESTING PLACEHOLDER> : testing statements begin
+
+    # <TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; test case turning point begin
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/jm2'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"jm2" in response.data
+    assert b"Your chat history with jm2 is empty." in response.data
+    assert b"Send message" in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/jd3'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"jd3" in response.data
+    assert b"Your chat history with jd3 is empty." in response.data
+    assert b"Send message" in response.data
+
+    # Imports the database table "FriendMessage" and the datetime function call from the file "app.py"
+    Code.app import FriendMessage, datetime, randrange
+
+    # Creates a new message between the users "jm2" and "js1"
+    new_message_id = randrange(pow(2, 31) - 1)
+    new_message = FriendMessage(
+      message_id = new_message_id,
+      sender = "js1", 
+      receiver = "jm2",
+      message_text = "Test Direct Message #1", 
+      time = datetime.now()
+    )
+
+    # Saves the newly created message into the database
+    db.session.add(new_message)
+    db.session.commit()
+
+    # Creates a new message between the users "jm2" and "js1"
+    new_message_id = randrange(pow(2, 31) - 1)
+    new_message = FriendMessage(
+      message_id = new_message_id,
+      sender = "js1", 
+      receiver = "jd3",
+      message_text = "Test Direct Message #2", 
+      time = datetime.now()
+    )
+
+    # Saves the newly created message into the database
+    db.session.add(new_message)
+    db.session.commit()
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/jm2'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"jm2" in response.data
+    assert b"Your chat history with jm2 is empty." not in response.data
+    assert b"Date" in response.data
+    assert b"Time" in response.data
+    assert b"Test Direct Message #1" in response.data
+    assert b"Send message" in response.data
+
+    # Initializes a response object to automate testing
+    # Build the arguments that will be passed to the response object
+    url = '/messages/jd3'
+
+    # Loads the user's chat log with the friend: jm2
+    response = app.test_client().get(url, follow_redirects=True)
+        
+    # A successfully loaded page should return a response status code of 200
+    assert response.status_code == 200
+    assert b"jd3" in response.data
+    assert b"Your chat history with jd3 is empty." not in response.data
+    assert b"Date" in response.data
+    assert b"Time" in response.data
+    assert b"Test Direct Message #2" in response.data
+    assert b"Send message" in response.data
 
     # </TEST CASE TURNING POINT> : the following code will differ with each User Story D test case; ; test case turning point end
 
